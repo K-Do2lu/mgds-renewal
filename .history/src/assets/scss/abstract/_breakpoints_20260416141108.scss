@@ -1,0 +1,15 @@
+// 1400, 920, 767, 360
+
+$breakpoints: (
+    "1400": 1400px,
+    "920": 920px,
+    "767": 767px,
+    "360": 360px,
+);
+
+@mixin breakpoint($breakpoint) {
+    @if map-has-key($breakpoints, $breakpoint) {
+        @media (max-width: map-get($breakpoints, $breakpoint)) {
+            @content;
+        }
+    }

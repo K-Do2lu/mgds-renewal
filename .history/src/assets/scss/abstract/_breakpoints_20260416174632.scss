@@ -1,0 +1,16 @@
+// 1400, 920, 767, 360
+
+$breakpoints: (pc: 1400px, tab: 920px, mo: 767px, mo-s: 360px);
+
+@mixin bp($name, $type: max) {
+    $value: map-get($breakpoints, $name);
+
+    @if $value == null {
+        @error "Unknown breakpoint: #{$name}";
+    }
+    @if $type == max {
+        @media (max-width: $value) {
+            @content;
+        }
+    }
+}
