@@ -1,0 +1,6 @@
+@use "sass:math";
+@use "breakpoints";
+
+@mixin clamp($property, $min, $max, $vp-min, $vp-max){
+
+}

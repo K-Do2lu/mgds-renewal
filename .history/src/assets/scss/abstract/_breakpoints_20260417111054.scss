@@ -1,0 +1,9 @@
+// 1400, 920, 767, 360
+$dp-pc: 1400px;
+$dp-tab: 920px;
+$dp-mo: 767px;
+$dp-mo-s: 360px;    
+
+@mixin bp($bp-name, $type: max) {
+    @media (#{$type}-width: $bp-name) { @content; }
+}

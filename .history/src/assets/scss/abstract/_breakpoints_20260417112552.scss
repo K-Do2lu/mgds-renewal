@@ -1,0 +1,17 @@
+// 1400, 920, 767, 360
+$bp-pc: 1400px;
+$bp-tab: 920px;
+$bp-mo: 767px;
+$bp-mo-s: 360px;    
+
+@mixin bp($bp, $type: max) {
+    $value: "$#{$bp}";
+
+    @if $type == max {
+        @media (max-width: $value) { @content; }
+    } @else if type == min {
+        @media (min-width: $value) { @content; }
+    } @else {
+        @error "bp() type must be `max` or `min`.";
+    }
+}

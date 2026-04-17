@@ -1,0 +1,28 @@
+// 1400, 920, 767, 360
+
+// breakpoint
+$bp-mobile: 360px;
+$bp-tablet: 768px;
+$bp-desktop: 1400px;
+$breakpoints: (pc: 1400px, tab: 920px, mo: 767px, mo-s: 360px);
+
+// @include bp(pc) {...}
+@mixin bp($name, $type: max) { 
+    $value: map-get($breakpoints, $name);
+
+    @if $value == null {
+        @error "Unknown breakpoint: #{$name}";
+    }
+    
+    @if $type == max {
+        @media (max-width: $value) {
+            @content;
+        }
+    } @else if $type == min {
+        @media (min-width: $value) {
+            @content;
+        }
+    } @else {
+        @error "bp() type must be `max` or `min`.";
+    }
+}  

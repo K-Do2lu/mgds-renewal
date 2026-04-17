@@ -1,0 +1,18 @@
+@use "sass:math";
+@use "breakpoints";
+
+@mixin clamp($property, $min, $max, $vp-min: $bp-mo-s, $vp-max: $bp-pc){
+ @if math.unit($min) != "px" or math.unit($max) != "px" {@error "clamp()는 px 단위만 사용합니다."}
+
+ $min-val: math.div($min, 1px);
+ $max-val: math.div($max, 1px);
+ $vp-min-val: math.div($vp-min, 1px);
+ $vp-max-val: math.div($vp-max, 1px);
+
+ $slope: math.div($max-val - $min-val, $vp-max-val - $vp-min-val); 
+
+ $intercept: $min-val - ($slope * $vp-min-val);
+
+ #{$property}: clamp(#{$min}, #{$slope * 100}vw + #{$intercept * 1px}, #{$max});
+}
+

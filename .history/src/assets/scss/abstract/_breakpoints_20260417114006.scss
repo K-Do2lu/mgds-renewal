@@ -1,0 +1,19 @@
+// 1400, 920, 767, 360
+$bp-pc: 1400px;
+$bp-tab: 920px;
+$bp-mo: 767px;
+$bp-mos: 360px;    
+
+@mixin bp($bp) {
+    @if $bp == pc {
+        @media (max-width: $bp-pc) { @content; }
+    } @else if $bp == tab {
+        @media (max-width: $bp-tab) { @content; }
+    } @else if $bp == mo {
+        @media (max-width: $bp-mo) { @content; }
+    } @else if $bp == mo-s {
+        @media (max-width: $bp-mo-s) { @content; }
+    } @else {
+        @error "bp() type must be `pc` or `tab` or `mo` or `mo-s`.";
+    }
+}

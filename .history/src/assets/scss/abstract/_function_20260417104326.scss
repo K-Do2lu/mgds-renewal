@@ -1,0 +1,8 @@
+@use "sass:math";
+@use "breakpoints";
+
+@mixin clamp($property, $min, $max, $vp-min: mo-s, $vp-max: pc){
+ @if math.unit($min) != "px" or math.unit($max) != "px" {@error "clamp()는 px 단위만 사용합니다."}
+
+ $min-val: math.div($min,1px);
+}

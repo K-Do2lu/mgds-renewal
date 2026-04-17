@@ -1,0 +1,15 @@
+// 1400, 920, 767, 360
+$dp-pc: 1400px;
+$dp-tab: 920px;
+$dp-mo: 767px;
+$dp-mo-s: 360px;    
+
+// @include bp(pc) {...}
+@mixin bp($bp-name, $type: max) {
+    $bp-pc: pc;
+    $bp-tab: tab;
+    $bp-mo: mo;
+    $bp-mo-s: mo-s;
+    
+    @media (#{$type}-width: $bp-name) { @content; }
+}
