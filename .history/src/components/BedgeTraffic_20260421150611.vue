@@ -1,0 +1,26 @@
+<script setup>
+</script>
+
+<template>
+    <div class="badge traffic">
+        <span class="badge-text">일반버스</span>
+        <span class="bade-traffic">604</span>
+    </div>
+</template>
+
+<style lang="scss" scoped>
+.badge{
+    &.traffic{
+        .badge-text{
+            display: inline-block;
+            @include wh(auto, 60px, 95px, auto, 39px, 41px);
+            padding: 10px 16px;
+            font-weight: 500;
+            color: $txt-white;
+            line-height: 1;
+            border-radius: 1000px;
+            background: $point-main;
+        }
+    }
+}
+</style>

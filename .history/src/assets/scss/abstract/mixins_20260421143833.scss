@@ -1,0 +1,50 @@
+@mixin glass-bg {
+    /* 1. 채우기: 흰색 20% (FFFFFF, 20%) */
+    background: rgba(255, 255, 255, 0.2);
+    
+    /* 2. 효과(유리): 흐릿함 49 (Blur) */
+    /* 피그마의 '흐릿함 49'는 보통 blur(20px~30px) 정도로 체감됩니다. */
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px); /* 사파리 대응 */
+
+    /* 3. 외곽선: 흰색 100% (FFFFFF, 100%) - 내부(Inside) 1px */
+    /* 유리 효과를 낼 때 테두리는 약간 투명한 게 더 고급스럽습니다. */
+    border: 1px solid rgba(255, 255, 255, 0.5);
+
+    /* 4. 외형: 모서리 곡률 44 */
+    border-radius: 44px;
+
+    /* 5. 크기: W 440, H 440 */
+    width: 440px;
+    height: 440px;
+
+    /* (선택 사항) 내용 정렬 */
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    color: #FFFFFF;
+}
+
+@mixin flex($direction, $justify, $align, $gap) {
+    display: flex;
+    flex-direction: $direction;
+    justify-content: $justify;
+    align-items: $align;
+    gap: $gap;
+}
+
+@mixin grid($row, $column, $gap) {
+    display: grid;
+    grid-template: $row / $column;
+    gap: $gap;
+}
+
+@mixin wh($width, $min-width, $max-width, $height, $min-height, $max-height) {
+    width: $width;
+    min-width: $min-width;
+    max-width: $max-width;
+    height: $height;
+    min-height: $min-height;
+    max-height: $max-height;
+}

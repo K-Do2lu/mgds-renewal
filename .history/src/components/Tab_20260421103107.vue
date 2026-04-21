@@ -1,0 +1,41 @@
+<script setup>
+import { ref } from 'vue'
+import SubNoticeTable from '@/views/SubNoticeTable.vue'
+import SubTenderTable from '@/views/SubTenderTable.vue'
+import SubArchiveTable from '@/views/SubArchiveTable.vue'
+
+const activeName = ref('first')
+
+const handleClick = (tab, event) => {
+  console.log(tab, event)
+}
+</script>
+
+<template>
+    <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick" :stretch="true">
+        <el-tab-pane label="공지사항" name="first"><SubNoticeTable /></el-tab-pane>
+        <el-tab-pane label="입찰공고" name="second"><SubTenderTable /></el-tab-pane>
+        <el-tab-pane label="자료실" name="third"><SubArchiveTable /></el-tab-pane>
+    </el-tabs>
+</template>
+
+<style lang="scss">
+.el-tabs{ height: auto; }
+.demo-tabs > .el-tabs__content {
+  padding: 0;
+  color: red;
+  font-size: 20px;
+  font-weight: 600;
+}
+.el-tabs--top>.el-tabs__header .el-tabs__item{
+    padding: 12px;
+    font-size: 20px;
+    color: $txt-main;
+}
+.el-tabs--top>.el-tabs__header .el-tabs__item.is-active{
+    color: $point-main;
+}
+.el-tabs__active-bar{
+    background-color: $point-main;
+}
+</style>

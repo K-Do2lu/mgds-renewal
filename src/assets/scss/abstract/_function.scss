@@ -1,5 +1,5 @@
 @use "sass:math";
-@use "breakpoints";
+@use "breakpoints" as *;
 
 // @include clamp(font-size, 12px, 16px);
 @mixin clamp($property, $min, $max, $vp-min: $bp-mo-s, $vp-max: $bp-pc){
