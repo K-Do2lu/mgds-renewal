@@ -1,0 +1,10 @@
+@use "@/assets/scss/abstract" as *;
+
+header{
+    @include flex(row, center, center, 0);
+    .header-inner{
+    @include flex(row, center, center, 0);
+        
+        max-width: 1400px;
+    }
+}
