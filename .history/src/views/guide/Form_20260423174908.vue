@@ -51,14 +51,5 @@ const selectPanels = [
 
             <CodeBlockTabs :panels="selectPanels" />
         </div>
-
-        <div class="cnt">
-            <h2>TopBtn</h2>
-            <div class="itm">
-               <TopBtn />
-            </div>
-
-            <CodeBlockTabs :panels="inputPanels" />
-        </div>
     </section>
 </template>

@@ -55,7 +55,7 @@ const selectPanels = [
         <div class="cnt">
             <h2>TopBtn</h2>
             <div class="itm">
-               <TopBtn />
+                <Input />
             </div>
 
             <CodeBlockTabs :panels="inputPanels" />

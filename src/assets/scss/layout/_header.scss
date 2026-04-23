@@ -3,10 +3,15 @@
 .header-app {
   position: relative;
   z-index: 1000;
+  // header가 fixed일 때 본문이 위로 말려 올라가지 않도록 자리 확보
+  @include clamp(padding-top, 60px, 100px);
 }
 
 header {
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   z-index: 1001;
   @include flex(row, center, stretch, 0);
   @include clamp(height, 60px, 100px);
