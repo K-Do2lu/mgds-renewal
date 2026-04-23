@@ -55,6 +55,12 @@ const tablePanels = [
 
 <template>
   <section class="guide">
+    <div class="cnt">
+        <h2>Header</h2>
+        <div class="itm">
+          <Header/>
+        </div>
+    </div>
         <div class="cnt">
             <h2>Tab</h2>
             <div class="itm">

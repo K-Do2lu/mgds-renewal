@@ -10,4 +10,5 @@ const route = useRoute()
   <Header v-if="route.name !== 'Guide'"/>
   <router-view />
   <Footer v-if="route.name !== 'Guide'"/>
+  <TopBtn />
 </template>
