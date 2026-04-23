@@ -142,8 +142,40 @@ img {
   object-fit: cover;
 }
 
-a{
+a {
   text-decoration: none;
   color: inherit;
   cursor: pointer;
+}
+
+/* Form element defaults */
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+
+input,
+select,
+textarea {
+  background: transparent;
+  border: 0;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+textarea {
+  resize: vertical;
 }

@@ -1,12 +1,12 @@
 @use "@/assets/scss/abstract" as *;
 
-footer{
+footer {
     @include flex(row, center, center, 0);
-    padding: 40px 20px;
+    padding: $layout-page-padding 20px;
     background: $bg-main;
 
     .footer-inner{
-        @include wh(1400px, 300px, null, null, null, null);
+        @include wh($layout-max-width, 300px, null, null, null, null);
 
         .inner-top{
             @include flex(column, center, null, 40px);

@@ -77,9 +77,6 @@ header {
 }
 
 .mega-panel {
-  // 썸네일·호버 카드: 바깥 그림자 X4 Y4 Blur4 Spread0 #CDD8EA 49%
-  $mega-outer-shadow: 4px 4px 4px 0 rgb(205 216 234 / 49%);
-
   position: fixed;
   left: 0;
   right: 0;
@@ -88,7 +85,7 @@ header {
   flex-direction: column;
   align-items: stretch;
   background: $gray-000;
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+  box-shadow: $shadow-panel;
   overflow: hidden;
 
   @include bp(tab) {
@@ -117,17 +114,17 @@ header {
   &__inner {
     display: grid;
     width: 100%;
-    grid-template-columns: repeat(auto-fit, 400px);
+    grid-template-columns: repeat(auto-fit, $mega-col-width);
     justify-content: center;
     gap: clamp(1rem, 3vw, 2.5rem);
-    max-width: 1400px;
+    max-width: $layout-max-width;
     margin-inline: auto;
     padding: clamp(1.25rem, 3vw, 2.25rem) clamp(20px, 4vw, 40px)
       clamp(1.5rem, 3vw, 2.5rem);
 
     &--count1 {
-      max-width: 400px;
-      grid-template-columns: 400px;
+      max-width: $mega-col-width;
+      grid-template-columns: $mega-col-width;
       justify-content: center;
       align-self: center;
     }
@@ -138,7 +135,7 @@ header {
       align-self: center;
       width: auto;
       max-width: none;
-      gap: 120px;
+      gap: $mega-gap-two-cols;
       grid-template-columns: unset;
       justify-content: center;
     }
@@ -146,7 +143,7 @@ header {
 
   &__col {
     box-sizing: border-box;
-    width: 400px;
+    width: $mega-col-width;
     flex-shrink: 0;
     display: flex;
     flex-direction: row;
@@ -154,7 +151,7 @@ header {
     justify-content: space-between;
     gap: 1rem;
     padding: 14px 20px;
-    border-radius: 12px;
+    border-radius: $radius-card;
     text-decoration: none;
     color: inherit;
     outline: none;
@@ -199,13 +196,13 @@ header {
     flex-shrink: 0;
     width: clamp(72px, 12vw, 104px);
     height: clamp(72px, 12vw, 104px);
-    border-radius: 12px;
+    border-radius: $radius-card;
     background: $gray-100;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: visible;
-    box-shadow: $mega-outer-shadow;
+    box-shadow: $shadow-soft-blue;
     transition:
       background 0.2s ease,
       box-shadow 0.2s ease;
