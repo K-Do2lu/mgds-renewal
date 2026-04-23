@@ -1,0 +1,21 @@
+@use "@/assets/scss/abstract" as *;
+
+footer{
+    @include flex(row, center, center, 0);
+    padding-block: 40px;
+    background: $bg-main;
+
+    .footer-inner{
+        @include wh(1400px, 300px, null, null, null, null);
+
+        .inner-top{
+            .footer-logo{
+                width: 154px;
+            }
+
+            .footer-info{
+                font-size: 16px;
+            }
+        }
+    }
+}

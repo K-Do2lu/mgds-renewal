@@ -1,0 +1,32 @@
+@use "@/assets/scss/abstract" as *;
+
+header{
+    background: #eee;
+    @include flex(row, center, center, 0);
+    .header-inner{
+        @include flex(row, space-between, center, 0);
+        @include wh(1400px, 920px, null, 100px, 60px, null);
+
+        .logo{ @include wh(auto, 140px, 248px, auto, null, null); }
+
+        nav{
+            height: 100%;
+            background: #ddd;
+
+            ul{
+                @include grid(1fr, repeat(4, 167.75px), 0);
+                // @include flex(row, space-between, stretch, 0);
+                height: 100%;
+                li{
+                    height: 100%;
+                    font-size: 24px;
+                    a{
+                        height: 100%;
+                    @include flex(row, center, center, 0);
+                        
+                    }
+                }
+            }
+        }
+    }
+}

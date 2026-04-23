@@ -4,5 +4,13 @@ import 'element-plus/dist/index.css'
 import './assets/scss/style.scss'
 import App from './App.vue'
 import router from './router/router.js'
+import Input from '@/components/Input.vue'
+import Select from '@/components/Select.vue'
 
-createApp(App).use(router).use(elementPlus).mount('#app')
+const app = createApp(App)
+
+app.use(router).use(elementPlus)
+app.component('Input', Input)
+app.component('Select', Select)
+
+app.mount('#app')

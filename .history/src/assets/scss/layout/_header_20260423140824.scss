@@ -1,0 +1,187 @@
+@use "@/assets/scss/abstract" as *;
+
+.header-app {
+  position: relative;
+  z-index: 1000;
+}
+
+header {
+  position: relative;
+  z-index: 1001;
+  @include flex(row, center, stretch, 0);
+  @include clamp(height, 60px, 100px);
+  background: $header-bg;
+
+  .header-inner {
+    @include flex(row, space-between, center, 0);
+    @include wh(1400px, 300px, null, null, null, null);
+
+    .logo {
+      @include clamp(width, 140px, 248px);
+    }
+
+    .menu-btn {
+      display: none;
+      @include clamp(width, 24px, 40px);
+      padding: 0;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    nav {
+      height: 100%;
+
+      ul {
+        @include grid(1fr, repeat(4, 167.75px), 0);
+        height: 100%;
+
+        li {
+          height: 100%;
+          font-size: 24px;
+
+          a {
+            height: 100%;
+            @include flex(row, center, center, 0);
+
+            &:hover,
+            &.router-link-active,
+            &.is-mega-active {
+              color: $point-main;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @include bp(pc) {
+    .header-inner {
+      @include clamp(padding-inline, 20px, 40px);
+    }
+  }
+
+  @include bp(tab) {
+    nav {
+      display: none;
+    }
+
+    .header-inner {
+      width: 100%;
+
+      .menu-btn {
+        display: block;
+      }
+    }
+  }
+}
+
+.mega-panel {
+  // 썸네일·호버 카드: 바깥 그림자 X4 Y4 Blur4 Spread0 #CDD8EA 49%
+  $mega-outer-shadow: 4px 4px 4px 0 rgb(205 216 234 / 49%);
+
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: $gray-000;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+
+  @include bp(tab) {
+    display: none !important;
+  }
+
+  &.mega-slide-enter-active,
+  &.mega-slide-leave-active {
+    transition:
+      transform 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.28s ease;
+  }
+
+  &.mega-slide-enter-from,
+  &.mega-slide-leave-to {
+    opacity: 0;
+    transform: translateY(-18px);
+  }
+
+  &.mega-slide-enter-to,
+  &.mega-slide-leave-from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  &__inner {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: clamp(1rem, 3vw, 2.5rem);
+    max-width: 1400px;
+    margin-inline: auto;
+    padding: clamp(1.25rem, 3vw, 2.25rem) clamp(20px, 4vw, 40px)
+      clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  &__col {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    border-radius: 12px;
+    text-decoration: none;
+    color: inherit;
+    outline: none;
+    background: transparent;
+    box-shadow: none;
+    transition:
+      background 0.2s ease,
+      box-shadow 0.2s ease;
+
+    &:hover,
+    &:focus-visible {
+      background: $gray-100;
+      box-shadow: $mega-outer-shadow;
+    }
+  }
+
+  &__text {
+    min-width: 0;
+  }
+
+  &__title {
+    display: block;
+    font-size: clamp(1rem, 2vw, 1.125rem);
+    font-weight: 700;
+    color: $gray-800;
+    margin-bottom: 0.5rem;
+  }
+
+  &__line {
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.45;
+    color: $gray-600;
+  }
+
+  &__thumb {
+    flex-shrink: 0;
+    width: clamp(72px, 12vw, 104px);
+    height: clamp(72px, 12vw, 104px);
+    border-radius: 12px;
+    background: $gray-100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+    box-shadow: $mega-outer-shadow;
+    transition: box-shadow 0.2s ease;
+
+    img {
+      width: 70%;
+      height: 70%;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+  }
+}

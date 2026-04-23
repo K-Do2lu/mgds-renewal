@@ -1,0 +1,52 @@
+@use "@/assets/scss/abstract" as *;
+
+header{
+    background: #eee;
+    @include flex(row, center, stretch, 0);
+    @include clamp(height, 60px, 100px);
+    .header-inner{
+        @include flex(row, space-between, center, 0);
+        @include wh(1400px, 300px, null, null, null, null);
+        background: #ddd;
+
+        .logo{            @include clamp(width, 140px, 248px); }
+        .menu-btn{
+            display: none;
+            @include clamp(width, 24px, 40px);
+            padding: 0;
+            border: none;
+            background: transparent;
+        }
+
+        nav{
+            height: 100%;
+
+            ul{
+                @include grid(1fr, repeat(4, 167.75px), 0);
+                height: 100%;
+                li{
+                    height: 100%;
+                    font-size: 24px;
+                    a{
+                        height: 100%;
+                        @include flex(row, center, center, 0);
+                        &:hover{color: $point-main;}
+                    }
+                }
+            }
+        }
+    }
+
+    @include bp(pc){
+        .header-inner {}
+    }
+
+    @include bp(tab){
+        nav{display: none;}
+        .header-inner {
+            width:  100%;
+            @include clamp(padding-inline, 20px, 40px);
+        }
+        .header-inner .menu-btn{ display: block;}
+    }
+}

@@ -1,0 +1,27 @@
+@use "@/assets/scss/abstract" as *;
+
+header{
+    background: #eee;
+    @include flex(row, center, center, 0);
+    .header-inner{
+        @include flex(row, space-between, center, 0);
+        @include wh(1400px, 920px, null, 100px, 60px, null);
+
+        .logo{ @include wh(auto, 140px, 248px, auto, null, null); }
+
+        nav{
+            height: 100%;
+            background: #ddd;
+
+            ul{
+                @include grid
+                // @include flex(row, space-between, stretch, 0);
+                height: 100%;
+                li{
+                    @include flex(row, center, center, 0);
+                    height: 100%;
+                }
+            }
+        }
+    }
+}

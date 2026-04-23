@@ -1,0 +1,20 @@
+@use "@/assets/scss/abstract" as *;
+
+header{
+    @include flex(row, center, center, 0);
+    .header-inner{
+        @include flex(row, space-between, center, 0);
+        @include wh(1400px, 920px, null, 100px, 60px, null);
+
+        .logo{ @include wh(auto, 140px, 248px, auto, null, null); }
+
+        nav{
+            background-color: red;
+            ul{
+                @include flex(row, space-between, center, 0);
+                li{
+                }
+            }
+        }
+    }
+}

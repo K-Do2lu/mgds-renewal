@@ -1,0 +1,10 @@
+@use "@/assets/scss/abstract" as *;
+
+footer{
+    @include flex(row, center, center, 0);
+
+    .footer-inner{
+        @include wh(1400px, 300px, null, null, null, null);
+
+    }
+}
