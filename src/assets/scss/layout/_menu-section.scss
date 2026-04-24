@@ -1,9 +1,8 @@
 @use "@/assets/scss/abstract" as *;
+@use "@/assets/scss/layout/page-common" as *;
 
 .menu-section {
-  max-width: $layout-max-width;
-  margin-inline: auto;
-  padding-inline: clamp(20px, 4vw, 40px);
+  @include layout-page-frame;
 }
 
 .menu-section__subnav {

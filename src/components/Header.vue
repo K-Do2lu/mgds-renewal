@@ -2,6 +2,7 @@
 import { ref, computed, watch, onMounted, onBeforeUnmount } from 'vue'
 import { useRoute } from 'vue-router'
 import { primaryNav, megaItemsForSection } from '@/config/sectionNav'
+import linkSvg from '@/assets/img/link.svg'
 
 const route = useRoute()
 const activeMegaKey = ref(null)
@@ -120,35 +121,75 @@ onBeforeUnmount(() => {
             'mega-panel__inner--count2': megaItems.length === 2,
           }"
         >
-          <router-link
-            v-for="(col, i) in megaItems"
-            :key="`${col.to}-${i}`"
-            :to="col.to"
-            class="mega-panel__col"
-          >
-            <div class="mega-panel__text">
-              <strong class="mega-panel__title">
-                <template v-if="Array.isArray(col.title)">
-                  <span
-                    v-for="(titleLine, ti) in col.title"
-                    :key="ti"
-                    class="mega-panel__title-line"
-                  >{{ titleLine }}</span>
-                </template>
-                <template v-else>{{ col.title }}</template>
-              </strong>
-              <p
-                v-for="(line, j) in col.lines"
-                :key="j"
-                class="mega-panel__line"
-              >
-                {{ line }}
-              </p>
-            </div>
-            <div class="mega-panel__thumb" aria-hidden="true">
-              <img :src="col.thumb" alt="" />
-            </div>
-          </router-link>
+          <template v-for="(col, i) in megaItems" :key="`${col.externalUrl || col.to}-${i}`">
+            <a
+              v-if="col.externalUrl"
+              :href="col.externalUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="mega-panel__col"
+            >
+              <div class="mega-panel__text">
+                <strong class="mega-panel__title mega-panel__title--external">
+                  <span class="mega-panel__title-main">
+                    <template v-if="Array.isArray(col.title)">
+                      <span
+                        v-for="(titleLine, ti) in col.title"
+                        :key="ti"
+                        class="mega-panel__title-line"
+                      >{{ titleLine }}</span>
+                    </template>
+                    <template v-else>{{ col.title }}</template>
+                  </span>
+                  <img
+                    class="mega-panel__title-link-ico"
+                    :src="linkSvg"
+                    alt=""
+                  />
+                </strong>
+                <p
+                  v-for="(line, j) in col.lines"
+                  :key="j"
+                  class="mega-panel__line"
+                >
+                  {{ line }}
+                </p>
+              </div>
+              <div class="mega-panel__thumb" aria-hidden="true">
+                <img :src="col.thumb" alt="" />
+              </div>
+            </a>
+            <router-link
+              v-else
+              :to="col.to"
+              class="mega-panel__col"
+            >
+              <div class="mega-panel__text">
+                <strong class="mega-panel__title">
+                  <span class="mega-panel__title-main">
+                    <template v-if="Array.isArray(col.title)">
+                      <span
+                        v-for="(titleLine, ti) in col.title"
+                        :key="ti"
+                        class="mega-panel__title-line"
+                      >{{ titleLine }}</span>
+                    </template>
+                    <template v-else>{{ col.title }}</template>
+                  </span>
+                </strong>
+                <p
+                  v-for="(line, j) in col.lines"
+                  :key="j"
+                  class="mega-panel__line"
+                >
+                  {{ line }}
+                </p>
+              </div>
+              <div class="mega-panel__thumb" aria-hidden="true">
+                <img :src="col.thumb" alt="" />
+              </div>
+            </router-link>
+          </template>
         </div>
       </div>
     </Transition>

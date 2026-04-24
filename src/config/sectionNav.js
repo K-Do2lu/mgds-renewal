@@ -81,7 +81,7 @@ export const megaMenuBySection = {
   ],
   recruit: [
     {
-      to: '/recruit/careers',
+      externalUrl: 'https://career.mgdatasystem.co.kr/',
       title: '채용공고',
       lines: ['MG데이터시스템의 주요 소식과', '공식 안내를 확인하세요.'],
       thumb: new URL('../assets/img/header_item_07.svg', import.meta.url).href,

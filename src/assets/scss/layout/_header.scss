@@ -162,9 +162,11 @@ header {
     outline: none;
     background: transparent;
     box-shadow: none;
+    transform: translateY(0);
     transition:
       background 0.2s ease,
-      box-shadow 0.2s ease;
+      box-shadow 0.2s ease,
+      transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
 
     &:hover &__thumb,
     &:focus-visible &__thumb {
@@ -174,6 +176,7 @@ header {
     &:hover,
     &:focus-visible {
       background: $gray-100;
+      transform: translateY(-5px);
     }
   }
 
@@ -192,6 +195,24 @@ header {
   &__title-line {
     display: block;
     line-height: 1.2;
+  }
+
+  &__title--external {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__title-main {
+    min-width: 0;
+  }
+
+  &__title-link-ico {
+    flex-shrink: 0;
+    // 타이틀(24px) 캡 높이에 맞춘 비율 — 글자 크기 변경 시 같이 스케일
+    width: 1.22em;
+    height: 1.22em;
+    object-fit: contain;
   }
 
   &__line {

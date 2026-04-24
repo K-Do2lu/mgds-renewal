@@ -1,0 +1,63 @@
+@use "@/assets/scss/abstract" as *;
+
+/** 좌우 인셋만 (섹션 래퍼 바깥) */
+@mixin layout-page-gutters {
+  padding-inline: clamp(20px, 4vw, 40px);
+}
+
+/** 콘텐츠 최대 너비 + 가운데 정렬 */
+@mixin layout-page-inner-width {
+  max-width: $layout-max-width;
+  margin-inline: auto;
+}
+
+/** 서브 레이아웃(.menu-section) 등: 인셋 + 최대 너비를 한 번에 */
+@mixin layout-page-frame {
+  @include layout-page-inner-width;
+  @include layout-page-gutters;
+}
+
+/**
+ * 본문 블록 공통 (메인 섹션, 서브 콘텐츠 등)
+ * — 배경은 modifier
+ */
+@mixin section-block-spacing {
+  @include clamp(padding-block, 60px, 120px);
+}
+
+.page-section {
+  @include section-block-spacing;
+  @include layout-page-gutters;
+}
+
+.page-section__inner {
+  @include layout-page-inner-width;
+}
+
+.page-section__title {
+  margin: 0;
+  font-weight: bold;
+  color: $txt-main;
+  letter-spacing: -0.02em;
+  // 메인 섹션 타이틀(h2) 공통
+  @include clamp(font-size, 28px, 40px);
+}
+
+.page-section__lead {
+  margin: 1rem 0 0;
+  color: $txt-sub;
+  line-height: 1.6;
+  @include clamp(font-size, 16px, 18px);
+}
+
+.point {
+  color: $point-main !important;
+}
+
+.page-section--surface-default {
+  background: $gray-000;
+}
+
+.page-section--surface-muted {
+  background: $bg-main;
+}

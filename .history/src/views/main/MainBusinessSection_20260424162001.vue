@@ -1,0 +1,45 @@
+<template>
+  <section
+    class="page-section page-section--surface-muted main-business"
+    aria-labelledby="main-business-title"
+  >
+    <div class="page-section__inner">
+      <h2 id="main-business-title" class="page-section__title"><span class="point">최적화된 서비스로</span><br>
+       더 나은 내일을 만들어 갑니다.</h2>
+      <p class="page-section__lead">
+        금융 기업의 IT 시스템 구축부터 운영, 유지보수까지<br>
+        종합적인 솔루션을 제공하려 최적화된 업무 환경을 지원합니다.
+      </p>
+
+      <div class="main-business__cards">
+
+
+        <div class="main-business__card">
+          <h3 class="main-business__card-title">
+           IT 시스템 구축 (SI) / 관리 운영 (SM)
+          </h3>
+          <p class="main-business__card-desc">
+            인프라 구축부터 시스템 개발, 데이터 이관까지
+            고객 맞춤형 IT 통합 솔루션을 제공합니다.  
+          </p>
+        </div>
+
+
+      </div>
+    </div>
+  </section>
+</template>
+
+<style lang="scss" scoped>
+@use '@/assets/scss/abstract' as *;
+
+.page-section--surface-muted {
+  background: $bg-main;
+}
+
+.main-business__cards {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+</style>
