@@ -9,22 +9,22 @@ export const primaryNav = [
 /** URL 첫 세그먼트(company, business, …) 기준 — 섹션 페이지 서브 네비 */
 export const subNavBySection = {
   company: [
-    { to: '/company/about', label: '회사소개' },
-    { to: '/company/ceo', label: 'CEO' },
-    { to: '/company/loc', label: '오시는 길' },
+    { to: '/company/about', label: '회사소개', routeName: 'CompanyAbout' },
+    { to: '/company/ceo', label: 'CEO', routeName: 'CompanyCeo' },
+    { to: '/company/loc', label: '오시는 길', routeName: 'CompanyLocation' },
   ],
   business: [
-    { to: '/business/overview', label: '사업개요' },
-    { to: '/business/partners', label: '파트너' },
+    { to: '/business/overview', label: '사업개요', routeName: 'BusinessOverview' },
+    { to: '/business/partners', label: '파트너', routeName: 'BusinessPartners' },
   ],
   notice: [
-    { to: '/notice/board', label: '공지사항' },
-    { to: '/notice/archive', label: '자료실' },
-    { to: '/notice/tender', label: '입찰공고' },
+    { to: '/notice/board', label: '공지사항', routeName: 'NoticeBoard' },
+    { to: '/notice/archive', label: '자료실', routeName: 'NoticeArchive' },
+    { to: '/notice/tender', label: '입찰공고', routeName: 'NoticeTender' },
   ],
   recruit: [
-    { to: '/recruit/careers', label: '채용공고' },
-    { to: '/recruit/talent', label: '인재상' },
+    { to: '/recruit/careers', label: '채용공고', routeName: 'RecruitCareers' },
+    { to: '/recruit/talent', label: '인재상', routeName: 'RecruitTalent' },
   ],
 }
 

@@ -13,6 +13,11 @@
   padding-block: 1rem 0.75rem;
   margin-bottom: 1rem;
   border-bottom: 1px solid $border-main;
+
+  &--tabs {
+    display: block;
+    padding-block: 0.5rem 0.75rem;
+  }
 }
 
 .menu-section__link {

@@ -1,4 +1,5 @@
 <script setup>
+import SubNavTabs from '@/components/SubNavTabs.vue'
 import { subNavBySection } from '@/config/sectionNav'
 
 const subNav = subNavBySection.company
@@ -6,20 +7,12 @@ const subNav = subNavBySection.company
 
 <template>
   <div class="menu-section">
-    <nav
+    <SubNavTabs
       v-if="subNav.length"
-      class="menu-section__subnav"
+      class="menu-section__subnav menu-section__subnav--tabs"
+      :items="subNav"
       aria-label="COMPANY 하위 메뉴"
-    >
-      <RouterLink
-        v-for="item in subNav"
-        :key="item.to"
-        :to="item.to"
-        class="menu-section__link"
-      >
-        {{ item.label }}
-      </RouterLink>
-    </nav>
+    />
     <main class="menu-section__body">
       <RouterView />
     </main>

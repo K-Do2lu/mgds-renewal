@@ -1,17 +1,10 @@
 <script setup>
-import { ref } from 'vue';
 
-const topBtn = () => {
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth',
-  });
-}
 
 </script>
 
 <template>
-  <button type="button" class="top-btn" aria-label="맨 위로" @click="topBtn">
+  <button type="button" class="top-btn" aria-label="맨 위로">
     <img class="top-btn__ico" src="@/assets/img/arrow_right.svg" alt="" aria-hidden="true" />
   </button>
 </template>
