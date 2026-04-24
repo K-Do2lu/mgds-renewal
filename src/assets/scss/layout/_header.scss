@@ -189,6 +189,11 @@ header {
     margin-bottom: 0.5rem;
   }
 
+  &__title-line {
+    display: block;
+    line-height: 1.2;
+  }
+
   &__line {
     margin: 0;
     font-size: 18px;

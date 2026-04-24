@@ -127,7 +127,16 @@ onBeforeUnmount(() => {
             class="mega-panel__col"
           >
             <div class="mega-panel__text">
-              <strong class="mega-panel__title">{{ col.title }}</strong>
+              <strong class="mega-panel__title">
+                <template v-if="Array.isArray(col.title)">
+                  <span
+                    v-for="(titleLine, ti) in col.title"
+                    :key="ti"
+                    class="mega-panel__title-line"
+                  >{{ titleLine }}</span>
+                </template>
+                <template v-else>{{ col.title }}</template>
+              </strong>
               <p
                 v-for="(line, j) in col.lines"
                 :key="j"
