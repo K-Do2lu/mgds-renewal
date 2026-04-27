@@ -13,7 +13,7 @@ const keywords = ref([
     class="page-section page-section--surface-default main-about"
     aria-labelledby="main-about-title"
   >
-    <div class="page-section__inner">
+    <div class="page-section__inner" v-reveal>
       <div class="main-about__head">
         <h2 id="main-about-title" class="page-section__title point">MG DATA SYSTEM</h2>
         <p class="page-section__lead">

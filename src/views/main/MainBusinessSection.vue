@@ -89,7 +89,7 @@ const accentClassFor = computed(() => {
     class="page-section page-section--surface-muted main-business"
     aria-labelledby="main-business-title"
   >
-    <div class="page-section__inner">
+    <div class="page-section__inner" v-reveal>
       <div class="main-business__head">
         <h2 id="main-business-title" class="page-section__title">
           <span class="point">최적화된 서비스로</span><br />

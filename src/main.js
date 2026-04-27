@@ -7,6 +7,7 @@ import router from './router/router.js'
 import Input from '@/components/Input.vue'
 import Select from '@/components/Select.vue'
 import TopBtn from '@/components/TopBtn.vue'
+import revealDirective from '@/directives/reveal.js'
 
 const app = createApp(App)
 
@@ -14,5 +15,6 @@ app.use(router).use(elementPlus)
 app.component('Input', Input)
 app.component('Select', Select)
 app.component('TopBtn', TopBtn)
+app.directive('reveal', revealDirective)
 
 app.mount('#app')

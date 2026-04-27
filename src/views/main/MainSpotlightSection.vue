@@ -18,7 +18,7 @@ const items = ref(
     class="page-section page-section--surface-default main-spotlight"
     aria-labelledby="main-spotlight-title"
   >
-    <div class="page-section__inner">
+    <div class="page-section__inner" v-reveal>
       <div class="main-spotlight__head">
         <h2 id="main-spotlight-title" class="page-section__title">
           <span class="point">MG데이터시스템</span>의<br />
@@ -57,6 +57,13 @@ const items = ref(
   @include clamp(gap, 40px, 60px);
 }
 
+.main-spotlight__slider {
+  width: 100%;
+  min-height: 0;
+  /* reveal 전에 카드 transform으로 생기는 세로(·가로) overflow 잔상 제거 */
+  overflow: hidden;
+}
+
 .main-spotlight__slider :deep(.base-slider__track) {
   @include clamp(gap, 12px, 20px);
 }
@@ -69,7 +76,11 @@ const items = ref(
   @include clamp(padding, 20px, 30px);
   @include clamp(border-radius, 20px, 40px);
   border: 1px solid $border-main;
-  background: $gray-000;
+  background-color: $gray-000;
+  background-image: url('@/assets/img/logo_bg.svg');
+  background-repeat: no-repeat;
+  background-position: right center;
+  background-size: min(55%, 200px) auto;
   text-align: left;
 }
 

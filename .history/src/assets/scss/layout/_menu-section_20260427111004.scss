@@ -1,0 +1,47 @@
+@use "@/assets/scss/abstract" as *;
+@use "@/assets/scss/layout/page-common" as *;
+
+.menu-section {
+  @include layout-page-frame;
+}
+
+.menu-section__subnav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  padding-block: 1rem 0.75rem;
+  margin-bottom: 1rem;
+
+  &--tabs {
+    display: block;
+    padding-block: 0.5rem 0.75rem;
+  }
+}
+
+.menu-section__link {
+  text-decoration: none;
+  color: inherit;
+  font-size: 0.95rem;
+  opacity: 0.75;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &.router-link-active {
+    opacity: 1;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+  }
+}
+
+.menu-section__body {
+  padding-bottom: 2rem;
+}
+
+.sec-title{
+  @include flex(column, center, null, 4px);
+  &__sub{}
+  &__title{}
+}

@@ -15,6 +15,13 @@ const index = ref(0)
 const maxIndex = ref(0)
 const stepPx = ref(0)
 
+const isDragging = ref(false)
+const dragOffsetPx = ref(0)
+const dragStartX = ref(0)
+const dragStartY = ref(0)
+const dragPointerId = ref(null)
+const didDrag = ref(false)
+
 let ro = null
 
 function clampIndex(v) {
@@ -52,8 +59,88 @@ function next() {
   index.value = clampIndex(index.value + 1)
 }
 
-const translateX = computed(() => `translateX(${-index.value * stepPx.value}px)`)
+const translateX = computed(() => `translateX(${-index.value * stepPx.value + dragOffsetPx.value}px)`)
 const pageCount = computed(() => maxIndex.value + 1)
+
+defineExpose({
+  prev,
+  next,
+  index,
+  maxIndex,
+})
+
+function onPointerDown(e) {
+  if (e.button != null && e.button !== 0) return
+  if (!viewportEl.value) return
+  if (stepPx.value <= 0) return
+
+  isDragging.value = true
+  didDrag.value = false
+  dragOffsetPx.value = 0
+  dragStartX.value = e.clientX
+  dragStartY.value = e.clientY
+  dragPointerId.value = e.pointerId
+
+  viewportEl.value.setPointerCapture?.(e.pointerId)
+}
+
+function onPointerMove(e) {
+  if (!isDragging.value) return
+  if (dragPointerId.value != null && e.pointerId !== dragPointerId.value) return
+
+  const dx = e.clientX - dragStartX.value
+  const dy = e.clientY - dragStartY.value
+
+  if (!didDrag.value) {
+    if (Math.abs(dx) < 6 && Math.abs(dy) < 6) return
+    if (Math.abs(dy) > Math.abs(dx)) {
+      onPointerUp(e)
+      return
+    }
+    didDrag.value = true
+  }
+
+  const maxLeft = 0
+  const maxRight = -maxIndex.value * stepPx.value
+  const current = -index.value * stepPx.value + dx
+  const rubber = 0.35
+  let offset = dx
+
+  if (current > maxLeft) offset = dx * rubber
+  if (current < maxRight) offset = dx * rubber
+
+  dragOffsetPx.value = offset
+}
+
+function finishDrag(dx) {
+  if (stepPx.value <= 0) return
+  const rawSteps = -dx / stepPx.value
+  const moved = Math.round(rawSteps)
+  const minMovePx = Math.max(24, stepPx.value * 0.18)
+
+  if (Math.abs(dx) < minMovePx) {
+    dragOffsetPx.value = 0
+    return
+  }
+
+  index.value = clampIndex(index.value + moved)
+  dragOffsetPx.value = 0
+}
+
+function onPointerUp(e) {
+  if (!isDragging.value) return
+  if (dragPointerId.value != null && e.pointerId !== dragPointerId.value) return
+
+  const dx = e.clientX - dragStartX.value
+  const wasDrag = didDrag.value
+
+  isDragging.value = false
+  didDrag.value = false
+  dragPointerId.value = null
+
+  if (wasDrag) finishDrag(dx)
+  else dragOffsetPx.value = 0
+}
 
 onMounted(() => {
   sync()
@@ -72,8 +159,20 @@ onBeforeUnmount(() => {
 
 <template>
   <div class="base-slider" :aria-label="ariaLabel">
-    <div class="base-slider__viewport" ref="viewportEl">
-      <div class="base-slider__track" ref="trackEl" :style="{ transform: translateX }">
+    <div
+      class="base-slider__viewport"
+      ref="viewportEl"
+      @pointerdown="onPointerDown"
+      @pointermove="onPointerMove"
+      @pointerup="onPointerUp"
+      @pointercancel="onPointerUp"
+    >
+      <div
+        class="base-slider__track"
+        ref="trackEl"
+        :class="{ 'is-dragging': isDragging }"
+        :style="{ transform: translateX }"
+      >
         <slot />
       </div>
     </div>
@@ -122,8 +221,12 @@ onBeforeUnmount(() => {
 }
 
 .base-slider__viewport {
-  overflow-x: hidden;
+  /* 수평 슬라이드 + reveal용 translateY 등에서 세로로 비치는 overflow 방지 */
+  overflow: hidden;
   width: 100%;
+  touch-action: pan-y;
+  cursor: grab;
+  user-select: none;
 }
 
 .base-slider__track {
@@ -131,6 +234,14 @@ onBeforeUnmount(() => {
   align-items: stretch;
   will-change: transform;
   transition: transform 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.base-slider__track.is-dragging {
+  transition: none;
+}
+
+.base-slider__viewport:active {
+  cursor: grabbing;
 }
 
 .base-slider__controls {

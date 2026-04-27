@@ -1,0 +1,376 @@
+@use '@/assets/scss/abstract' as *;
+
+.sub-company-about {
+  @include flex(column, null, null, 0);
+}
+
+.sub-company-about > section {
+  @include clamp(padding-block, 60px, 100px);
+}
+
+/* 상단: 좌(타이틀) + 우(표) */
+.sub-company-about__hero {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.4fr);
+  align-items: start;
+  @include clamp(gap, 40px, 60px);
+}
+
+.sub-company-about__intro {
+  position: relative;
+  padding-top: 2px;
+}
+
+.sub-company-about__info {
+  min-width: 0;
+}
+
+.sub-company-about__table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+/* CI: About(표) 아래 영역 */
+.sub-company-about__ci {
+  @include clamp(margin-top, 40px, 60px);
+}
+
+.sub-company-about__table th,
+.sub-company-about__table td {
+  @include clamp(padding-block, 14px, 20px);
+  padding-inline: 0;
+  border-bottom: 1px solid $border-main;
+  text-align: left;
+  vertical-align: top;
+}
+
+.sub-company-about__table th {
+  width: 28%;
+  @include clamp(font-size, 16px, 16px);
+  font-weight: 500;
+  color: $txt-sub;
+  vertical-align: middle;
+}
+
+.sub-company-about__table td {
+  @include clamp(font-size, 16px, 16px);
+  font-weight: 600;
+  line-height: 1.6;
+  color: $txt-main;
+  word-break: keep-all;
+}
+
+/* ORG: column (타이틀 위 + 이미지 아래) */
+.sub-company-about__org {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  @include clamp(gap, 40px, 60px);
+}
+
+.sub-company-about__org-media {
+  min-width: 0;
+}
+
+.sub-company-about__org-img {
+  width: 100%;
+  max-width: 1058px;
+  height: auto;
+  display: block;
+  margin-inline: auto;
+}
+
+/* Partners */
+.sub-company-about__partners {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  @include clamp(gap, 40px, 60px);
+}
+
+.sub-company-about__partners-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.sub-company-about__partners-item {
+  min-width: 0;
+}
+
+.sub-company-about__partners-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @include clamp(padding, 14px, 18px);
+  border-radius: 8px;
+  background: $bg-main;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.02);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  min-height: 56px;
+}
+
+.sub-company-about__partners-logo {
+  max-width: 100%;
+  height: 20px;
+  display: block;
+  object-fit: contain;
+  opacity: 0.85;
+}
+
+/* History */
+.sub-company-about__history {
+  @include flex(column, null, null, null);
+  @include clamp(gap, 40px, 60px);
+}
+
+.sub-company-about__history-head {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  @include clamp(gap, 12px, 18px);
+}
+
+.sub-company-about__history-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  align-self: flex-end;
+}
+
+.sub-company-about__history-nav {
+  @include clamp(width, 32px, 62px);
+  @include clamp(height, 32px, 62px);
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.16);
+  background: $gray-000;
+  color: $txt-main;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    opacity 0.2s ease;
+
+  &:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+}
+
+.sub-company-about__history-nav-ico {
+  width: 11px;
+  height: 18px;
+  display: block;
+}
+
+.sub-company-about__history-nav--next {
+  background: $gray-600;
+  border-color: $gray-600;
+}
+
+.sub-company-about__history-nav--next:hover:not(:disabled) {
+  background: $gray-200;
+  border-color: $gray-200;
+}
+
+.sub-company-about__history-nav--prev:hover:not(:disabled) {
+  background: $gray-000;
+  border-color: $gray-600;
+}
+
+.sub-company-about__history-eyebrow {
+  display: inline-block;
+  @include clamp(font-size, 14px, 16px);
+  font-weight: 600;
+  color: $point-main;
+  margin-bottom: 8px;
+}
+
+.sub-company-about__history-heading {
+  margin: 0;
+  font-weight: 700;
+  color: $txt-main;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  @include clamp(font-size, 22px, 28px);
+}
+
+.sub-company-about__history-body {
+  position: relative;
+  width: 100%;
+  padding-top: 22px;
+  border-top: 3px solid $point-main;
+}
+
+.sub-company-about__history-slider {
+  width: 100%;
+  overflow: hidden;
+}
+
+.sub-company-about__history-slider :deep(.base-slider__track) {
+  @include clamp(gap, 40px, 120px);
+}
+
+.sub-company-about__history-slider :deep(.base-slider__dots) {
+  display: none;
+}
+
+.sub-company-about__history-slider :deep(.base-slider__controls) {
+  display: none;
+}
+
+.sub-company-about__history-year {
+  flex: 0 0 auto;
+  width: min(clamp(260px, 28vw, 360px), 100%);
+}
+
+.sub-company-about__history-year-title {
+  margin: 0;
+  @include clamp(font-size, 20px, 24px);
+  font-weight: 700;
+  color: $point-main;
+  text-align: left;
+  padding-bottom: 18px;
+}
+
+.sub-company-about__history-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  @include flex(column, null, null, 12px);
+}
+
+.sub-company-about__history-item {
+  @include flex(column, null, null, 4px);
+  text-align: left;
+}
+
+.sub-company-about__history-text {
+  margin: 0;
+  color: $txt-sub;
+  line-height: 1.55;
+  @include clamp(font-size, 16px, 20px);
+  white-space: pre-line;
+}
+
+.sub-company-about__ci-heading {
+  margin: 0;
+  @include clamp(font-size, 16px, 18px);
+  @include clamp(margin-bottom, 20px, 40px);
+  font-weight: 600;
+  color: $txt-main;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+  text-align: left;
+}
+
+.sub-company-about__ci-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  @include clamp(gap, 10px, 14px);
+}
+
+.sub-company-about__ci-item {
+  min-width: 0;
+}
+
+.sub-company-about__ci-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  min-height: 120px;
+  @include clamp(padding, 14px, 18px);
+  border-radius: 8px;
+  background: $bg-main;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.02);
+  text-decoration: none;
+  color: inherit;
+  transition:
+    background 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.sub-company-about__ci-label {
+  @include clamp(font-size, 14px, 15px);
+  line-height: 1.35;
+  color: $txt-main;
+  font-weight: 600;
+}
+
+.sub-company-about__ci-icon {
+  align-self: flex-end;
+  display: flex;
+  color: $point-main;
+  margin-top: 10px;
+
+  img {
+    width: 24px;
+    height: 24px;
+    display: block;
+  }
+}
+
+.sub-company-about__ci-card:hover {
+  background: $bg-main;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
+}
+
+.sub-company-about__ci-card:focus-visible {
+  outline: 2px solid $point-main;
+  outline-offset: 2px;
+}
+
+@include bp(tab) {
+  .sub-company-about__hero {
+    grid-template-columns: 1fr;
+  }
+
+  .sub-company-about__table th {
+    width: 32%;
+  }
+
+  .sub-company-about__ci-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .sub-company-about__partners-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .sub-company-about__history-year {
+    width: 100%;
+    padding-right: 0;
+  }
+}
+
+@include bp(mo) {
+  .sub-company-about__table th {
+    width: 36%;
+  }
+
+  .sub-company-about__ci-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sub-company-about__partners-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sub-company-about__history-year {
+    width: 100%;
+    padding-right: 0;
+  }
+}
+

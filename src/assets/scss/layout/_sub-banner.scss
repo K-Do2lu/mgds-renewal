@@ -1,0 +1,52 @@
+@use "@/assets/scss/abstract" as *;
+
+.sub-banner {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  @include clamp(min-height, 200px, 320px);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.sub-banner__inner {
+  min-height: inherit;
+  display: grid;
+  place-items: center;
+  padding: 28px 16px;
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.sub-banner__title {
+  margin: 0;
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  @include clamp(font-size, 32px, 56px);
+  line-height: 1.1;
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.sub-banner__title.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 820ms cubic-bezier(0.22, 1, 0.36, 1) 80ms,
+    transform 820ms cubic-bezier(0.22, 1, 0.36, 1) 80ms;
+  will-change: opacity, transform;
+}
+
+.sub-banner__title.reveal.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sub-banner__title.reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}

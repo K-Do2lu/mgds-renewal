@@ -10,8 +10,7 @@
   flex-wrap: wrap;
   gap: 0.5rem 1.25rem;
   padding-block: 1rem 0.75rem;
-  margin-bottom: 1rem;
-  border-bottom: 1px solid $border-main;
+  @include clamp(margin-bottom, 60px, 100px);
 
   &--tabs {
     display: block;
