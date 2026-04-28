@@ -20,10 +20,7 @@ export const subNavBySection = {
     { to: '/notice/archive', label: '자료실', routeName: 'NoticeArchive' },
     { to: '/notice/tender', label: '입찰공고', routeName: 'NoticeTender' },
   ],
-  recruit: [
-    { to: '/recruit/careers', label: '채용공고', routeName: 'RecruitCareers' },
-    { to: '/recruit/talent', label: '인재상', routeName: 'RecruitTalent' },
-  ],
+  recruit: [],
 }
 
 /** PC 헤더 호버 메가 메뉴 (제목·설명·썸네일) */
@@ -81,12 +78,12 @@ export const megaMenuBySection = {
     {
       externalUrl: 'https://career.mgdatasystem.co.kr/',
       title: '채용공고',
-      lines: ['MG데이터시스템의 주요 소식과', '공식 안내를 확인하세요.'],
+      lines: ['MG데이터시스템 채용 사이트에서', '채용공고를 확인하세요.'],
       thumb: new URL('../assets/img/header_item_07.svg', import.meta.url).href,
     },
     {
       to: '/recruit/talent',
-      title: ['인재상'],
+      title: '인재상',
       lines: ['MG데이터시스템이 추구하는', '인재상을 소개합니다.'],
       thumb: new URL('../assets/img/header_item_08.svg', import.meta.url).href,
     },

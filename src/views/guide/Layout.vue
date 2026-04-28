@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import Tab from '@/components/Tab.vue'
 import Table from '@/components/Table.vue'
+import PagingIndicator from '@/components/PagingIndicator.vue'
 import CodeBlockTabs from '@/views/guide/CodeBlockTabs.vue'
 
 const tableData = ref([
@@ -51,6 +52,8 @@ const tablePanels = [
   { label: 'Template', code: tableTemplateCode, language: 'html' },
   { label: 'Script', code: tableScriptCode, language: 'javascript' },
 ]
+
+const guidePage = ref(1)
 </script>
 
 <template>
@@ -69,6 +72,7 @@ const tablePanels = [
             <h2>Table</h2>
             <div class="itm">
                 <Table :items="tableData" />
+                <PagingIndicator v-model:page="guidePage" :total-pages="5" />
             </div>
 
             <CodeBlockTabs :panels="tablePanels" />

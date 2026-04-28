@@ -51,7 +51,7 @@ const routes = [
   {
     path: '/recruit',
     component: RecruitSection,
-    redirect: '/recruit/careers',
+    redirect: '/recruit/talent',
     children: [
       { path: 'careers', name: 'RecruitCareers', component: SubRecruitCareers },
       { path: 'talent', name: 'RecruitTalent', component: SubRecruitTalent },

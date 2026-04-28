@@ -8,7 +8,13 @@ const props = defineProps({
     default: 'search',
     validator: (v) => ['search', 'familySite'].includes(v),
   },
+  modelValue: {
+    type: String,
+    default: undefined,
+  },
 })
+
+const emit = defineEmits(['update:modelValue'])
 
 const searchValue = ref('')
 const familySiteValue = ref('')
@@ -36,6 +42,16 @@ const placeholder = computed(() =>
   props.mode === 'familySite' ? familySiteOptions[0]?.label : searchOptions[0]?.label,
 )
 
+const searchModel = computed({
+  get() {
+    return props.modelValue ?? searchValue.value
+  },
+  set(v) {
+    if (props.modelValue === undefined) searchValue.value = v
+    emit('update:modelValue', v)
+  },
+})
+
 function openFamilySite(selectedValue) {
   const item = familySiteOptions.find((o) => o.value === selectedValue)
   if (!item?.url) return
@@ -46,7 +62,7 @@ function openFamilySite(selectedValue) {
 <template>
   <el-select
     v-if="mode === 'search'"
-    v-model="searchValue"
+    v-model="searchModel"
     :placeholder="placeholder"
   >
     <el-option

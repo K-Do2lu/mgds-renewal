@@ -13,3 +13,59 @@
 .sub-notice-page__intro {
   @include clamp(margin-bottom, 32px, 48px);
 }
+
+.sub-notice-page__toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  @include clamp(margin-bottom, 16px, 22px);
+}
+
+.sub-notice-page__count {
+  margin: 0;
+  color: $txt-sub;
+  font-weight: 500;
+  @include clamp(font-size, 14px, 16px);
+  white-space: nowrap;
+}
+
+.sub-notice-page__search {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: max-content;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ElementPlus input/select 크기 살짝 정리 */
+.sub-notice-page__search :deep(.el-select) {
+  width: 120px;
+}
+
+.sub-notice-page__search :deep(.el-input) {
+  width: clamp(220px, 32vw, 360px);
+}
+
+@include bp(mo) {
+  .sub-notice-page__toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+  }
+
+  .sub-notice-page__search {
+    grid-auto-flow: row;
+    grid-auto-columns: 1fr;
+  }
+
+  .sub-notice-page__search :deep(.el-select),
+  .sub-notice-page__search :deep(.el-input) {
+    width: 100%;
+  }
+}
+
+/* NOTICE 목록 테이블: 그림자 제거 */
+.sub-notice-page :deep(table) {
+  box-shadow: none;
+}
