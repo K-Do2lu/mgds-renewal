@@ -57,6 +57,10 @@ function onTabClick(pane) {
     height: auto !important;
   }
 
+  :deep(.el-tabs__header) {
+    margin: 0;
+  }
+
   :deep(.demo-tabs > .el-tabs__content) {
     display: none;
     padding: 0;

@@ -13,10 +13,8 @@ export const subNavBySection = {
     { to: '/company/ceo', label: 'CEO', routeName: 'CompanyCeo' },
     { to: '/company/loc', label: '오시는 길', routeName: 'CompanyLocation' },
   ],
-  business: [
-    { to: '/business/overview', label: '사업개요', routeName: 'BusinessOverview' },
-    { to: '/business/partners', label: '파트너', routeName: 'BusinessPartners' },
-  ],
+  /** BUSINESS: 서브 탭 UI 없음 — 라우트는 `/business/overview`, `/business/partners` 유지 */
+  business: [],
   notice: [
     { to: '/notice/board', label: '공지사항', routeName: 'NoticeBoard' },
     { to: '/notice/archive', label: '자료실', routeName: 'NoticeArchive' },

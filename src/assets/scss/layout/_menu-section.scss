@@ -1,8 +1,24 @@
 @use "@/assets/scss/abstract" as *;
 @use "@/assets/scss/layout/page-common" as *;
 
+/* header와 동일 높이 clamp (header.scss와 동일 수치) */
+$sub-tabs-header-clamp: clamp(60px, 3.846154vw + 46.1538461538px, 100px);
+
 .menu-section {
   @include layout-page-frame;
+}
+
+/* 사업개요 히어로: 헤더 바로 아래, 프레임 여백·max-width 없이 전폭 */
+.menu-section.menu-section--business-overview-hero {
+  max-width: none;
+  width: 100%;
+  margin-inline: 0;
+  padding-inline: 0;
+  padding-block: 0;
+}
+
+.menu-section.menu-section--business-overview-hero .menu-section__body {
+  padding-bottom: 0;
 }
 
 .menu-section__subnav {
@@ -14,7 +30,16 @@
 
   &--tabs {
     display: block;
-    padding-block: 0.5rem 0.75rem;
+    /* 탭 영역 자체를 넓혀(배경 포함) 본문이 비치지 않게 */
+    padding-top: 10px;
+    padding-bottom: 2px;
+    margin-bottom: 0;
+    /* 서브 탭: 스크롤 시 헤더 바로 아래 고정 */
+    position: sticky;
+    top: $sub-tabs-header-clamp;
+    z-index: 900;
+    background: $gray-000;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.04);
   }
 }
 

@@ -1,27 +1,14 @@
 <script setup>
 import SubNavTabs from '@/components/SubNavTabs.vue'
+import SubSectionBanner from '@/components/SubSectionBanner.vue'
 import { subNavBySection } from '@/config/sectionNav'
-import subBannerImg from '@/assets/img/sub_banner.svg'
-import { computed } from 'vue'
-import { useRoute } from 'vue-router'
-import { primaryNav } from '@/config/sectionNav'
 
 const subNav = subNavBySection.company
-
-const route = useRoute()
-const bannerTitle = computed(() => {
-  const sectionKey = (route.path.split('/')[1] || '').toLowerCase()
-  return primaryNav.find((n) => n.sectionKey === sectionKey)?.label ?? 'COMPANY'
-})
 </script>
 
 <template>
   <div>
-    <section class="sub-banner" :style="{ backgroundImage: `url(${subBannerImg})` }" aria-label="서브 배너">
-      <div class="sub-banner__inner">
-        <p class="sub-banner__title" v-reveal>{{ bannerTitle }}</p>
-      </div>
-    </section>
+    <SubSectionBanner />
 
     <div class="menu-section">
       <SubNavTabs

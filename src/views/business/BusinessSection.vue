@@ -1,18 +1,16 @@
 <script setup>
-import SubNavTabs from '@/components/SubNavTabs.vue'
-import { subNavBySection } from '@/config/sectionNav'
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
 
-const subNav = subNavBySection.business
+const route = useRoute()
+const isBusinessOverviewHero = computed(() => route.name === 'BusinessOverview')
 </script>
 
 <template>
-  <div class="menu-section">
-    <SubNavTabs
-      v-if="subNav.length"
-      class="menu-section__subnav menu-section__subnav--tabs"
-      :items="subNav"
-      aria-label="BUSINESS 하위 메뉴"
-    />
+  <div
+    class="menu-section"
+    :class="{ 'menu-section--business-overview-hero': isBusinessOverviewHero }"
+  >
     <main class="menu-section__body">
       <RouterView />
     </main>

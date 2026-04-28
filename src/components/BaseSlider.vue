@@ -1,11 +1,15 @@
 <script setup>
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 
 const props = defineProps({
   itemCount: { type: Number, required: true },
   ariaLabel: { type: String, default: '슬라이더' },
   // 트랙 내부 첫 아이템을 찾기 위한 셀렉터 (width 측정용)
   itemSelector: { type: String, default: '[data-slider-item]' },
+  /** 일정 간격으로 다음 페이지로 이동 (마지막에서 처음으로 루프) */
+  autoplay: { type: Boolean, default: true },
+  /** 자동 재생 간격 (ms) */
+  autoplayInterval: { type: Number, default: 5000 },
 })
 
 const viewportEl = ref(null)
@@ -23,6 +27,48 @@ const dragPointerId = ref(null)
 const didDrag = ref(false)
 
 let ro = null
+let autoplayTimer = null
+
+function prefersReducedMotion() {
+  return (
+    typeof window !== 'undefined' &&
+    window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches === true
+  )
+}
+
+function stopAutoplay() {
+  if (autoplayTimer != null) {
+    clearInterval(autoplayTimer)
+    autoplayTimer = null
+  }
+}
+
+function startAutoplay() {
+  stopAutoplay()
+  if (!props.autoplay) return
+  if (prefersReducedMotion()) return
+  if (maxIndex.value <= 0) return
+
+  autoplayTimer = window.setInterval(() => {
+    if (typeof document !== 'undefined' && document.hidden) return
+    if (isDragging.value) return
+    if (index.value >= maxIndex.value) {
+      index.value = 0
+    } else {
+      index.value = clampIndex(index.value + 1)
+    }
+  }, props.autoplayInterval)
+}
+
+function restartAutoplay() {
+  startAutoplay()
+}
+
+function onVisibilityChange() {
+  if (typeof document === 'undefined') return
+  if (document.hidden) stopAutoplay()
+  else startAutoplay()
+}
 
 function clampIndex(v) {
   if (v < 0) return 0
@@ -44,27 +90,48 @@ function sync() {
   const gap = Number.parseFloat(styles.gap || styles.columnGap || '0') || 0
 
   const step = itemWidth + gap
+  if (!Number.isFinite(step) || step <= 0) {
+    stepPx.value = 0
+    maxIndex.value = 0
+    index.value = clampIndex(index.value)
+    return
+  }
+
   stepPx.value = step
 
-  const visibleCount = Math.max(1, Math.floor((viewportWidth + gap) / step))
+  const rawVisible = (viewportWidth + gap) / step
+  const visibleCount = Number.isFinite(rawVisible)
+    ? Math.max(1, Math.floor(rawVisible))
+    : 1
   maxIndex.value = Math.max(0, props.itemCount - visibleCount)
   index.value = clampIndex(index.value)
 }
 
 function prev() {
   index.value = clampIndex(index.value - 1)
+  restartAutoplay()
 }
 
 function next() {
   index.value = clampIndex(index.value + 1)
+  restartAutoplay()
+}
+
+function goToPage(i) {
+  index.value = clampIndex(i)
+  restartAutoplay()
 }
 
 const translateX = computed(() => `translateX(${-index.value * stepPx.value + dragOffsetPx.value}px)`)
-const pageCount = computed(() => maxIndex.value + 1)
+const pageCount = computed(() => {
+  const m = Number.isFinite(maxIndex.value) ? maxIndex.value : 0
+  return Math.max(1, m + 1)
+})
 
 defineExpose({
   prev,
   next,
+  goToPage,
   index,
   maxIndex,
 })
@@ -140,11 +207,21 @@ function onPointerUp(e) {
 
   if (wasDrag) finishDrag(dx)
   else dragOffsetPx.value = 0
+
+  restartAutoplay()
 }
+
+watch(
+  () => [maxIndex.value, props.autoplay, props.autoplayInterval],
+  () => {
+    startAutoplay()
+  }
+)
 
 onMounted(() => {
   sync()
   window.addEventListener('resize', sync)
+  document.addEventListener('visibilitychange', onVisibilityChange)
   if (viewportEl.value && typeof ResizeObserver !== 'undefined') {
     ro = new ResizeObserver(sync)
     ro.observe(viewportEl.value)
@@ -152,6 +229,8 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
+  stopAutoplay()
+  document.removeEventListener('visibilitychange', onVisibilityChange)
   window.removeEventListener('resize', sync)
   ro?.disconnect()
 })
@@ -196,7 +275,7 @@ onBeforeUnmount(() => {
           :class="{ 'is-active': p - 1 === index }"
           :aria-label="`페이지 ${p}`"
           :aria-current="p - 1 === index ? 'true' : undefined"
-          @click="index = p - 1"
+          @click="goToPage(p - 1)"
         />
       </div>
       <button

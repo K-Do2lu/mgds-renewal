@@ -1,0 +1,121 @@
+@use '@/assets/scss/abstract' as *;
+
+.sub-company-loc {
+  @include flex(column, null, null, 0);
+}
+
+.sub-company-loc__block {
+  @include clamp(padding-block, 60px, 100px);
+}
+
+.sub-company-loc__intro {
+  @include clamp(margin-bottom, 32px, 48px);
+}
+
+.sub-company-loc__table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.sub-company-loc__table th,
+.sub-company-loc__table td {
+  @include clamp(padding-block, 14px, 20px);
+  padding-inline: 0;
+  border-bottom: 1px solid $border-main;
+  text-align: left;
+  vertical-align: top;
+  font-size: 18px;
+}
+
+.sub-company-loc__table th {
+  width: 28%;
+  padding-right: 20px;
+  font-weight: 500;
+  color: $txt-sub;
+  vertical-align: top;
+}
+
+.sub-company-loc__table td {
+  font-weight: 600;
+  line-height: 1.6;
+  color: $txt-main;
+  word-break: keep-all;
+}
+
+.sub-company-loc__table td :deep(.bedge-traffic) {
+  min-width: 0;
+}
+
+/* 모바일: 라벨(th) 아래에 값(td)이 내려가도록 세로 스택 */
+@include bp(mo) {
+  .sub-company-loc__table,
+  .sub-company-loc__table tbody {
+    display: block;
+    width: 100%;
+  }
+
+  .sub-company-loc__table tr {
+    display: block;
+    width: 100%;
+    border-bottom: 1px solid $border-main;
+    @include clamp(padding-block, 14px, 20px);
+  }
+
+  .sub-company-loc__table th,
+  .sub-company-loc__table td {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border-bottom: none;
+  }
+
+  .sub-company-loc__table th {
+    padding-bottom: 20px;
+    padding-right: 0;
+  }
+}
+
+.sub-company-loc__map {
+  position: relative;
+  width: 100%;
+  margin-top: 2rem;
+  aspect-ratio: 16 / 9;
+  min-height: 280px;
+  max-height: 524px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: $gray-100;
+}
+
+.sub-company-loc__map-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.sub-company-loc__map-skeleton {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, $gray-100 0%, $gray-200 50%, $gray-100 100%);
+  background-size: 200% 100%;
+  animation: sub-company-loc-map-shimmer 1.2s ease-in-out infinite;
+}
+
+@keyframes sub-company-loc-map-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sub-company-loc__map-skeleton {
+    animation: none;
+    background: $gray-200;
+  }
+}

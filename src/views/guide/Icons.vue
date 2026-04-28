@@ -20,20 +20,25 @@ const bedgeTrafficPanels = [
   {
     label: 'Template',
     language: 'html',
-    code: `<BedgeTraffic />`,
+    code: `<BedgeTraffic />
+<BedgeTraffic :items="busOnlyItems" />`,
   },
   {
     label: 'Script',
     language: 'javascript',
-    code: `import { ref } from 'vue';
+    code: `// items 생략 시 컴포넌트 내 기본 5종(일반·좌석·직행·공항·5호선) 표시
+// 오시는 길 등: :items 로 일부만 넘기면 해당 줄만 렌더
 
-const trafficBedge = ref([
-  {title: '일반버스', number: '601, 605, 654, 661, N26(심야)', bg: '#EEFFE8', border: '#53B332', text: '#53B332' },
-  {title: '좌석버스', number: '60, 60-3, 88', bg: '#F8EFFF', border: '#7030A0', text: '#7030A0' },
-  {title: '직행', number: '8000', bg: '#FFF1F0', border: '#E61911', text: '#E61911' },
-  {title: '공항', number: '6003, 6008', bg: '#F0F9FF', border: '#0068B7', text: '#0068B7' },
-  {title: '5호선선', number: '마곡역 7번 출구', bg: '#F8EFFF', border: '#7030A0', text: '#7030A0' },
-])`,
+const busOnlyItems = [
+  { title: '일반버스', number: '601, 605, 654, 661, N26(심야)', bg: '#EEFFE8', border: '#53B332', text: '#53B332' },
+  { title: '좌석버스', number: '60, 60-3, 88', bg: '#F8EFFF', border: '#7030A0', text: '#7030A0' },
+  { title: '직행', number: '8000', bg: '#FFF1F0', border: '#E61911', text: '#E61911' },
+  { title: '공항', number: '6003, 6008', bg: '#F0F9FF', border: '#0068B7', text: '#0068B7' },
+]
+
+const subwayOnlyItems = [
+  { title: '5호선', number: '마곡역 7번 출구', bg: '#F8EFFF', border: '#7030A0', text: '#7030A0' },
+]`,
   },
 ]
 </script>

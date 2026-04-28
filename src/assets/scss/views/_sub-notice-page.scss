@@ -1,0 +1,15 @@
+@use '@/assets/scss/abstract' as *;
+
+/* COMPANY 서브(SubCompanyAbout, SubCompanyLoc 등)와 동일: menu-section 프레임만 받고 블록에 세로 리듬 부여 */
+
+.sub-notice-page {
+  @include flex(column, null, null, 0);
+}
+
+.sub-notice-page__block {
+  @include clamp(padding-block, 60px, 100px);
+}
+
+.sub-notice-page__intro {
+  @include clamp(margin-bottom, 32px, 48px);
+}
