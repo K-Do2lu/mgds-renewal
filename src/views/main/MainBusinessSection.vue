@@ -1,10 +1,11 @@
 <script setup>
-import { computed, onBeforeUnmount, ref } from 'vue'
+import { onBeforeUnmount, ref } from 'vue'
 import item06 from '@/assets/img/business_item_06.svg'
 import { businessSectionCards as cards } from '@/config/businessSectionCards.js'
 
-const accentAKey = ref(cards[2]?.key ?? 'type03')
-const accentBKey = ref(cards[4]?.key ?? 'type05')
+/** 랜덤으로 선택되는 2카드에 해당 카드 hover 배경 이미지를 기본 상태에서도 노출 */
+const spotlightAKey = ref(cards[2]?.key ?? 'type03')
+const spotlightBKey = ref(cards[4]?.key ?? 'type05')
 
 function pickTwoDistinctKeys() {
   const keys = cards.map((c) => c.key)
@@ -14,26 +15,37 @@ function pickTwoDistinctKeys() {
   return [a, b]
 }
 
-function shuffleAccents() {
+function shuffleSpotlights() {
   const [a, b] = pickTwoDistinctKeys()
-  accentAKey.value = a
-  accentBKey.value = b
+  spotlightAKey.value = a
+  spotlightBKey.value = b
 }
 
-shuffleAccents()
-const accentTimer = window.setInterval(shuffleAccents, 2000)
+shuffleSpotlights()
+const spotlightTimer = window.setInterval(shuffleSpotlights, 2000)
 
 onBeforeUnmount(() => {
-  window.clearInterval(accentTimer)
+  window.clearInterval(spotlightTimer)
 })
 
-const accentClassFor = computed(() => {
-  return (key) => {
-    if (key === accentAKey.value) return 'is-accent-a'
-    if (key === accentBKey.value) return 'is-accent-b'
-    return ''
+function isSpotlightKey(key) {
+  return key === spotlightAKey.value || key === spotlightBKey.value
+}
+
+/** 메인 카드 배경 스타일(랜덤 2매: 해당 카드 hoverBg 노출 / 나머지: 회색표면) */
+function cardOuterStyle(card) {
+  const style = {
+    '--hover-bg': `url(${card.hoverBg})`,
   }
-})
+  if (isSpotlightKey(card.key)) {
+    Object.assign(style, {
+      backgroundImage: `linear-gradient(180deg, rgba(248, 250, 252, 0.88) 0%, rgba(248, 250, 252, 0.72) 45%, rgba(255, 255, 255, 0.52) 100%), url(${card.hoverBg})`,
+      backgroundSize: 'cover, cover',
+      backgroundPosition: 'center, center',
+    })
+  }
+  return style
+}
 </script>
 
 <template>
@@ -58,8 +70,11 @@ const accentClassFor = computed(() => {
           v-for="card in cards"
           :key="card.key"
           class="main-business__card"
-          :class="[`main-business__card--${card.key}`, accentClassFor(card.key)]"
-          :style="{ '--hover-bg': `url(${card.hoverBg})` }"
+          :class="[
+            `main-business__card--${card.key}`,
+            { 'is-spotlight': isSpotlightKey(card.key) },
+          ]"
+          :style="cardOuterStyle(card)"
         >
           <div class="main-business__card-top">
             <span class="main-business__card-ico" aria-hidden="true">
@@ -179,13 +194,12 @@ const accentClassFor = computed(() => {
   }
 }
 
-// default card surface colors (random 2 cards)
-.main-business__card.is-accent-a {
-  background: $business-card-bg-03;
-}
-
-.main-business__card.is-accent-b {
-  background: $business-card-bg-05;
+// 랜덤 선택 2카드: 인라인 backgroundImage 로 해당 카드 이미지(대비 확보 그라데이션) 표시
+.main-business__card.is-spotlight {
+  transition:
+    transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.22s ease,
+    background-image 0.35s ease;
 }
 
 .main-business__card-top,

@@ -2,7 +2,7 @@
 import { computed } from 'vue'
 import SubSectionBanner from '@/components/SubSectionBanner.vue'
 import talentImg from '@/assets/img/talent.png'
-import linkSvg from '@/assets/img/link.svg'
+import RecruitCtaSection from '@/components/RecruitCtaSection.vue'
 
 const talentItems = computed(() => [
   {
@@ -55,26 +55,12 @@ const talentItems = computed(() => [
       </div>
     </section>
 
-    <section class="recruit-cta" aria-label="채용 공고 안내">
-      <div class="recruit-cta__inner">
-        <p class="recruit-cta__text">
-          당신의 새로운 도전이 곧,<br />
-          MGDS의 새로운 이야기가 됩니다.
-        </p>
-
-        <a
-          class="recruit-cta__btn"
-          href="https://career.mgdatasystem.co.kr/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <span class="recruit-cta__btn-ico" aria-hidden="true">
-            <img :src="linkSvg" alt="" />
-          </span>
-          채용 공고 보러가기
-        </a>
-      </div>
-    </section>
+    <RecruitCtaSection career-href="https://career.mgdatasystem.co.kr/">
+      <p class="recruit-cta__text">
+        당신의 새로운 도전이 곧,<br />
+        MGDS의 새로운 이야기가 됩니다.
+      </p>
+    </RecruitCtaSection>
   </div>
 </template>
 

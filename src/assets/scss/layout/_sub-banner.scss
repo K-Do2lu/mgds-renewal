@@ -1,9 +1,7 @@
 @use "@/assets/scss/abstract" as *;
 
 .sub-banner {
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
+  @include layout-full-bleed;
   @include clamp(min-height, 200px, 320px);
   background-size: cover;
   background-position: center;

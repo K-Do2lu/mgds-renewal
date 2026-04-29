@@ -1,3 +1,10 @@
+/** 뷰포트 폭까지 꽉 채우는 패턴(서브 배너·CTA 바 등). overflow-x 대응 시 부모에 overflow 처리 권장 */
+@mixin layout-full-bleed {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}
+
 @mixin glass-bg {
     /* 1. 채우기: 흰색 20% (FFFFFF, 20%) */
     background: rgba(255, 255, 255, 0.2);
