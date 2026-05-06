@@ -29,7 +29,7 @@ onMounted(async () => {
   } catch {
     mapEmbedSrc.value = buildGoogleMapsEmbedUrl(
       OFFICE_MAP_FALLBACK.lat,
-      OFFICE_MAP_FALLBACK.lon
+      OFFICE_MAP_FALLBACK.lon,
     )
   } finally {
     mapLoading.value = false
@@ -40,13 +40,6 @@ onMounted(async () => {
 <template>
   <div class="sub-company-loc">
     <section class="sub-company-loc__block" aria-labelledby="sub-company-loc-title">
-      <div class="sub-company-loc__intro">
-        <div class="sec-title">
-          <span class="sec-title__sub">Directions</span>
-          <h2 id="sub-company-loc-title" class="sec-title__title">오시는 길</h2>
-        </div>
-      </div>
-
       <table class="sub-company-loc__table">
         <tbody>
           <tr>

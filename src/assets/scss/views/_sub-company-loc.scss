@@ -6,6 +6,11 @@
 
 .sub-company-loc__block {
   @include clamp(padding-block, 60px, 100px);
+  padding-inline: clamp(16px, 2.5vw, 28px);
+  border-radius: 0;
+  background: #fff;
+  border: 0;
+  box-shadow: none;
 }
 
 .sub-company-loc__intro {
@@ -16,28 +21,32 @@
   width: 100%;
   border-collapse: collapse;
   table-layout: fixed;
+  border-radius: 0;
+  background: #fff;
+  border: 0;
+  overflow: hidden;
 }
 
 .sub-company-loc__table th,
 .sub-company-loc__table td {
   @include clamp(padding-block, 14px, 20px);
-  padding-inline: 0;
-  border-bottom: 1px solid $border-main;
+  padding-inline: 10px;
+  border-bottom: 1px solid rgba(29, 78, 216, 0.12);
   text-align: left;
   vertical-align: top;
-  font-size: 18px;
+  font-size: 17px;
 }
 
 .sub-company-loc__table th {
   width: 28%;
   padding-right: 20px;
-  font-weight: 500;
+  font-weight: 700;
   color: $txt-sub;
   vertical-align: top;
 }
 
 .sub-company-loc__table td {
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1.6;
   color: $txt-main;
   word-break: keep-all;
@@ -47,7 +56,6 @@
   min-width: 0;
 }
 
-/* 모바일: 라벨(th) 아래에 값(td)이 내려가도록 세로 스택 */
 @include bp(mo) {
   .sub-company-loc__table,
   .sub-company-loc__table tbody {
@@ -58,7 +66,7 @@
   .sub-company-loc__table tr {
     display: block;
     width: 100%;
-    border-bottom: 1px solid $border-main;
+    border-bottom: 1px solid rgba(29, 78, 216, 0.12);
     @include clamp(padding-block, 14px, 20px);
   }
 
@@ -83,9 +91,11 @@
   aspect-ratio: 16 / 9;
   min-height: 280px;
   max-height: 524px;
-  border-radius: 8px;
+  border-radius: 0;
   overflow: hidden;
-  background: $gray-100;
+  background: #f1f5f9;
+  border: 0;
+  box-shadow: none;
 }
 
 .sub-company-loc__map-frame {

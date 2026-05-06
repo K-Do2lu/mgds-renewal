@@ -1,13 +1,18 @@
 @use '@/assets/scss/abstract' as *;
 
-/* COMPANY 서브(SubCompanyAbout, SubCompanyLoc 등)와 동일: menu-section 프레임만 받고 블록에 세로 리듬 부여 */
+/* 공지·자료·입찰 테이블: SubPageLayout 본문 안에서 블록 세로 리듬 */
 
 .sub-notice-page {
   @include flex(column, null, null, 0);
 }
 
 .sub-notice-page__block {
-  @include clamp(padding-block, 60px, 100px);
+  @include section-block-rhythm;
+  border-radius: 0;
+  background: #fff;
+  border: 0;
+  box-shadow: none;
+  padding: clamp(18px, 2.6vw, 30px);
 }
 
 .sub-notice-page__intro {
@@ -20,12 +25,17 @@
   justify-content: space-between;
   gap: 12px;
   @include clamp(margin-bottom, 16px, 22px);
+  padding: 12px;
+  border-radius: 0;
+  background: #f8fafc;
+  border: 0;
+  box-shadow: none;
 }
 
 .sub-notice-page__count {
   margin: 0;
   color: $txt-sub;
-  font-weight: 500;
+  font-weight: 700;
   @include clamp(font-size, 14px, 16px);
   white-space: nowrap;
 }
@@ -38,6 +48,13 @@
   gap: 10px;
 }
 
+.sub-notice-page__search-help {
+  margin: 0 0 14px;
+  color: $txt-sub;
+  font-size: 13px;
+  padding-inline: 4px;
+}
+
 /* ElementPlus input/select 크기 살짝 정리 */
 .sub-notice-page__search :deep(.el-select) {
   width: 120px;
@@ -47,21 +64,47 @@
   width: clamp(220px, 32vw, 360px);
 }
 
+.sub-notice-page__search :deep(.el-input__wrapper),
+.sub-notice-page__search :deep(.el-select__wrapper) {
+  border-radius: 10px;
+  box-shadow: none;
+  border: 1px solid rgba(29, 78, 216, 0.16);
+  background: #fff;
+}
+
 @include bp(mo) {
   .sub-notice-page__toolbar {
-    flex-direction: column;
-    align-items: stretch;
-    justify-content: flex-start;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
   }
 
   .sub-notice-page__search {
-    grid-auto-flow: row;
-    grid-auto-columns: 1fr;
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: flex-end;
   }
 
-  .sub-notice-page__search :deep(.el-select),
+  .sub-notice-page__count {
+    font-size: 13px;
+  }
+
+  .sub-notice-page__search :deep(.el-select) {
+    width: 96px;
+    flex: 0 0 auto;
+  }
+
   .sub-notice-page__search :deep(.el-input) {
-    width: 100%;
+    width: min(56vw, 240px);
+    flex: 1 1 auto;
+  }
+
+  .sub-notice-page__search-help {
+    margin-bottom: 10px;
   }
 }
 

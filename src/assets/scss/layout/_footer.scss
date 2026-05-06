@@ -1,54 +1,144 @@
 @use "@/assets/scss/abstract" as *;
 
 footer {
-    @include flex(row, center, center, 0);
-    padding: $layout-page-padding 20px;
-    background: $bg-main;
+  @include flex(row, center, center, 0);
+  padding: 0;
+  background: linear-gradient(180deg, #0f1b33 0%, #0c162b 100%);
 
-    .footer-inner{
-        @include wh($layout-max-width, 300px, null, null, null, null);
+  .footer-inner {
+    height: auto;
+    width: 100%;
+    max-width: $layout-max-width;
+    margin-inline: auto;
+  }
 
-        .inner-top{
-            @include flex(column, center, null, 40px);
-            padding-bottom: 20px;
-            border-bottom: 1px solid $border-main;
-            .footer-logo{
-                width: 200px;
-            }
+  .footer-col--left {
+    @include flex(column, flex-start, flex-start, clamp(16px, 2vw, 24px));
+    min-width: 0;
+  }
 
-            .footer-info{
-                @include flex(column, center, null, 20px);
-                font-size: 16px;
-                font-weight: 400;
-                color: $txt-sub;
-                dl{
-                    @include flex(row, null,center,4px);
-                }
-                dt{
-                    flex-basis: 160px;
-                    font-weight: 500;
-                    color: $txt-main;
-                }
-                dd {
-                    line-height: 24px;
-                }
-            }
-        }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 0.7fr;
+    gap: clamp(20px, 4vw, 48px);
+    padding: clamp(20px, 3vw, 32px);
+    border-radius: 0;
+    border: 0;
+    background: transparent;
+  }
 
-        .inner-bottom{
-            @include flex(row, flex-end, center, null);
-            @include clamp(gap, 20px, 32px);
-            padding-top: 20px;
-            .el-select{
-                max-width: 124px;
-            }
-        }
+  .footer-logo {
+    width: 180px;
+    flex: 0 0 auto;
+    align-self: flex-start;
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  .footer-info {
+    @include flex(column, flex-start, flex-start, 12px);
+    align-self: stretch;
+    width: 100%;
+    text-align: left;
+    flex: 1 1 auto;
+    min-width: 0;
+    font-size: 15px;
+    font-weight: 400;
+    color: rgba(240, 244, 252, 0.8);
+
+    dl {
+      @include flex(row, flex-start, flex-start, 8px);
+      width: 100%;
     }
 
-    @include bp(mo){
-        .footer-inner .inner-top .footer-info dl{flex-direction: column; align-items: flex-start;}
-        .footer-inner .inner-top .footer-info dl dt{flex-basis: auto;}
-        .footer-inner .inner-bottom{flex-direction: column; align-items: flex-start;}
-        .footer-inner .inner-bottom .el-select{align-self: flex-end;}
+    dt {
+      flex: 0 0 148px;
+      margin: 0;
+      font-weight: 600;
+      color: #ffffff;
     }
+
+    dd {
+      margin: 0;
+      flex: 1 1 auto;
+      min-width: 0;
+      line-height: 1.6;
+      text-align: left;
+    }
+  }
+
+  .footer-col--right {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 20px;
+  }
+
+  .footer-actions {
+    @include flex(column, flex-end, flex-end, 12px);
+
+    .el-select {
+      max-width: 180px;
+    }
+  }
+
+  .footer-copy {
+    margin: 0;
+    color: rgba(240, 244, 252, 0.68);
+    font-size: 12px;
+    letter-spacing: 0.01em;
+  }
+
+  .footer-links {
+    @include flex(row, null, center, 18px);
+    flex-wrap: wrap;
+
+    a {
+      color: rgba(240, 244, 252, 0.88);
+      text-decoration: none;
+      min-height: 32px;
+      display: inline-flex;
+      align-items: center;
+
+      &:hover {
+        color: #fff;
+        text-decoration: underline;
+      }
+
+      &:focus-visible {
+        @include focus-ring();
+      }
+    }
+  }
+
+  @include bp(mo) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+      padding: 18px;
+    }
+
+    .footer-info dl {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
+    }
+
+    .footer-info dt {
+      flex-basis: auto;
+    }
+
+    .footer-links {
+      gap: 10px;
+    }
+
+    .footer-col--right,
+    .footer-actions {
+      align-items: flex-start;
+    }
+  }
 }

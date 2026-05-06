@@ -1,48 +1,15 @@
 <script setup>
-import { computed, ref, watch } from 'vue'
 import Table from '@/components/Table.vue'
 import PagingIndicator from '@/components/PagingIndicator.vue'
 import { noticeArchiveSampleRows } from '@/config/noticeSampleRows.js'
+import { useNoticeList } from '@/composables/useNoticeList'
 
-const tableData = ref(noticeArchiveSampleRows)
-
-const searchField = ref('제목')
-const searchQuery = ref('')
-
-const filtered = computed(() => {
-  const q = searchQuery.value.trim()
-  if (!q) return tableData.value
-
-  if (searchField.value === '내용') {
-    return tableData.value.filter((r) => String(r.content ?? '').includes(q))
-  }
-  return tableData.value.filter((r) => String(r.title ?? '').includes(q))
-})
-
-const page = ref(1)
-const pageSize = 5
-const totalPages = computed(() => Math.max(1, Math.ceil(filtered.value.length / pageSize)))
-const paged = computed(() => {
-  const p = Math.min(totalPages.value, Math.max(1, page.value))
-  const start = (p - 1) * pageSize
-  return filtered.value.slice(start, start + pageSize)
-})
-
-watch([searchField, searchQuery], () => {
-  page.value = 1
-})
+const { searchField, searchQuery, filtered, page, totalPages, paged } = useNoticeList(noticeArchiveSampleRows)
 </script>
 
 <template>
   <div class="sub-notice-page">
     <section class="sub-notice-page__block" aria-labelledby="sub-notice-archive-title">
-      <div class="sub-notice-page__intro">
-        <div class="sec-title">
-          <span class="sec-title__sub">Archive</span>
-          <h2 id="sub-notice-archive-title" class="sec-title__title">자료실</h2>
-        </div>
-      </div>
-
       <div class="sub-notice-page__toolbar" role="group" aria-label="자료실 검색">
         <p class="sub-notice-page__count">총 {{ filtered.length }} 건</p>
         <div class="sub-notice-page__search">
@@ -50,6 +17,7 @@ watch([searchField, searchQuery], () => {
           <Input v-model="searchQuery" placeholder="검색어를 입력하세요." />
         </div>
       </div>
+      <p class="sub-notice-page__search-help">실무 문서 중심 · 제목/내용 즉시 검색</p>
 
       <Table :items="paged" />
 

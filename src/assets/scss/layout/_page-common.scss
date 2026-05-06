@@ -3,7 +3,7 @@
 /** 좌우 인셋만 (섹션 래퍼 바깥) */
 @mixin layout-page-gutters {
   @include clamp(padding-inline, 20px, 40px);
-  @include clamp(padding-block, 60px, 100px);
+  @include clamp(padding-block, 36px, 76px);
 }
 
 /** 콘텐츠 최대 너비 + 가운데 정렬 */
@@ -12,7 +12,7 @@
   margin-inline: auto;
 }
 
-/** 서브 레이아웃(.menu-section) 등: 인셋 + 최대 너비를 한 번에 */
+/** 서브 레이아웃(.sub-page) 등: 인셋 + 최대 너비를 한 번에 */
 @mixin layout-page-frame {
   @include layout-page-inner-width;
   @include layout-page-gutters;
@@ -37,19 +37,18 @@
 
 .page-section__title {
   margin: 0;
-  font-weight: bold;
+  font-weight: 700;
   color: $txt-main;
   letter-spacing: -0.02em;
-  // 메인 섹션 타이틀(h2) 공통
-  @include clamp(font-size, 28px, 40px);
-  @include clamp(line-height, 32px, 44px);
+  @include clamp(font-size, 32px, 50px);
+  @include clamp(line-height, 38px, 56px);
 }
 
 .page-section__lead {
-  margin: 20px 0 0;
+  margin: 14px 0 0;
   color: $txt-sub;
-  @include clamp(font-size, 16px, 18px);
-  @include clamp(line-height, 22px, 30px);
+  @include clamp(font-size, 16px, 20px);
+  @include clamp(line-height, 24px, 32px);
 }
 
 .main-page {
@@ -139,16 +138,19 @@
 }
 
 .sec-title{
-  @include flex(column, center, null, 4px);
+  @include flex(column, null, null, 8px);
   &__sub{
-    @include clamp(font-size, 16px, 20px);
-    font-weight: 500;
+    @include clamp(font-size, 14px, 18px);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
     font-style: normal;
     color: $point-main;
   }
   &__title{
-    @include clamp(font-size, 28px, 40px);
-    font-weight: bold;
+    @include clamp(font-size, 34px, 52px);
+    font-weight: 700;
     color: $txt-main;
+    line-height: 1.12;
   }
 }

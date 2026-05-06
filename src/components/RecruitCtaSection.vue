@@ -30,7 +30,9 @@ const decoUrl = computed(() => props.decoSrc || logoBgDefault)
         loading="lazy"
       />
       <div class="recruit-cta__row">
-        <slot />
+        <div class="recruit-cta__copy">
+          <slot />
+        </div>
         <a
           class="recruit-cta__btn"
           :href="careerHref"

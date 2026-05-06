@@ -6,6 +6,11 @@
 
 .sub-company-ceo__block {
   @include clamp(padding-block, 60px, 100px);
+  padding-inline: clamp(16px, 2.5vw, 28px);
+  border-radius: 0;
+  background: #fff;
+  border: 0;
+  box-shadow: none;
 }
 
 .sub-company-ceo__intro {
@@ -17,8 +22,8 @@
   position: relative;
   display: block;
   min-height: 240px;
-  border-radius: 12px;
-  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.08);
+  border-radius: 0;
+  box-shadow: none;
   /* 인물 이미지가 카드 밖으로 나와도 잘리지 않게 */
   overflow: visible;
 }
@@ -27,8 +32,8 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: #f2f2f2;
-  border-radius: 12px;
+  background: linear-gradient(120deg, #eef3ff 0%, #e2ebff 100%);
+  border-radius: 0;
   z-index: 0;
 }
 
@@ -50,7 +55,7 @@
   margin: 0;
   font-weight: 800;
   letter-spacing: -0.02em;
-  color: $txt-main;
+  color: #0f172a;
   @include clamp(font-size, 18px, 22px);
 }
 
@@ -107,6 +112,11 @@
   color: $txt-main;
   line-height: 1.9;
   @include clamp(font-size, 15px, 16px);
+  padding: clamp(14px, 2vw, 22px);
+  border-radius: 0;
+  background: #fff;
+  border: 0;
+  box-shadow: none;
 
   p {
     margin: 0;

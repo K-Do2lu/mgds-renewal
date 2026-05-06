@@ -16,6 +16,11 @@ const slides = [
     desc: ['사용자 경험을 고민하고', '더 나은 내일을 만듭니다.'],
   },
 ]
+const quickLinks = [
+  { to: '/business/overview', label: '사업영역' },
+  { to: '/notice/board', label: '뉴스룸' },
+  { to: '/recruit/talent', label: '채용정보' },
+]
 
 const activeIndex = ref(0)
 const activeSlide = computed(() => slides[activeIndex.value])
@@ -27,9 +32,12 @@ function goTo(idx) {
 }
 
 onMounted(() => {
-  intervalId = window.setInterval(() => {
-    activeIndex.value = (activeIndex.value + 1) % slides.length
-  }, 5000)
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  if (!reduceMotion) {
+    intervalId = window.setInterval(() => {
+      activeIndex.value = (activeIndex.value + 1) % slides.length
+    }, 5000)
+  }
 })
 
 onBeforeUnmount(() => {
@@ -54,13 +62,29 @@ onBeforeUnmount(() => {
 
       <div class="main-hero__content">
         <div class="main-hero__text" :key="activeIndex">
+          <p class="main-hero__eyebrow">MG DATA SYSTEM</p>
           <h2 class="main-hero__title">
             <span v-for="(line, i) in activeSlide.title" :key="i">{{ line }}</span>
           </h2>
           <p class="main-hero__desc">
             <span v-for="(line, i) in activeSlide.desc" :key="i">{{ line }}</span>
           </p>
+          <div class="main-hero__cta">
+            <RouterLink to="/business/overview" class="main-hero__cta-btn">사업영역 보기</RouterLink>
+            <RouterLink to="/recruit/careers" class="main-hero__cta-btn main-hero__cta-btn--ghost">
+              인재채용 보기
+            </RouterLink>
+          </div>
         </div>
+
+        <aside class="main-hero__panel" aria-label="주요 바로가기">
+          <h3 class="main-hero__panel-title">Quick Access</h3>
+          <ul class="main-hero__panel-list">
+            <li v-for="link in quickLinks" :key="link.to">
+              <RouterLink :to="link.to">{{ link.label }}</RouterLink>
+            </li>
+          </ul>
+        </aside>
       </div>
 
       <nav class="main-hero__indicator" aria-label="메인 배너 인디케이터">
@@ -83,8 +107,8 @@ onBeforeUnmount(() => {
 @use '@/assets/scss/abstract' as *;
 
 .main-hero {
-  height: 100vh;
-  min-height: 100vh;
+  height: 100dvh;
+  min-height: 100dvh;
   padding: 0 $layout-page-padding $layout-page-padding;
   box-sizing: border-box;
 
@@ -118,10 +142,10 @@ onBeforeUnmount(() => {
   position: absolute;
   inset: 0;
   background: linear-gradient(
-    90deg,
-    rgba(0, 0, 0, 0.35) 0%,
-    rgba(0, 0, 0, 0.15) 35%,
-    rgba(0, 0, 0, 0) 70%
+    98deg,
+    rgba(6, 16, 36, 0.58) 0%,
+    rgba(6, 16, 36, 0.34) 42%,
+    rgba(6, 16, 36, 0.08) 78%
   );
 }
 
@@ -131,7 +155,21 @@ onBeforeUnmount(() => {
   height: 100%;
   display: flex;
   align-items: center;
-  padding-inline: clamp(24px, 6vw, 80px);
+  justify-content: space-between;
+  gap: 20px;
+  padding: clamp(24px, 5vw, 60px);
+}
+
+.main-hero__text {
+  max-width: min(760px, 100%);
+}
+
+.main-hero__eyebrow {
+  margin: 0 0 14px;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
 }
 
 .main-hero__title {
@@ -157,6 +195,82 @@ onBeforeUnmount(() => {
 
   span {
     display: block;
+  }
+}
+
+.main-hero__cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.main-hero__cta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 10px 16px;
+  border-radius: 6px;
+  background: $point-main;
+  border: 1px solid transparent;
+  color: $txt-white;
+  font-weight: 600;
+  text-decoration: none;
+
+  &:focus-visible {
+    @include focus-ring();
+  }
+
+  &:hover {
+    background: $blue-200;
+  }
+}
+
+.main-hero__cta-btn--ghost {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.62);
+}
+
+.main-hero__panel {
+  width: min(320px, 100%);
+  padding: 18px;
+  border-radius: 14px;
+  background: rgba(9, 20, 42, 0.42);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+}
+
+.main-hero__panel-title {
+  margin: 0 0 10px;
+  color: #fff;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+}
+
+.main-hero__panel-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 8px;
+
+  a {
+    min-height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    color: rgba(255, 255, 255, 0.94);
+    text-decoration: none;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+
+    &:hover,
+    &:focus-visible {
+      background: rgba(255, 255, 255, 0.14);
+      @include focus-ring($gray-000);
+    }
   }
 }
 
@@ -192,6 +306,10 @@ onBeforeUnmount(() => {
   background: $hero-dot-bg;
   cursor: pointer;
 
+  &:focus-visible {
+    @include focus-ring($gray-000);
+  }
+
   &.is-active {
     @include wh(
       $hero-dot-active-size,
@@ -211,6 +329,53 @@ onBeforeUnmount(() => {
   animation: heroFadeUp 420ms ease both;
 }
 
+@include bp(tab) {
+  .main-hero__content {
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .main-hero__panel {
+    width: 100%;
+    max-width: 420px;
+  }
+}
+
+@include bp(mo) {
+  .main-hero {
+    height: 100vh;
+    min-height: 100vh;
+    padding: 0;
+
+    @supports (height: 100svh) {
+      height: 100svh;
+      min-height: 100svh;
+    }
+  }
+
+  .main-hero__frame {
+    border-radius: 0;
+  }
+
+  .main-hero__content {
+    padding: clamp(22px, 6vw, 32px);
+    justify-content: center;
+  }
+
+  .main-hero__title {
+    @include clamp(font-size, 30px, 42px);
+  }
+
+  .main-hero__desc {
+    @include clamp(font-size, 16px, 22px);
+  }
+
+  .main-hero__panel {
+    display: none;
+  }
+}
+
 @keyframes heroFadeUp {
   from {
     opacity: 0;
@@ -220,6 +385,12 @@ onBeforeUnmount(() => {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .main-hero__text {
+    animation: none;
   }
 }
 </style>

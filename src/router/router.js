@@ -15,12 +15,19 @@ import SubRecruitCareers from '@/views/SubRecruitCareers.vue'
 import SubRecruitTalent from '@/views/SubRecruitTalent.vue'
 import SubCompanyLoc from '@/views/SubCompanyLoc.vue'
 import SubCompanyCeo from '@/views/SubCompanyCeo.vue'
+import PrivacyPolicy from '@/views/PrivacyPolicy.vue'
+import TermsOfService from '@/views/TermsOfService.vue'
+import NoEmailCollect from '@/views/NoEmailCollect.vue'
 
 const routes = [
   { path: '/', name: 'Main', component: MainView },
   { path: '/guide', name: 'Guide', component: GuideView },
+  { path: '/privacy', name: 'PrivacyPolicy', component: PrivacyPolicy },
+  { path: '/terms', name: 'TermsOfService', component: TermsOfService },
+  { path: '/email', name: 'NoEmailCollect', component: NoEmailCollect },
   {
     path: '/company',
+    meta: { sectionKey: 'company' },
     component: CompanySection,
     redirect: '/company/about',
     children: [
@@ -31,6 +38,7 @@ const routes = [
   },
   {
     path: '/business',
+    meta: { sectionKey: 'business' },
     component: BusinessSection,
     redirect: '/business/overview',
     children: [
@@ -40,6 +48,7 @@ const routes = [
   },
   {
     path: '/notice',
+    meta: { sectionKey: 'notice' },
     component: NoticeSection,
     redirect: '/notice/board',
     children: [
@@ -50,6 +59,7 @@ const routes = [
   },
   {
     path: '/recruit',
+    meta: { sectionKey: 'recruit' },
     component: RecruitSection,
     redirect: '/recruit/talent',
     children: [

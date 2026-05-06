@@ -3,12 +3,18 @@ import { ref, computed, watch, onMounted, onBeforeUnmount } from 'vue'
 import { useRoute } from 'vue-router'
 import { primaryNav, megaItemsForSection } from '@/config/sectionNav'
 import linkSvg from '@/assets/img/link.svg'
+import menuBtnMoSvg from '@/assets/img/menu_btn_mo.svg'
+import headerMenuSvg from '@/assets/img/header_menu.svg'
+import menuArrowMoSvg from '@/assets/img/menu_arrow_mo.svg'
+import menuArrowActiveSvg from '@/assets/img/menu_arrow_active.svg'
 
 const route = useRoute()
 const activeMegaKey = ref(null)
 const headerEl = ref(null)
 const megaTopPx = ref(72)
 const isWideNav = ref(true)
+const mobileMenuOpen = ref(false)
+const mobileOpenSection = ref(null)
 
 let closeTimer = null
 let resizeObserver = null
@@ -19,7 +25,12 @@ function syncMegaTop() {
 
 function syncViewport() {
   isWideNav.value = window.matchMedia('(min-width: 921px)').matches
-  if (!isWideNav.value) activeMegaKey.value = null
+  if (!isWideNav.value) {
+    activeMegaKey.value = null
+  } else {
+    mobileMenuOpen.value = false
+    mobileOpenSection.value = null
+  }
 }
 
 function openMega(key) {
@@ -43,6 +54,14 @@ function cancelClose() {
   closeTimer = null
 }
 
+function toggleMobileMenu() {
+  mobileMenuOpen.value = !mobileMenuOpen.value
+}
+
+function toggleMobileSection(key) {
+  mobileOpenSection.value = mobileOpenSection.value === key ? null : key
+}
+
 const megaItems = computed(() =>
   activeMegaKey.value ? megaItemsForSection(activeMegaKey.value) : [],
 )
@@ -51,6 +70,8 @@ watch(
   () => route.path,
   () => {
     activeMegaKey.value = null
+    mobileMenuOpen.value = false
+    mobileOpenSection.value = null
   },
 )
 
@@ -77,34 +98,107 @@ onBeforeUnmount(() => {
   <div class="header-app">
     <header ref="headerEl">
       <div class="header-inner">
-        <router-link to="/">
-          <h1 class="logo">
-            <img src="../assets/img/logo.svg" alt="MG데이터시스템 로고" />
-          </h1>
-        </router-link>
-        <button type="button" class="menu-btn">
-          <img src="../assets/img/header_menu.svg" alt="메뉴 버튼" />
-        </button>
-        <nav aria-label="주 메뉴">
-          <ul>
-            <li
-              v-for="item in primaryNav"
-              :key="item.to"
-              class="nav-top-item"
-              @mouseenter="openMega(item.sectionKey)"
-              @mouseleave="scheduleClose"
-            >
-              <router-link
-                :to="item.to"
-                :class="{ 'is-mega-active': activeMegaKey === item.sectionKey }"
+        <div class="header-main">
+          <router-link to="/" class="header-main__logo-link">
+            <h1 class="logo" aria-label="MG데이터시스템 홈">
+              <img src="../assets/img/logo.svg" alt="MG데이터시스템 로고" />
+            </h1>
+          </router-link>
+          <button
+            type="button"
+            class="menu-btn"
+            :aria-expanded="mobileMenuOpen ? 'true' : 'false'"
+            aria-controls="mobile-global-nav"
+            :aria-label="mobileMenuOpen ? '모바일 메뉴 닫기' : '모바일 메뉴 열기'"
+            :class="{ 'is-open': mobileMenuOpen }"
+            @click="toggleMobileMenu"
+          >
+            <span class="menu-btn__icons" aria-hidden="true">
+              <img class="menu-btn__ico menu-btn__ico--closed" :src="headerMenuSvg" alt="" />
+              <img class="menu-btn__ico menu-btn__ico--open" :src="menuBtnMoSvg" alt="" />
+            </span>
+          </button>
+          <nav aria-label="주 메뉴">
+            <ul>
+              <li
+                v-for="item in primaryNav"
+                :key="item.to"
+                class="nav-top-item"
+                @mouseenter="openMega(item.sectionKey)"
+                @mouseleave="scheduleClose"
               >
-                {{ item.label }}
-              </router-link>
+                <router-link
+                  :to="item.to"
+                  :class="{ 'is-mega-active': activeMegaKey === item.sectionKey }"
+                  @focus="openMega(item.sectionKey)"
+                >
+                  {{ item.label }}
+                </router-link>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <Transition name="mobile-nav">
+      <div
+        v-if="mobileMenuOpen && !isWideNav"
+        id="mobile-global-nav"
+        class="mobile-nav"
+      >
+        <nav class="mobile-nav__panel" aria-label="모바일 주 메뉴">
+          <ul class="mobile-nav__list">
+            <li v-for="item in primaryNav" :key="`mobile-${item.to}`" class="mobile-nav__item">
+              <div class="mobile-nav__head">
+                <span
+                  class="mobile-nav__top-link"
+                  :class="{ 'is-open': mobileOpenSection === item.sectionKey }"
+                >{{ item.label }}</span>
+                <button
+                  type="button"
+                  class="mobile-nav__toggle"
+                  :aria-expanded="mobileOpenSection === item.sectionKey ? 'true' : 'false'"
+                  :aria-controls="`mobile-section-${item.sectionKey}`"
+                  :aria-label="mobileOpenSection === item.sectionKey ? '하위 메뉴 닫기' : '하위 메뉴 열기'"
+                  @click="toggleMobileSection(item.sectionKey)"
+                >
+                  <img
+                    class="mobile-nav__toggle-ico"
+                    :class="{ 'is-open': mobileOpenSection === item.sectionKey }"
+                    :src="mobileOpenSection === item.sectionKey ? menuArrowActiveSvg : menuArrowMoSvg"
+                    alt=""
+                  />
+                </button>
+              </div>
+              <ul
+                v-if="mobileOpenSection === item.sectionKey"
+                :id="`mobile-section-${item.sectionKey}`"
+                class="mobile-nav__sub-list"
+              >
+                <li
+                  v-for="(sub, idx) in megaItemsForSection(item.sectionKey)"
+                  :key="`${sub.externalUrl || sub.to}-${idx}`"
+                >
+                  <a
+                    v-if="sub.externalUrl"
+                    :href="sub.externalUrl"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="mobile-nav__sub-link"
+                  >{{ Array.isArray(sub.title) ? sub.title.join(' ') : sub.title }}</a>
+                  <router-link
+                    v-else
+                    :to="sub.to"
+                    class="mobile-nav__sub-link"
+                  >{{ Array.isArray(sub.title) ? sub.title.join(' ') : sub.title }}</router-link>
+                </li>
+              </ul>
             </li>
           </ul>
         </nav>
       </div>
-    </header>
+    </Transition>
 
     <Transition name="mega-slide">
       <div

@@ -1,0 +1,178 @@
+@use "@/assets/scss/abstract" as *;
+@use "@/assets/scss/layout/page-common" as *;
+
+/* 헤더 높이와 맞춤 (header.scss / 이전 menu-section과 동일 계열) */
+$sub-sticky-top: clamp(56px, 3.2vw + 44px, 92px);
+
+.sub-page {
+  background: #fff;
+  padding-bottom: clamp(48px, 6vw, 100px);
+}
+
+.sub-page__frame {
+  max-width: $layout-max-width;
+  margin-inline: auto;
+  @include clamp(padding-inline, 20px, 40px);
+  padding-top: clamp(20px, 2.5vw, 36px);
+}
+
+.sub-page__breadcrumb {
+  margin-bottom: clamp(14px, 2vw, 22px);
+}
+
+.sub-page__breadcrumb-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: clamp(13px, 1.1vw, 14px);
+  color: $txt-sub;
+}
+
+.sub-page__breadcrumb-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  &:not(:last-child)::after {
+    content: "";
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    border-right: 1px solid $border-main;
+    border-bottom: 1px solid $border-main;
+    transform: rotate(-45deg);
+    margin-left: 0.15rem;
+    opacity: 0.65;
+  }
+}
+
+.sub-page__breadcrumb-link {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.15s ease;
+
+  &:hover {
+    color: $point-main;
+  }
+
+  &:focus-visible {
+    @include focus-ring();
+  }
+}
+
+.sub-page__breadcrumb-current {
+  color: $txt-main;
+  font-weight: 600;
+}
+
+.sub-page__lnb {
+  position: sticky;
+  top: $sub-sticky-top;
+  z-index: 800;
+  margin: 0 calc(-1 * clamp(20px, 2.5vw, 40px)) clamp(20px, 2.8vw, 36px);
+  padding: 0 clamp(20px, 2.5vw, 40px);
+  background: #fff;
+}
+
+.sub-page__lnb-list {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: clamp(8px, 1.5vw, 28px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.sub-page__lnb-item {
+  flex: 0 0 auto;
+}
+
+.sub-page__lnb-link {
+  display: block;
+  padding: 14px 2px 12px;
+  font-size: clamp(15px, 1.05vw, 17px);
+  font-weight: 500;
+  color: $txt-sub;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  white-space: nowrap;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease;
+
+  &:hover {
+    color: $txt-main;
+  }
+
+  &.is-active {
+    color: $txt-main;
+    font-weight: 700;
+    border-bottom-color: $point-main;
+  }
+
+  &:focus-visible {
+    @include focus-ring();
+  }
+}
+
+/* 페이지 타이틀(SubPageHeading)과 본문(main) 사이 — 상한 40px */
+.sub-page__intro {
+  margin-bottom: clamp(12px, 2vw, 40px);
+
+  .sub-page-heading {
+    padding-bottom: 0;
+  }
+
+  .sec-title__sub {
+    letter-spacing: 0.08em;
+    font-size: clamp(12px, 0.95vw, 13px);
+  }
+
+  .sec-title__title {
+    @include clamp(font-size, 28px, 46px);
+    @include clamp(line-height, 34px, 52px);
+    margin-top: 6px;
+  }
+
+  .sub-page-heading__lead {
+    @include clamp(font-size, 16px, 19px);
+    max-width: 52rem;
+  }
+}
+
+.sub-page__main {
+  max-width: $layout-max-width;
+  margin-inline: auto;
+  padding-inline: 0;
+}
+
+.sub-page--bleed-main .sub-page__main {
+  max-width: none;
+  width: 100%;
+  margin-inline: 0;
+  padding-inline: 0;
+}
+
+@include bp(mo) {
+  .sub-page__lnb {
+    margin-inline: calc(-1 * clamp(16px, 4vw, 24px));
+    padding-inline: clamp(16px, 4vw, 24px);
+  }
+
+  .sub-page__lnb-link {
+    padding-top: 12px;
+    padding-bottom: 10px;
+  }
+}

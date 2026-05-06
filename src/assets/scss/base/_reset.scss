@@ -104,9 +104,12 @@ section {
 }
 
 body {
-  line-height: 1;
+  line-height: 1.5;
   overflow-x: hidden;
   overflow-x: clip;
+  background: #ffffff;
+  color: #0f172a;
+  letter-spacing: -0.01em;
 }
 
 ol,
@@ -173,9 +176,14 @@ select,
 textarea {
   background: transparent;
   border: 0;
-  outline: none;
   appearance: none;
   -webkit-appearance: none;
+}
+
+:focus-visible {
+  outline: 2px solid #1d4ed8;
+  outline-offset: 3px;
+  border-radius: 8px;
 }
 
 textarea {

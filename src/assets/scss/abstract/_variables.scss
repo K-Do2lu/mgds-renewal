@@ -1,6 +1,6 @@
 $gray-000: #ffffff;
-$gray-100: #f8fafc;
-$gray-200: #E5E7EB;
+$gray-100: #f2f6ff;
+$gray-200: #d9e3f5;
 $gray-300: #CCCCCC;
 $gray-400: #BDBDBD;
 $gray-500: #888888;
@@ -21,31 +21,38 @@ $etc-100: #F56C6C;
 $etc-200: #E6A23C;
 $etc-300: #67C23A;
 // Text
-$txt-main: $gray-700;
-$txt-sub: $gray-600;
+$txt-main: #0f172a;
+$txt-sub: #475569;
 $txt-white: $gray-000;
 // Point
-$point-main: $blue-100;
+$point-main: #1d4ed8;
 $point-sub: $blue-400;
 // Bg
-$bg-main: $gray-100;
+$bg-main: #eef3ff;
+$bg-submenu: #F8FAFC;
 // Border
-$border-main: $gray-200;
+$border-main: #d6e0f0;
 // Icon
 $ico-color: $gray-600;
 
 // Header
-$header-bg: $gray-000;
+$header-bg: rgba(255, 255, 255, 0.95);
 
 // Layout tokens
 $layout-max-width: 1400px;
 $layout-page-padding: 40px;
-$radius-hero: 40px;
-$radius-card: 12px;
+$radius-hero: 28px;
+$radius-card: 16px;
+$space-section-min: 60px;
+$space-section-max: 100px;
+$space-content-gap-min: 24px;
+$space-content-gap-max: 36px;
+$focus-ring-width: 2px;
+$focus-ring-offset: 3px;
 
 // Shadows
-$shadow-panel: 0 12px 24px rgba(0, 0, 0, 0.08);
-$shadow-soft-blue: 4px 4px 4px 0 rgb(205 216 234 / 49%);
+$shadow-panel: 0 14px 34px rgba(10, 20, 40, 0.12);
+$shadow-soft-blue: 0 16px 30px rgba(29, 78, 216, 0.16);
 $shadow-text-hero: 0 4px 4px rgb(0 0 0 / 25%);
 
 // Mega menu

@@ -6,7 +6,7 @@
   @include layout-full-bleed;
   height: $recruit-cta-strip-height;
   max-height: $recruit-cta-strip-height;
-  background: $bg-main;
+  background: linear-gradient(180deg, #f8faff 0%, #f2f6fc 100%);
   display: grid;
   align-items: stretch;
   justify-items: center;
@@ -65,7 +65,7 @@
   gap: 24px;
 }
 
-.recruit-cta__text {
+.recruit-cta__copy {
   margin: 0;
   flex: 1 1 auto;
   min-width: 0;
@@ -73,6 +73,14 @@
   font-weight: 600;
   @include clamp(font-size, 18px, 24px);
   line-height: 1.35;
+
+  p,
+  .recruit-cta__text {
+    margin: 0;
+    color: inherit;
+    font: inherit;
+    line-height: inherit;
+  }
 }
 
 .recruit-cta__btn {
@@ -90,8 +98,11 @@
   white-space: nowrap;
 
   &:focus-visible {
-    outline: 2px solid $point-main;
-    outline-offset: 3px;
+    @include focus-ring();
+  }
+
+  &:hover {
+    background: $blue-200;
   }
 }
 
@@ -137,5 +148,13 @@
 
   .recruit-cta__inner {
     padding-block: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .recruit-cta__deco,
+  .recruit-cta__btn {
+    transition: none !important;
+    transform: none !important;
   }
 }

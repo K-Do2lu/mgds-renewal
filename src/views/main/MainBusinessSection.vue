@@ -1,51 +1,10 @@
 <script setup>
-import { onBeforeUnmount, ref } from 'vue'
+import { computed } from 'vue'
 import item06 from '@/assets/img/business_item_06.svg'
 import { businessSectionCards as cards } from '@/config/businessSectionCards.js'
 
-/** 랜덤으로 선택되는 2카드에 해당 카드 hover 배경 이미지를 기본 상태에서도 노출 */
-const spotlightAKey = ref(cards[2]?.key ?? 'type03')
-const spotlightBKey = ref(cards[4]?.key ?? 'type05')
-
-function pickTwoDistinctKeys() {
-  const keys = cards.map((c) => c.key)
-  const a = keys[Math.floor(Math.random() * keys.length)]
-  let b = a
-  while (b === a) b = keys[Math.floor(Math.random() * keys.length)]
-  return [a, b]
-}
-
-function shuffleSpotlights() {
-  const [a, b] = pickTwoDistinctKeys()
-  spotlightAKey.value = a
-  spotlightBKey.value = b
-}
-
-shuffleSpotlights()
-const spotlightTimer = window.setInterval(shuffleSpotlights, 2000)
-
-onBeforeUnmount(() => {
-  window.clearInterval(spotlightTimer)
-})
-
-function isSpotlightKey(key) {
-  return key === spotlightAKey.value || key === spotlightBKey.value
-}
-
-/** 메인 카드 배경 스타일(랜덤 2매: 해당 카드 hoverBg 노출 / 나머지: 회색표면) */
-function cardOuterStyle(card) {
-  const style = {
-    '--hover-bg': `url(${card.hoverBg})`,
-  }
-  if (isSpotlightKey(card.key)) {
-    Object.assign(style, {
-      backgroundImage: `linear-gradient(180deg, rgba(248, 250, 252, 0.88) 0%, rgba(248, 250, 252, 0.72) 45%, rgba(255, 255, 255, 0.52) 100%), url(${card.hoverBg})`,
-      backgroundSize: 'cover, cover',
-      backgroundPosition: 'center, center',
-    })
-  }
-  return style
-}
+const featuredCard = computed(() => cards[0])
+const secondaryCards = computed(() => cards.slice(1))
 </script>
 
 <template>
@@ -53,50 +12,58 @@ function cardOuterStyle(card) {
     class="page-section page-section--surface-muted main-business"
     aria-labelledby="main-business-title"
   >
-    <div class="page-section__inner" v-reveal>
+    <div class="page-section__inner main-business__layout" v-reveal>
       <div class="main-business__head">
         <h2 id="main-business-title" class="page-section__title">
-          <span class="point">최적화된 서비스로</span><br />
-          더 나은 내일을 만들어 갑니다
+          기업 운영의 핵심을 연결하는<br />
+          금융 IT 서비스 포트폴리오
         </h2>
         <p class="page-section__lead">
-          금융 기업의 IT 시스템 구축부터 운영, 유지보수까지<br />
-          종합적인 솔루션을 제공하려 최적화된 업무 환경을 지원합니다.
+          구축, 운영, 개발, 유지보수를 분리하지 않고 하나의 실행 체계로 제공합니다.
         </p>
       </div>
 
-      <div class="main-business__cards" aria-label="사업 영역 카드 목록">
-        <div
-          v-for="card in cards"
-          :key="card.key"
-          class="main-business__card"
-          :class="[
-            `main-business__card--${card.key}`,
-            { 'is-spotlight': isSpotlightKey(card.key) },
-          ]"
-          :style="cardOuterStyle(card)"
+      <div class="main-business__stack" aria-label="사업 영역 카드 목록">
+        <router-link
+          v-if="featuredCard"
+          class="main-business__featured"
+          :to="`/business/overview#${featuredCard.key}`"
+          :style="{ '--featured-bg': `url(${featuredCard.hoverBg})` }"
         >
-          <div class="main-business__card-top">
+          <div class="main-business__featured-content">
+            <p class="main-business__kicker">Featured Service</p>
+            <h3>{{ featuredCard.title }}</h3>
+            <p>{{ featuredCard.desc }}</p>
+            <span class="main-business__featured-link">서비스 상세 보기</span>
+          </div>
+          <span class="main-business__featured-ico" aria-hidden="true">
+            <img :src="featuredCard.icon" alt="" />
+          </span>
+        </router-link>
+
+        <div class="main-business__cards">
+          <router-link
+            v-for="card in secondaryCards"
+            :key="card.key"
+            class="main-business__card"
+            :to="`/business/overview#${card.key}`"
+          >
             <span class="main-business__card-ico" aria-hidden="true">
               <img :src="card.icon" alt="" />
             </span>
-          </div>
-          <div class="main-business__card-body">
-            <h3 class="main-business__card-title">{{ card.title }}</h3>
-            <p class="main-business__card-desc">{{ card.desc }}</p>
-          </div>
-        </div>
+            <h3>{{ card.title }}</h3>
+            <p>{{ card.desc }}</p>
+          </router-link>
 
-        <router-link to="/business/overview" class="main-business__card main-business__card--more">
-          <div class="main-business__card-top">
+          <router-link to="/business/overview" class="main-business__card main-business__card--more">
             <span class="main-business__card-ico" aria-hidden="true">
               <img :src="item06" alt="" />
             </span>
-          </div>
-          <div class="main-business__card-body">
+            <h3>Business Overview</h3>
+            <p>전체 서비스 체계와 수행 범위를 한 번에 확인하세요.</p>
             <span class="main-business__more-text">자세히 보기</span>
-          </div>
-        </router-link>
+          </router-link>
+        </div>
       </div>
     </div>
   </section>
@@ -106,106 +73,155 @@ function cardOuterStyle(card) {
 @use '@/assets/scss/abstract' as *;
 
 .main-business {
-  background: $bg-main;
+  background: linear-gradient(180deg, #edf3ff 0%, #ffffff 100%);
 }
 
-.page-section__inner {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  @include clamp(gap, 40px, 60px);
+.main-business__layout {
+  display: grid;
+  grid-template-columns: minmax(260px, 320px) minmax(0, 1fr);
+  align-items: start;
+  gap: clamp(20px, 3vw, 40px);
 }
 
 .main-business__head {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   gap: 20px;
+  position: sticky;
+  top: 110px;
 
   :deep(.page-section__lead) {
     margin-top: 0;
   }
 }
 
-.main-business__cards {
-  width: 100%;
+.main-business__stack {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
+  gap: 14px;
+}
+
+.main-business__featured {
+  min-height: 280px;
+  border-radius: 18px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: clamp(22px, 3vw, 34px);
+  color: #fff;
+  text-decoration: none;
+  background-image:
+    linear-gradient(110deg, rgba(7, 18, 42, 0.78) 0%, rgba(7, 18, 42, 0.42) 55%, rgba(7, 18, 42, 0.22) 100%),
+    var(--featured-bg);
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 18px 36px rgba(8, 20, 44, 0.22);
+
+  &:hover {
+    filter: brightness(1.04);
+  }
+
+  &:focus-visible {
+    @include focus-ring($gray-000);
+  }
+}
+
+.main-business__featured-content {
+  max-width: min(560px, 100%);
+
+  h3 {
+    margin: 0;
+    @include clamp(font-size, 28px, 40px);
+    line-height: 1.12;
+  }
+
+  p {
+    margin: 12px 0 0;
+    color: rgba(255, 255, 255, 0.9);
+    @include clamp(font-size, 15px, 18px);
+    line-height: 1.65;
+  }
+}
+
+.main-business__kicker {
+  margin: 0 0 8px;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+}
+
+.main-business__featured-link {
+  margin-top: 16px;
+  display: inline-flex;
+  min-height: 38px;
+  align-items: center;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+}
+
+.main-business__featured-ico {
+  width: clamp(72px, 11vw, 130px);
+  height: clamp(72px, 11vw, 130px);
+  border-radius: 18px;
+  align-self: flex-end;
+  background: rgba(255, 255, 255, 0.14);
+  display: grid;
+  place-items: center;
+  backdrop-filter: blur(4px);
+
+  img {
+    width: 58%;
+    height: 58%;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+  }
+}
+
+.main-business__cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
 }
 
 .main-business__card {
-  position: relative;
-  padding: 30px;
-  border-radius: 24px;
-  background: $gray-000;
+  @include clamp(padding, 18px, 24px);
+  border-radius: 12px;
+  background: #fff;
   text-align: left;
-  @include clamp(height, 180px, 333px);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+  min-height: 188px;
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  border: 1px solid rgba(29, 78, 216, 0.14);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
   text-decoration: none;
   color: inherit;
-  overflow: hidden;
-  transition:
-    transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.22s ease,
-    background-color 0.22s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 
   &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.10);
+    transform: translateY(-3px);
+    box-shadow: 0 14px 30px rgba(29, 78, 216, 0.16);
   }
 
-  // hover background layer
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--hover-bg) no-repeat center / cover;
-    opacity: 0;
-    transform: scale(1.02);
-    transition:
-      opacity 0.28s ease,
-      transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-    z-index: 0;
+  &:focus-visible {
+    @include focus-ring();
   }
 
-  // subtle darken for readability
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.28);
-    opacity: 0;
-    transition: opacity 0.28s ease;
-    z-index: 0;
+  h3 {
+    margin: 0;
+    font-size: 20px;
+    color: $txt-main;
   }
 
-  &:hover::before,
-  &:hover::after {
-    opacity: 1;
+  p {
+    margin: 0;
+    color: $txt-sub;
+    line-height: 1.6;
+    font-size: 15px;
   }
-
-  &:hover::before {
-    transform: scale(1);
-  }
-}
-
-// 랜덤 선택 2카드: 인라인 backgroundImage 로 해당 카드 이미지(대비 확보 그라데이션) 표시
-.main-business__card.is-spotlight {
-  transition:
-    transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.22s ease,
-    background-image 0.35s ease;
-}
-
-.main-business__card-top,
-.main-business__card-body {
-  position: relative;
-  z-index: 1;
 }
 
 .main-business__card-ico {
@@ -214,82 +230,20 @@ function cardOuterStyle(card) {
   justify-content: center;
   width: 40px;
   height: 40px;
-  border-radius: 12px;
+  border-radius: 8px;
   background: rgba(40, 108, 247, 0.08);
 
   img {
-    width: 24px;
-    height: 24px;
+    width: 22px;
+    height: 22px;
     object-fit: contain;
   }
 }
 
-.main-business__card-ico--plain {
-  background: transparent;
-  width: 24px;
-  height: 24px;
-  border-radius: 0;
-}
-
-.main-business__card-title {
-  margin: 0;
-  font-weight: 600;
-  color: $txt-main;
-  @include clamp(font-size, 16px, 18px);
-}
-
-.main-business__card-desc {
-  margin: 0;
-  color: $txt-sub;
-  line-height: 1.6;
-  @include clamp(font-size, 14px, 16px);
-  opacity: 0;
-  transform: translateY(6px);
-  max-height: 0;
-  overflow: hidden;
-  transition:
-    opacity 0.22s ease,
-    transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
-    max-height 0.32s ease,
-    margin-top 0.22s ease;
-}
-
-.main-business__card:hover .main-business__card-title,
-.main-business__card:hover .main-business__card-desc {
-  color: $gray-000;
-}
-
-.main-business__card:hover .main-business__card-desc {
-  opacity: 1;
-  transform: translateY(0);
-  max-height: 6.5em;
-  margin-top: 12px;
-}
-
-.main-business__card:hover .main-business__card-ico {
-  background: rgba(255, 255, 255, 0.16);
-}
-
-.main-business__card:hover .main-business__card-ico img {
-  filter: brightness(0) invert(1);
-}
-
 .main-business__card--more {
-  background: rgba(40, 108, 247, 0.72);
-  color: $gray-000;
-  align-items: stretch;
-  justify-content: space-between;
+  background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%);
+  color: #fff;
 
-  &:hover {
-    background: $blue-300;
-  }
-
-  &::before,
-  &::after {
-    display: none;
-  }
-
-  // 더 보기 카드도 다른 카드와 동일한 아이콘 박스 비율
   .main-business__card-ico {
     background: rgba(255, 255, 255, 0.16);
   }
@@ -297,22 +251,48 @@ function cardOuterStyle(card) {
   .main-business__card-ico img {
     filter: brightness(0) invert(1);
   }
+
+  h3,
+  p {
+    color: #fff;
+  }
 }
 
 .main-business__more-text {
-  font-weight: 600;
-  @include clamp(font-size, 16px, 18px);
+  margin-top: auto;
+  min-height: 36px;
+  padding: 0 12px;
+  width: fit-content;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  display: inline-flex;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 700;
 }
 
 @include bp(tab) {
+  .main-business__layout {
+    grid-template-columns: 1fr;
+  }
+
+  .main-business__head {
+    position: static;
+  }
+
   .main-business__cards {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
   }
 }
 
 @include bp(mo) {
-  .main-business__cards {
-    grid-template-columns: 1fr;
+  .main-business__featured {
+    min-height: 240px;
+  }
+
+  .main-business__featured-ico {
+    width: 78px;
+    height: 78px;
   }
 }
 </style>

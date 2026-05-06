@@ -10,7 +10,7 @@ defineProps({
 </script>
 
 <template>
-    <table>
+    <table class="board-table">
         <colgroup>
             <col width="80%">
             <col width="10%">
@@ -18,21 +18,21 @@ defineProps({
         </colgroup>
         <thead>
             <tr>
-                <th>제목</th>
-                <th>등록일</th>
-                <th>조회수</th>
+                <th scope="col">제목</th>
+                <th scope="col">등록일</th>
+                <th scope="col">조회수</th>
             </tr>
         </thead>
         <tbody>
            
                 <tr v-for="(item, index) in items" :key="index">
-                    <td class="title">
+                    <td class="title" data-label="제목">
                         <BedgeList v-if="item.hot"/>
-                        <router-link :to="item.url">{{ item.title }}</router-link>
-                        <img src="@/assets/img/file.svg" alt="file" v-if="item.file"/>
+                        <router-link class="table-link" :to="item.url">{{ item.title }}</router-link>
+                        <img src="@/assets/img/file.svg" alt="" aria-hidden="true" v-if="item.file"/>
                     </td>
-                    <td align="center" class="date">{{ item.date }}</td>
-                    <td align="center" class="view"> {{ item.view }} </td>
+                    <td align="center" class="date" data-label="등록일">{{ item.date }}</td>
+                    <td align="center" class="view" data-label="조회수"> {{ item.view }} </td>
                 </tr>
           
         </tbody>
@@ -44,14 +44,15 @@ table{
     width: 100%;
     table-layout: fixed;
     border-collapse: collapse;
-    border-top: 1px solid $gray-700;
-    border-bottom: 1px solid $gray-700;
+    border-top: 1px solid $border-main;
+    border-bottom: 1px solid $border-main;
     overflow: hidden;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    border-radius: 0;
+    box-shadow: none;
     font-weight: 500;
     color: $txt-main;
     thead{
-        background-color: $bg-main;
+        background: linear-gradient(180deg, #eff4ff 0%, #f7faff 100%);
     }
     tbody{
         background-color: $gray-000;
@@ -62,7 +63,9 @@ table{
         }
     }
     th{
-        padding: 24px 20px;
+        padding: 18px 20px;
+        font-weight: 700;
+        color: #1e293b;
     }
     td{
         @include clamp(padding-block, 20px, 24px);
@@ -72,7 +75,7 @@ table{
         &.title{
             min-width: 0;
             @include flex(row, null, center, 12px);
-            @include clamp(font-size, 16px, 18px);
+            @include clamp(font-size, 15px, 18px);
             flex-wrap: nowrap;
 
             > :not(a){
@@ -84,11 +87,12 @@ table{
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
+                text-underline-offset: 3px;
             }
         }
         &.date, &.view{
             @include clamp(font-size, 14px, 18px);
-            font-weight: 400;
+            font-weight: 500;
             color: $txt-sub;
             white-space: nowrap;
         }
@@ -116,6 +120,17 @@ table{
             padding-block: 0;
             padding-inline: 20px;
             border: none;
+
+            &.date,
+            &.view{
+              &::before{
+                content: attr(data-label);
+                display: inline-block;
+                margin-right: 8px;
+                color: $txt-main;
+                font-weight: 500;
+              }
+            }
         }
 
         td.title{
@@ -131,11 +146,26 @@ table{
         td.date{
             text-align: left !important;
             padding-top: 0;
+            display: inline-flex;
+            align-items: center;
+            width: auto;
+            padding-inline: 20px 10px;
         }
 
         td.view{
-            display: none;
+            display: inline-flex;
+            align-items: center;
+            width: auto;
+            padding-inline: 10px 20px;
         }
     }
+}
+
+.table-link:hover {
+  text-decoration: underline;
+}
+
+.table-link:focus-visible {
+  @include focus-ring();
 }
 </style> 

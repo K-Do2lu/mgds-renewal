@@ -5,13 +5,6 @@ import ceoImg from '@/assets/img/ceo.png'
 <template>
   <div class="sub-company-ceo">
     <section class="sub-company-ceo__block" aria-labelledby="sub-company-ceo-title">
-      <div class="sub-company-ceo__intro">
-        <div class="sec-title">
-          <span class="sec-title__sub">CEO</span>
-          <h2 id="sub-company-ceo-title" class="sec-title__title">CEO 인사말</h2>
-        </div>
-      </div>
-
       <div class="sub-company-ceo__hero" role="group" aria-label="CEO 인사말 헤드라인">
         <div class="sub-company-ceo__hero-text">
           <p class="sub-company-ceo__headline">MGDS, Make Growth Digital.</p>

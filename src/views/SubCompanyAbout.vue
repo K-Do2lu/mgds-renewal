@@ -1,18 +1,7 @@
 <script setup>
-import { ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import downloadIcon from '@/assets/img/download.svg'
 import orgImg from '@/assets/img/org.svg'
-import partner01 from '@/assets/img/partner_01.svg'
-import partner02 from '@/assets/img/partner_02.svg'
-import partner03 from '@/assets/img/partner_03.svg'
-import partner04 from '@/assets/img/partner_04.svg'
-import partner05 from '@/assets/img/partner_05.svg'
-import partner06 from '@/assets/img/partner_06.svg'
-import BaseSlider from '@/components/BaseSlider.vue'
-import slideArrowLeft from '@/assets/img/slide_arrow_left.svg'
-import slideArrowRight from '@/assets/img/slide_arrow_right.svg'
-
-const historySliderRef = ref(null)
 
 const companyRows = [
   { label: '회사명', value: 'MG데이터시스템' },
@@ -34,15 +23,6 @@ const ciItems = [
   { label: '영문 세로형' },
   { label: '국문 가로형 응용2' },
   { label: '응용 영문 혼합형2' },
-]
-
-const partnerItems = [
-  { label: 'EXOM', src: partner01 },
-  { label: 'FOWAVESOFT', src: partner02 },
-  { label: 'HS정보통신서비스', src: partner03 },
-  { label: 'R2WARE', src: partner04 },
-  { label: 'FORCS', src: partner05 },
-  { label: 'KSIGN', src: partner06 },
 ]
 
 const historyYears = [
@@ -92,6 +72,54 @@ const historyYears = [
   },
 ]
 
+const historyNavItems = computed(() =>
+  historyYears.map((y) => ({ id: `history-${y.year}`, label: y.year })),
+)
+
+const activeHistoryYear = ref(`history-${historyYears[0].year}`)
+
+let historyIo = null
+
+onMounted(() => {
+  const sectionEls = historyNavItems.value
+    .map(({ id }) => document.getElementById(id))
+    .filter(Boolean)
+
+  if (!sectionEls.length || typeof IntersectionObserver === 'undefined') return
+
+  historyIo = new IntersectionObserver(
+    (entries) => {
+      const visible = entries
+        .filter((e) => e.isIntersecting && e.intersectionRatio > 0.12)
+        .reduce(
+          (best, e) =>
+            !best || e.intersectionRatio > best.intersectionRatio ? e : best,
+          null,
+        )
+      if (visible?.target?.id) {
+        activeHistoryYear.value = visible.target.id
+      }
+    },
+    { root: null, rootMargin: '-32% 0px -40% 0px', threshold: [0, 0.15, 0.35, 0.55] },
+  )
+
+  for (const el of sectionEls) {
+    historyIo.observe(el)
+  }
+})
+
+onBeforeUnmount(() => {
+  historyIo?.disconnect()
+  historyIo = null
+})
+
+function onHistoryNavClick(id, e) {
+  e.preventDefault()
+  const el = document.getElementById(id)
+  el?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  activeHistoryYear.value = id
+}
+
 function onCiClick(e) {
   e.preventDefault()
 }
@@ -100,13 +128,6 @@ function onCiClick(e) {
 <template>
   <div class="sub-company-about">
     <section class="sub-company-about__hero" aria-labelledby="sub-company-about-title">
-      <div class="sub-company-about__intro">
-        <div class="sec-title">
-          <span class="sec-title__sub">About</span>
-          <h2 id="sub-company-about-title" class="sec-title__title">MG데이터시스템</h2>
-        </div>
-      </div>
-
       <div class="sub-company-about__info">
         <table class="sub-company-about__table">
           <tbody>
@@ -151,77 +172,61 @@ function onCiClick(e) {
       </div>
     </section>
 
-    <section class="sub-company-about__partners" aria-labelledby="sub-company-partners-title">
-      <div class="sub-company-about__partners-intro">
-        <div class="sec-title">
-          <span class="sec-title__sub">Partners</span>
-          <h3 id="sub-company-partners-title" class="sec-title__title">협력사</h3>
-        </div>
-      </div>
-
-      <ul class="sub-company-about__partners-grid" role="list">
-        <li v-for="item in partnerItems" :key="item.label" class="sub-company-about__partners-item">
-          <div class="sub-company-about__partners-card">
-            <img class="sub-company-about__partners-logo" :src="item.src" :alt="`${item.label} 로고`" />
-          </div>
-        </li>
-      </ul>
-    </section>
-
     <section class="sub-company-about__history" aria-labelledby="sub-company-history-title">
-      <div class="sub-company-about__history-head">
-        <div class="sub-company-about__history-title">
-          <span class="sub-company-about__history-eyebrow">History</span>
-          <h3 id="sub-company-history-title" class="sub-company-about__history-heading">
-            나은 미래, 더 나은 가치를 위해<br />
-            성장을 거듭하는 MGDS가 되겠습니다.
-          </h3>
-        </div>
-
-        <div class="sub-company-about__history-controls" aria-label="연혁 슬라이더 컨트롤">
-          <button
-            type="button"
-            class="sub-company-about__history-nav sub-company-about__history-nav--prev"
-            :disabled="!historySliderRef || historySliderRef.index === 0"
-            aria-label="이전"
-            @click="historySliderRef?.prev?.()"
-          >
-            <img class="sub-company-about__history-nav-ico" :src="slideArrowLeft" alt="" aria-hidden="true" />
-          </button>
-          <button
-            type="button"
-            class="sub-company-about__history-nav sub-company-about__history-nav--next"
-            :disabled="!historySliderRef || historySliderRef.index === historySliderRef.maxIndex"
-            aria-label="다음"
-            @click="historySliderRef?.next?.()"
-          >
-            <img class="sub-company-about__history-nav-ico" :src="slideArrowRight" alt="" aria-hidden="true" />
-          </button>
+      <div class="sub-company-about__history-intro">
+        <div class="sec-title">
+          <span class="sec-title__sub">History</span>
+          <h3 id="sub-company-history-title" class="sec-title__title">연혁</h3>
         </div>
       </div>
 
-      <div class="sub-company-about__history-body">
-        <BaseSlider
-          ref="historySliderRef"
-          class="sub-company-about__history-slider"
-          aria-label="연혁 슬라이더"
-          :item-count="historyYears.length"
-          item-selector=".sub-company-about__history-year"
-        >
-          <article
+      <div class="sub-company-about__history-layout">
+        <nav class="sub-company-about__history-aside" aria-label="연혁 연도">
+          <ul class="sub-company-about__history-nav">
+            <li v-for="item in historyNavItems" :key="item.id" class="sub-company-about__history-nav-item">
+              <a
+                :href="`#${item.id}`"
+                class="sub-company-about__history-nav-link"
+                :class="{ 'is-active': activeHistoryYear === item.id }"
+                :aria-current="activeHistoryYear === item.id ? true : undefined"
+                @click="onHistoryNavClick(item.id, $event)"
+              >
+                <span
+                  class="sub-company-about__history-nav-dot"
+                  :class="{ 'is-active': activeHistoryYear === item.id }"
+                  aria-hidden="true"
+                >
+                  <span
+                    v-if="activeHistoryYear === item.id"
+                    class="sub-company-about__history-nav-dot-ring"
+                  />
+                </span>
+                <span class="sub-company-about__history-nav-label">{{ item.label }}</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="sub-company-about__history-main">
+          <section
             v-for="y in historyYears"
+            :id="`history-${y.year}`"
             :key="y.year"
-            class="sub-company-about__history-year"
-            data-slider-item
+            class="sub-company-about__history-block"
+            tabindex="-1"
+            :aria-labelledby="`history-year-${y.year}`"
           >
-            <h4 class="sub-company-about__history-year-title">{{ y.year }}</h4>
-            <ul class="sub-company-about__history-list" role="list">
-              <li v-for="(it, i) in y.items" :key="`${y.year}-${i}`" class="sub-company-about__history-item">
-                <p class="sub-company-about__history-text">{{ it.text }}</p>
+            <h4 :id="`history-year-${y.year}`" class="sub-company-about__history-year-heading">
+              {{ y.year }}
+            </h4>
+            <ul class="sub-company-about__history-bullets" role="list">
+              <li v-for="(it, i) in y.items" :key="`${y.year}-${i}`" class="sub-company-about__history-bullet">
+                <span class="sub-company-about__history-bullet-date">{{ it.date }}</span>
+                <span class="sub-company-about__history-bullet-text">{{ it.text }}</span>
               </li>
             </ul>
-          </article>
-        </BaseSlider>
+          </section>
+        </div>
       </div>
     </section>
   </div>

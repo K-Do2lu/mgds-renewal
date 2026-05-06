@@ -89,17 +89,30 @@ function go(p) {
   justify-content: center;
   align-items: center;
   gap: 6px;
-  padding-top: 18px;
+  padding-top: 24px;
+}
+
+@media (max-width: 767px) {
+  .paging {
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+
+  .paging__num,
+  .paging__btn {
+    height: 36px;
+    min-width: 36px;
+  }
 }
 
 .paging__num {
-  height: 32px;
-  min-width: 32px;
+  height: 40px;
+  min-width: 40px;
   padding: 0 10px;
   border: 0;
-  background: $bg-main;
+  background: #f3f6fd;
   color: $txt-sub;
-  border-radius: 6px;
+  border-radius: 10px;
   font-size: 16px;
   line-height: 1;
   cursor: pointer;
@@ -109,12 +122,12 @@ function go(p) {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
   padding: 0;
-  border: 1px solid $border-main;
-  background: $gray-000;
-  border-radius: 6px;
+  border: 1px solid rgba(29, 78, 216, 0.2);
+  background: #fff;
+  border-radius: 10px;
   color: inherit;
   cursor: pointer;
 }
@@ -138,9 +151,16 @@ function go(p) {
 }
 
 .paging__num.is-active {
-  background: $bg-main;
-  color: $point-main;
+  background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%);
+  color: #fff;
   font-weight: 700;
+  border: 1px solid transparent;
+  box-shadow: none;
+}
+
+.paging__btn:focus-visible,
+.paging__num:focus-visible {
+  @include focus-ring();
 }
 </style>
 

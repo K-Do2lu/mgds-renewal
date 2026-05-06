@@ -2,29 +2,55 @@
 
 .sub-banner {
   @include layout-full-bleed;
-  @include clamp(min-height, 200px, 320px);
+  @include clamp(min-height, 240px, 360px);
   background-size: cover;
-  background-position: center;
+  background-position: center top;
   background-repeat: no-repeat;
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(110deg, rgba(7, 18, 42, 0.78) 0%, rgba(7, 18, 42, 0.55) 45%, rgba(7, 18, 42, 0.2) 100%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 60%);
+  }
 }
 
 .sub-banner__inner {
+  position: relative;
+  z-index: 1;
+  width: min(1400px, 100%);
+  margin-inline: auto;
   min-height: inherit;
-  display: grid;
-  place-items: center;
-  padding: 28px 16px;
-  background: rgba(0, 0, 0, 0.18);
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding: clamp(28px, 5vw, 56px) clamp(16px, 3vw, 36px);
 }
 
 .sub-banner__title {
   margin: 0;
   color: #fff;
   font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  @include clamp(font-size, 32px, 56px);
-  line-height: 1.1;
-  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  letter-spacing: -0.01em;
+  text-transform: none;
+  @include clamp(font-size, 32px, 52px);
+  line-height: 1.14;
+  text-shadow: 0 8px 22px rgba(0, 0, 0, 0.3);
+}
+
+@include bp(mo) {
+  .sub-banner__inner {
+    padding: clamp(20px, 6vw, 26px) clamp(16px, 3vw, 20px);
+    align-items: flex-end;
+  }
+
+  .sub-banner__title {
+    @include clamp(font-size, 26px, 36px);
+    line-height: 1.12;
+  }
 }
 
 .sub-banner__title.reveal {
