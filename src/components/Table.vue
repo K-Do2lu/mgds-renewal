@@ -1,6 +1,4 @@
 <script setup>
-import BedgeList from '@/components/BedgeList.vue'
-
 defineProps({
     items: {
         type: Array,
@@ -27,9 +25,24 @@ defineProps({
            
                 <tr v-for="(item, index) in items" :key="index">
                     <td class="title" data-label="제목">
-                        <BedgeList v-if="item.hot"/>
-                        <router-link class="table-link" :to="item.url">{{ item.title }}</router-link>
-                        <img src="@/assets/img/file.svg" alt="" aria-hidden="true" v-if="item.file"/>
+                        <div class="title-stack">
+                            <span class="title-stack__txt">
+                                <router-link
+                                    class="table-link"
+                                    :class="{ 'table-link--hot': item.hot }"
+                                    :to="item.url"
+                                >
+                                    {{ item.title }}
+                                </router-link>
+                            </span>
+                            <img
+                                v-if="item.file"
+                                class="title-stack__file"
+                                src="@/assets/img/file.svg"
+                                alt=""
+                                aria-hidden="true"
+                            />
+                        </div>
                     </td>
                     <td align="center" class="date" data-label="등록일">{{ item.date }}</td>
                     <td align="center" class="view" data-label="조회수"> {{ item.view }} </td>
@@ -74,20 +87,32 @@ table{
         
         &.title{
             min-width: 0;
-            @include flex(row, null, center, 12px);
             @include clamp(font-size, 15px, 18px);
-            flex-wrap: nowrap;
 
-            > :not(a){
-                flex-shrink: 0;
+            .title-stack {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                min-width: 0;
+                width: 100%;
             }
-            a{
+
+            .title-stack__txt {
                 min-width: 0;
                 flex: 1 1 auto;
+                overflow: hidden;
+            }
+
+            .title-stack__txt .table-link {
+                display: block;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
                 text-underline-offset: 3px;
+            }
+
+            .title-stack__file {
+                flex-shrink: 0;
             }
         }
         &.date, &.view{
@@ -136,7 +161,7 @@ table{
         td.title{
             padding-bottom: 8px;
 
-            a{
+            .title-stack__txt .table-link {
                 white-space: normal;
                 overflow: visible;
                 text-overflow: clip;
@@ -163,6 +188,11 @@ table{
 
 .table-link:hover {
   text-decoration: underline;
+}
+
+.table-link--hot {
+  color: $point-main;
+  font-weight: 700;
 }
 
 .table-link:focus-visible {

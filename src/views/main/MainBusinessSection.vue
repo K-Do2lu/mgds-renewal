@@ -1,10 +1,48 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, onBeforeUnmount, onMounted, shallowRef } from 'vue'
 import item06 from '@/assets/img/business_item_06.svg'
 import { businessSectionCards as cards } from '@/config/businessSectionCards.js'
 
-const featuredCard = computed(() => cards[0])
-const secondaryCards = computed(() => cards.slice(1))
+/** 메인 배너와 비슷한 템포로 피처드 교체 (ms) */
+const FEATURED_ROTATE_MS = 6000
+
+/** 직전과 다른 카드를 무작위 선택 */
+function pickRandomFeatured(excludeKey) {
+  if (cards.length <= 1) return cards[0]
+  let next = cards[0]
+  let guard = 0
+  while (guard < 16 && next.key === excludeKey) {
+    next = cards[Math.floor(Math.random() * cards.length)] ?? cards[0]
+    guard++
+  }
+  return next
+}
+
+const featuredCard = shallowRef(pickRandomFeatured(undefined))
+
+const secondaryCards = computed(() =>
+  cards.filter((c) => c.key !== featuredCard.value.key),
+)
+
+let featuredRotateTimer = null
+
+onMounted(() => {
+  if (
+    typeof window !== 'undefined' &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  ) {
+    return
+  }
+
+  featuredRotateTimer = window.setInterval(() => {
+    if (typeof document !== 'undefined' && document.hidden) return
+    featuredCard.value = pickRandomFeatured(featuredCard.value.key)
+  }, FEATURED_ROTATE_MS)
+})
+
+onBeforeUnmount(() => {
+  if (featuredRotateTimer != null) window.clearInterval(featuredRotateTimer)
+})
 </script>
 
 <template>
@@ -19,13 +57,14 @@ const secondaryCards = computed(() => cards.slice(1))
           금융 IT 서비스 포트폴리오
         </h2>
         <p class="page-section__lead">
-          구축, 운영, 개발, 유지보수를 분리하지 않고 하나의 실행 체계로 제공합니다.
+          금융 기업의 IT시스템 구축부터 운영, 유지보수까지 종합적인 솔루션을 제공하여 최적화된 업무 환경을 지원합니다.
         </p>
       </div>
 
       <div class="main-business__stack" aria-label="사업 영역 카드 목록">
         <router-link
           v-if="featuredCard"
+          :key="featuredCard.key"
           class="main-business__featured"
           :to="`/business/overview#${featuredCard.key}`"
           :style="{ '--featured-bg': `url(${featuredCard.hoverBg})` }"
@@ -78,9 +117,9 @@ const secondaryCards = computed(() => cards.slice(1))
 
 .main-business__layout {
   display: grid;
-  grid-template-columns: minmax(260px, 320px) minmax(0, 1fr);
+  grid-template-columns: minmax(240px, 0.4fr) minmax(0, 1fr);
   align-items: start;
-  gap: clamp(20px, 3vw, 40px);
+  gap: clamp(28px, 4.5vw, 52px);
 }
 
 .main-business__head {
@@ -98,7 +137,7 @@ const secondaryCards = computed(() => cards.slice(1))
 
 .main-business__stack {
   display: grid;
-  gap: 14px;
+  gap: 18px;
 }
 
 .main-business__featured {

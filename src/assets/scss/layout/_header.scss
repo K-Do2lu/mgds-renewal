@@ -1,9 +1,10 @@
 @use "@/assets/scss/abstract" as *;
 
+/* fixed header는 흐름에 안 잡히므로, 실제 바 높이(62~88) + 소량 여백에 맞춤 */
 .header-app {
   position: relative;
   z-index: 1000;
-  @include clamp(padding-top, 86px, 124px);
+  @include clamp(padding-top, 70px, 100px);
 }
 
 header {

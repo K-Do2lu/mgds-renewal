@@ -19,7 +19,7 @@ import { businessSectionCards } from '@/config/businessSectionCards.js'
             <span class="business-overview__section-heading-ko">{{ card.title }}</span>
           </h3>
           <div class="business-overview__section-copy">
-            <p class="business-overview__section-summary">{{ card.summary }}</p>
+            <p v-if="card.summary" class="business-overview__section-summary">{{ card.summary }}</p>
             <p class="business-overview__section-body">{{ card.body }}</p>
           </div>
         </div>

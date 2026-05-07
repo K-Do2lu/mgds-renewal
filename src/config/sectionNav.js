@@ -22,10 +22,7 @@ export const subNavBySection = {
     { to: '/notice/archive', label: '자료실', routeName: 'NoticeArchive' },
     { to: '/notice/tender', label: '입찰공고', routeName: 'NoticeTender' },
   ],
-  recruit: [
-    { to: '/recruit/careers', label: '채용공고', routeName: 'RecruitCareers' },
-    { to: '/recruit/talent', label: '인재상', routeName: 'RecruitTalent' },
-  ],
+  recruit: [{ to: '/recruit/talent', label: '인재상', routeName: 'RecruitTalent' }],
 }
 
 /** PC 헤더 호버 메가 메뉴 (제목·설명·썸네일) */

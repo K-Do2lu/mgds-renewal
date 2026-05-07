@@ -65,14 +65,14 @@ const items = ref(
 .page-section__inner {
   display: flex;
   align-items: flex-start;
-  @include clamp(gap, 40px, 60px);
+  @include clamp(gap, 48px, 72px);
 }
 
 .main-spotlight__layout {
   display: grid;
   grid-template-columns: minmax(250px, 320px) minmax(0, 1fr);
   align-items: start;
-  gap: clamp(20px, 3vw, 42px);
+  gap: clamp(28px, 4vw, 52px);
 }
 
 .main-spotlight__eyebrow {

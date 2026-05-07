@@ -11,14 +11,17 @@
 .badge{
     border-radius: 1000px;
     &.list{
-        @include wh(auto, 54px, 58px, auto, 25px, 31px);
-        padding-inline: 12px;
-        @include clamp(padding-block, 4px, 6px);
-        @include clamp(font-size, 14px, 16px);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        @include wh(auto, 44px, 48px, auto, 20px, 24px);
+        padding-inline: 8px;
+        @include clamp(padding-block, 3px, 5px);
+        @include clamp(font-size, 12px, 14px);
         font-weight: 500;
         color: $txt-white;
         background: $point-main;
-        line-height: 1.2;
+        line-height: 1;
     }
 }
 </style>

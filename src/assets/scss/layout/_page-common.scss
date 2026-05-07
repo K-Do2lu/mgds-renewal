@@ -1,9 +1,8 @@
 @use "@/assets/scss/abstract" as *;
 
-/** 좌우 인셋만 (섹션 래퍼 바깥) */
+/** 좌우 인셋만 — 세로는 `.page-section`의 `section-block-spacing`과 겹치지 않게 분리 */
 @mixin layout-page-gutters {
   @include clamp(padding-inline, 20px, 40px);
-  @include clamp(padding-block, 36px, 76px);
 }
 
 /** 콘텐츠 최대 너비 + 가운데 정렬 */
@@ -16,6 +15,7 @@
 @mixin layout-page-frame {
   @include layout-page-inner-width;
   @include layout-page-gutters;
+  @include clamp(padding-block, 36px, 76px);
 }
 
 /**
@@ -23,7 +23,7 @@
  * — 배경은 modifier
  */
 @mixin section-block-spacing {
-  @include clamp(padding-block, 60px, 120px);
+  @include clamp(padding-block, 80px, 140px);
 }
 
 .page-section {
@@ -45,7 +45,7 @@
 }
 
 .page-section__lead {
-  margin: 14px 0 0;
+  margin: 18px 0 0;
   color: $txt-sub;
   @include clamp(font-size, 16px, 20px);
   @include clamp(line-height, 24px, 32px);

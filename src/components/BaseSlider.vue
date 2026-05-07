@@ -1,6 +1,8 @@
 <script setup>
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 
+import slideArrow from '@/assets/img/slide_arrow_left.svg'
+
 const props = defineProps({
   itemCount: { type: Number, required: true },
   ariaLabel: { type: String, default: '슬라이더' },
@@ -264,7 +266,7 @@ onBeforeUnmount(() => {
         aria-label="이전"
         @click="prev"
       >
-        ‹
+        <img class="base-slider__nav-icon" :src="slideArrow" alt="" aria-hidden="true" width="11" height="18" />
       </button>
       <div class="base-slider__dots" role="tablist" aria-label="슬라이더 페이지">
         <button
@@ -285,7 +287,14 @@ onBeforeUnmount(() => {
         aria-label="다음"
         @click="next"
       >
-        ›
+        <img
+          class="base-slider__nav-icon base-slider__nav-icon--next"
+          :src="slideArrow"
+          alt=""
+          aria-hidden="true"
+          width="11"
+          height="18"
+        />
       </button>
     </div>
   </div>
@@ -332,6 +341,9 @@ onBeforeUnmount(() => {
 }
 
 .base-slider__nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 40px;
   height: 40px;
   border-radius: 999px;
@@ -344,6 +356,16 @@ onBeforeUnmount(() => {
     opacity: 0.35;
     cursor: not-allowed;
   }
+}
+
+.base-slider__nav-icon {
+  display: block;
+  width: 11px;
+  height: auto;
+}
+
+.base-slider__nav-icon--next {
+  transform: scaleX(-1);
 }
 
 .base-slider__dots {

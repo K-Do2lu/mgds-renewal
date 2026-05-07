@@ -85,8 +85,8 @@ const metrics = [
 
 .main-about__layout {
   display: grid;
-  grid-template-columns: minmax(260px, 0.95fr) minmax(0, 1.05fr);
-  gap: clamp(20px, 3vw, 40px);
+  grid-template-columns: minmax(0, 5fr) minmax(0, 8fr);
+  gap: clamp(28px, 4.5vw, 56px);
   align-items: center;
 }
 

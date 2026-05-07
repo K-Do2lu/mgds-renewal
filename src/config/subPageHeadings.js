@@ -48,11 +48,6 @@ export const subPageHeadingsByRouteName = {
   },
 
   // RECRUIT
-  RecruitCareers: {
-    id: 'sub-recruit-careers-title',
-    sub: 'Recruit',
-    title: '채용공고',
-  },
   RecruitTalent: {
     id: 'recruit-talent-title',
     sub: 'Talent',

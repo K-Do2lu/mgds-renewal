@@ -74,33 +74,44 @@
 
 @include bp(mo) {
   .sub-notice-page__toolbar {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-  }
-
-  .sub-notice-page__search {
-    flex: 1 1 auto;
-    min-width: 0;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    justify-content: flex-end;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 12px;
   }
 
   .sub-notice-page__count {
     font-size: 13px;
+    flex: none;
+  }
+
+  .sub-notice-page__search {
+    flex: none;
+    width: 100%;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    justify-content: flex-start;
   }
 
   .sub-notice-page__search :deep(.el-select) {
-    width: 96px;
-    flex: 0 0 auto;
+    width: 100%;
+    max-width: none;
+    flex: none;
   }
 
   .sub-notice-page__search :deep(.el-input) {
-    width: min(56vw, 240px);
-    flex: 1 1 auto;
+    width: 100%;
+    max-width: none;
+    flex: none;
+    min-width: 0;
+  }
+
+  /* suffix 아이콘 옆에도 플레이스홀더가 잘리지 않도록 */
+  .sub-notice-page__search :deep(.el-input__inner) {
+    text-overflow: ellipsis;
   }
 
   .sub-notice-page__search-help {

@@ -11,7 +11,6 @@ import SubBusinessPartners from '@/views/SubBusinessPartners.vue'
 import SubNoticeTable from '@/views/SubNoticeTable.vue'
 import SubArchiveTable from '@/views/SubArchiveTable.vue'
 import SubTenderTable from '@/views/SubTenderTable.vue'
-import SubRecruitCareers from '@/views/SubRecruitCareers.vue'
 import SubRecruitTalent from '@/views/SubRecruitTalent.vue'
 import SubCompanyLoc from '@/views/SubCompanyLoc.vue'
 import SubCompanyCeo from '@/views/SubCompanyCeo.vue'
@@ -63,7 +62,7 @@ const routes = [
     component: RecruitSection,
     redirect: '/recruit/talent',
     children: [
-      { path: 'careers', name: 'RecruitCareers', component: SubRecruitCareers },
+      { path: 'careers', redirect: '/recruit/talent' },
       { path: 'talent', name: 'RecruitTalent', component: SubRecruitTalent },
     ],
   },

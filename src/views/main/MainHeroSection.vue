@@ -71,7 +71,7 @@ onBeforeUnmount(() => {
           </p>
           <div class="main-hero__cta">
             <RouterLink to="/business/overview" class="main-hero__cta-btn">사업영역 보기</RouterLink>
-            <RouterLink to="/recruit/careers" class="main-hero__cta-btn main-hero__cta-btn--ghost">
+            <RouterLink to="/recruit/talent" class="main-hero__cta-btn main-hero__cta-btn--ghost">
               인재채용 보기
             </RouterLink>
           </div>
@@ -106,25 +106,36 @@ onBeforeUnmount(() => {
 <style scoped lang="scss">
 @use '@/assets/scss/abstract' as *;
 
+/* 뷰포트 너비·21:9·vh 상한을 함께 써서 배너 비율을 일정하게 유지 */
 .main-hero {
-  height: 100dvh;
-  min-height: 100dvh;
-  padding: 0 $layout-page-padding $layout-page-padding;
+  height: auto;
+  min-height: 0;
+  padding: 0;
+  @include clamp(padding-inline, 20px, 40px);
+  padding-bottom: clamp(28px, 4.2vw, 48px);
   box-sizing: border-box;
-
-  @supports (height: 100svh) {
-    height: 100svh;
-    min-height: 100svh;
-  }
 }
 
 .main-hero__frame {
   position: relative;
   width: 100%;
-  height: 100%;
-  border-radius: $radius-hero;
+  height: min(
+    calc((100vw - clamp(40px, 5vw, 80px)) * 9 / 21),
+    70dvh,
+    660px
+  );
+  min-height: clamp(300px, 30vw, 400px);
+  border-radius: clamp(14px, 1.8vw, #{$radius-hero});
   overflow: hidden;
   transform: translateZ(0);
+
+  @supports (height: 100svh) {
+    height: min(
+      calc((100vw - clamp(40px, 5vw, 80px)) * 9 / 21),
+      70svh,
+      660px
+    );
+  }
 }
 
 .main-hero__video {
@@ -134,6 +145,7 @@ onBeforeUnmount(() => {
   width: calc(100% + 4px);
   height: calc(100% + 4px);
   object-fit: cover;
+  object-position: center 40%;
   transform: translateZ(0);
   backface-visibility: hidden;
 }
@@ -153,11 +165,16 @@ onBeforeUnmount(() => {
   position: relative;
   z-index: 1;
   height: 100%;
+  width: 100%;
+  max-width: $layout-max-width;
+  margin-inline: auto;
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  padding: clamp(24px, 5vw, 60px);
+  padding-block: clamp(16px, 3.2vh, 44px);
+  padding-inline: 0;
 }
 
 .main-hero__text {
@@ -165,9 +182,9 @@ onBeforeUnmount(() => {
 }
 
 .main-hero__eyebrow {
-  margin: 0 0 14px;
+  margin: 0 0 10px;
   color: rgba(255, 255, 255, 0.85);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.18em;
 }
@@ -179,7 +196,7 @@ onBeforeUnmount(() => {
   text-shadow: $shadow-text-hero;
   letter-spacing: -0.02em;
   line-height: 1.12;
-  @include clamp(font-size, 32px, 60px);
+  @include clamp(font-size, 28px, 52px);
 
   span {
     display: block;
@@ -187,11 +204,11 @@ onBeforeUnmount(() => {
 }
 
 .main-hero__desc {
-  margin: 18px 0 0;
+  margin: 14px 0 0;
   color: rgba(255, 255, 255, 0.9);
   text-shadow: $shadow-text-hero;
   line-height: 1.5;
-  @include clamp(font-size, 20px, 32px);
+  @include clamp(font-size, 16px, 26px);
 
   span {
     display: block;
@@ -202,7 +219,7 @@ onBeforeUnmount(() => {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-top: 22px;
+  margin-top: 18px;
 }
 
 .main-hero__cta-btn {
@@ -233,9 +250,10 @@ onBeforeUnmount(() => {
 }
 
 .main-hero__panel {
-  width: min(320px, 100%);
-  padding: 18px;
-  border-radius: 14px;
+  flex: 0 0 auto;
+  width: min(300px, 38%);
+  padding: 16px;
+  border-radius: 12px;
   background: rgba(9, 20, 42, 0.42);
   border: 1px solid rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(8px);
@@ -276,7 +294,7 @@ onBeforeUnmount(() => {
 
 .main-hero__indicator {
   position: absolute;
-  right: 22px;
+  right: clamp(12px, 2.2vw, 22px);
   top: 50%;
   transform: translateY(-50%);
   z-index: 2;
@@ -344,31 +362,31 @@ onBeforeUnmount(() => {
 
 @include bp(mo) {
   .main-hero {
-    height: 100vh;
-    min-height: 100vh;
     padding: 0;
-
-    @supports (height: 100svh) {
-      height: 100svh;
-      min-height: 100svh;
-    }
+    padding-bottom: 0;
   }
 
   .main-hero__frame {
+    height: min(calc(100vw * 9 / 16), min(68svh, 500px));
+    min-height: clamp(280px, 48vw, 360px);
     border-radius: 0;
+
+    @supports (height: 100svh) {
+      height: min(calc(100vw * 9 / 16), min(68svh, 500px));
+    }
   }
 
   .main-hero__content {
-    padding: clamp(22px, 6vw, 32px);
+    padding: clamp(18px, 5vw, 28px);
     justify-content: center;
   }
 
   .main-hero__title {
-    @include clamp(font-size, 30px, 42px);
+    @include clamp(font-size, 26px, 36px);
   }
 
   .main-hero__desc {
-    @include clamp(font-size, 16px, 22px);
+    @include clamp(font-size, 15px, 19px);
   }
 
   .main-hero__panel {

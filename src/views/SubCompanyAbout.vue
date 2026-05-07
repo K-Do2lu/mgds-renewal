@@ -14,16 +14,23 @@ const companyRows = [
   { label: '대표전화/팩스', value: '(관리)02-2669-2993/02-2699-0056' },
 ]
 
+/** public/downloads/ci 에 동일 파일명으로 두면 다운로드됩니다 (public/downloads/ci/README.txt 참고) */
+const CI_DOWNLOAD_BASE = `${String(import.meta.env.BASE_URL || '/').replace(/\/$/, '')}/downloads/ci`
+
 const ciItems = [
-  { label: '국문 가로형' },
-  { label: '국문 세로형' },
-  { label: '국문 가로형 응용1' },
-  { label: '응용 영문 혼합형1' },
-  { label: '영문 가로형' },
-  { label: '영문 세로형' },
-  { label: '국문 가로형 응용2' },
-  { label: '응용 영문 혼합형2' },
+  { label: '국문 가로형 기본', file: 'MG데이터시스템-가로형-기본.ai' },
+  { label: '국문 세로형 기본', file: 'MG데이터시스템-세로형-기본.ai' },
+  { label: '국문 가로형 응용', file: 'MG데이터시스템-가로형-응용.ai' },
+  { label: '국문 세로형 응용', file: 'MG데이터시스템-세로형-응용.ai' },
+  { label: '응용 영문 혼합형 1', file: 'MG데이터시스템-가로형-응용(영문혼합)-01.ai' },
+  { label: '응용 영문 혼합형 2', file: 'MG데이터시스템-가로형-응용(영문혼합)-02.ai' },
+  { label: '영문 가로형 기본', file: 'MG데이터시스템-가로형-기본(영문).ai' },
+  { label: '영문 세로형 기본', file: 'MG데이터시스템-세로형-기본(영문).ai' },
 ]
+
+function ciDownloadHref(file) {
+  return `${CI_DOWNLOAD_BASE}/${encodeURIComponent(file)}`
+}
 
 const historyYears = [
   {
@@ -120,9 +127,6 @@ function onHistoryNavClick(id, e) {
   activeHistoryYear.value = id
 }
 
-function onCiClick(e) {
-  e.preventDefault()
-}
 </script>
 
 <template>
@@ -141,12 +145,12 @@ function onCiClick(e) {
         <section class="sub-company-about__ci" aria-labelledby="sub-company-ci-title">
           <h3 id="sub-company-ci-title" class="sub-company-about__ci-heading">CI 다운로드</h3>
           <ul class="sub-company-about__ci-grid" role="list">
-            <li v-for="item in ciItems" :key="item.label" class="sub-company-about__ci-item">
+            <li v-for="item in ciItems" :key="item.file" class="sub-company-about__ci-item">
               <a
                 class="sub-company-about__ci-card"
-                href="#"
-                :aria-label="`${item.label} CI 파일 다운로드`"
-                @click="onCiClick"
+                :href="ciDownloadHref(item.file)"
+                :download="item.file"
+                :aria-label="`${item.label} CI ${item.file} 다운로드`"
               >
                 <span class="sub-company-about__ci-label">{{ item.label }}</span>
                 <span class="sub-company-about__ci-icon" aria-hidden="true">

@@ -27,9 +27,9 @@
 
 .business-overview__section-grid {
   display: grid;
-  grid-template-columns: minmax(0, 0.34fr) minmax(0, 1fr);
-  gap: clamp(20px, 3.5vw, 56px);
-  align-items: start;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 8fr);
+  gap: clamp(24px, 4vw, 56px);
+  align-items: center;
 }
 
 .business-overview__section-heading {
@@ -58,7 +58,7 @@
 }
 
 .business-overview__section-copy {
-  padding-top: 2px;
+  max-width: 52rem;
 }
 
 .business-overview__section-summary {
@@ -123,7 +123,12 @@
 @include bp(tab) {
   .business-overview__section-grid {
     grid-template-columns: 1fr;
+    align-items: stretch;
     gap: clamp(16px, 3vw, 24px);
+  }
+
+  .business-overview__section-copy {
+    max-width: none;
   }
 
   .business-overview__section-media {
