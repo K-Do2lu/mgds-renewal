@@ -53,8 +53,8 @@ onBeforeUnmount(() => {
     <div class="page-section__inner main-business__layout" v-reveal>
       <div class="main-business__head">
         <h2 id="main-business-title" class="page-section__title">
-          기업 운영의 핵심을 연결하는<br />
-          금융 IT 서비스 포트폴리오
+          <span class="title-line">기업 운영의 핵심을</span>
+          <span class="title-line">연결하는 금융 IT 서비스 포트폴리오</span>
         </h2>
         <p class="page-section__lead">
           금융 기업의 IT시스템 구축부터 운영, 유지보수까지 종합적인 솔루션을 제공하여 최적화된 업무 환경을 지원합니다.

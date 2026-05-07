@@ -20,8 +20,8 @@ const metrics = [
       <div class="main-about__hero">
         <p class="main-about__eyebrow">COMPANY HERO</p>
         <h2 id="main-about-title" class="page-section__title">
-          금융 IT의 표준을 다시 설계하는<br />
-          MG DATA SYSTEM
+          <span class="title-line">금융 IT의 표준을 다시 설계하는</span>
+          <span class="title-line">MG DATA SYSTEM</span>
         </h2>
         <p class="page-section__lead">
           구축부터 운영까지 하나의 흐름으로 연결하는 통합 실행력으로,

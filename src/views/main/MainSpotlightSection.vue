@@ -22,8 +22,8 @@ const items = ref(
       <div class="main-spotlight__head">
         <p class="main-spotlight__eyebrow">NEWSROOM</p>
         <h2 id="main-spotlight-title" class="page-section__title">
-          MG데이터시스템의<br />
-          최신 소식
+          <span class="title-line title-line--nowrap">MG데이터시스템의</span>
+          <span class="title-line">최신 소식</span>
         </h2>
         <RouterLink class="main-spotlight__more" to="/notice/board">전체 보기</RouterLink>
       </div>
@@ -70,9 +70,10 @@ const items = ref(
 
 .main-spotlight__layout {
   display: grid;
-  grid-template-columns: minmax(250px, 320px) minmax(0, 1fr);
+  /* 다른 메인 섹션과 동일한 비율감(좌:우 ≈ 40:60) */
+  grid-template-columns: minmax(240px, 0.4fr) minmax(0, 1fr);
   align-items: start;
-  gap: clamp(28px, 4vw, 52px);
+  gap: clamp(28px, 4.5vw, 56px);
 }
 
 .main-spotlight__eyebrow {

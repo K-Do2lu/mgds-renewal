@@ -7,7 +7,6 @@ import menuBtnMoSvg from '@/assets/img/menu_btn_mo.svg'
 import headerMenuSvg from '@/assets/img/header_menu.svg'
 import menuArrowMoSvg from '@/assets/img/menu_arrow_mo.svg'
 import menuArrowActiveSvg from '@/assets/img/menu_arrow_active.svg'
-import dshopLogoSvg from '@/assets/img/logo_dshop.svg'
 
 const route = useRoute()
 const activeMegaKey = ref(null)
@@ -57,8 +56,6 @@ function cancelClose() {
 
 function toggleMobileMenu() {
   mobileMenuOpen.value = !mobileMenuOpen.value
-  // 모바일 메뉴를 닫고/열 때, 펼침 상태 리셋
-  mobileOpenSection.value = null
 }
 
 function toggleMobileSection(key) {
@@ -199,17 +196,6 @@ onBeforeUnmount(() => {
               </ul>
             </li>
           </ul>
-
-          <a
-            class="mobile-nav__dshop"
-            href="https://mgdshop.co.kr/main/index.do"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="MGDshop 새 창 열기"
-          >
-            <img class="mobile-nav__dshop-logo" :src="dshopLogoSvg" alt="MGDshop" />
-            <img class="mobile-nav__dshop-link-ico" :src="linkSvg" alt="" aria-hidden="true" />
-          </a>
         </nav>
       </div>
     </Transition>
@@ -284,7 +270,7 @@ onBeforeUnmount(() => {
                     </template>
                     <template v-else>{{ col.title }}</template>
                   </span>
-
+                  
                 </strong>
                 <p
                   v-for="(line, j) in col.lines"

@@ -200,6 +200,8 @@ onBeforeUnmount(() => {
 
   span {
     display: block;
+    /* 데스크톱/태블릿: 제공된 2줄 문구가 중간에서 또 꺾이지 않게 */
+    white-space: nowrap;
   }
 }
 
@@ -212,6 +214,7 @@ onBeforeUnmount(() => {
 
   span {
     display: block;
+    white-space: nowrap;
   }
 }
 
@@ -383,10 +386,19 @@ onBeforeUnmount(() => {
 
   .main-hero__title {
     @include clamp(font-size, 26px, 36px);
+
+    span {
+      /* 모바일: 화면이 좁아 한 줄 고정이 오히려 어색해져서 풀어줌 */
+      white-space: normal;
+    }
   }
 
   .main-hero__desc {
     @include clamp(font-size, 15px, 19px);
+
+    span {
+      white-space: normal;
+    }
   }
 
   .main-hero__panel {

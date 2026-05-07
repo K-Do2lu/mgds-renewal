@@ -339,12 +339,14 @@ header {
   background: #fff;
   overflow-y: auto;
   padding: 0;
+  position: relative;
 }
 
 .mobile-nav__list {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  padding-bottom: 84px; /* 하단 로고 버튼 공간 확보 */
 }
 
 .mobile-nav__item {
@@ -441,6 +443,47 @@ header {
     color: $point-main;
     @include focus-ring();
   }
+}
+
+/* 모바일 메뉴 좌하단 MGDshop 로고 (참고 이미지처럼 고정) */
+.mobile-nav__dshop {
+  position: absolute;
+  left: 18px;
+  bottom: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  text-decoration: none;
+  padding: 6px 8px;
+  border-radius: 999px;
+  border: 1px solid $border-main;
+  background: #fff;
+  transition: border-color 0.2s ease;
+
+  &:focus-visible {
+    @include focus-ring();
+  }
+
+  /* 터치 환경에서 hover 에뮬레이션으로 '깜빡'이는 현상 방지 */
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      border-color: $point-main;
+    }
+  }
+}
+
+.mobile-nav__dshop-logo {
+  display: block;
+  height: 18px;
+  width: auto;
+}
+
+.mobile-nav__dshop-link-ico {
+  display: block;
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
 }
 
 @media (prefers-reduced-motion: reduce) {
