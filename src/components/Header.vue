@@ -2,6 +2,12 @@
 import { ref, computed, watch, onMounted, onBeforeUnmount } from 'vue'
 import { useRoute } from 'vue-router'
 import { primaryNav, megaItemsForSection } from '@/config/sectionNav'
+import { EXTERNAL_URLS } from '@/config/site'
+import {
+  HEADER_MEGA_CLOSE_DELAY_MS,
+  HEADER_MEGA_FALLBACK_TOP_PX,
+  NAV_WIDE_MIN_WIDTH_PX,
+} from '@/config/layoutConstants'
 import linkSvg from '@/assets/img/link.svg'
 import menuBtnMoSvg from '@/assets/img/menu_btn_mo.svg'
 import headerMenuSvg from '@/assets/img/header_menu.svg'
@@ -12,7 +18,7 @@ import dshopLogoSvg from '@/assets/img/logo_dshop.svg'
 const route = useRoute()
 const activeMegaKey = ref(null)
 const headerEl = ref(null)
-const megaTopPx = ref(72)
+const megaTopPx = ref(HEADER_MEGA_FALLBACK_TOP_PX)
 const isWideNav = ref(true)
 const mobileMenuOpen = ref(false)
 const mobileOpenSection = ref(null)
@@ -25,7 +31,7 @@ function syncMegaTop() {
 }
 
 function syncViewport() {
-  isWideNav.value = window.matchMedia('(min-width: 921px)').matches
+  isWideNav.value = window.matchMedia(`(min-width: ${NAV_WIDE_MIN_WIDTH_PX}px)`).matches
   if (!isWideNav.value) {
     activeMegaKey.value = null
   } else {
@@ -47,7 +53,7 @@ function scheduleClose() {
   closeTimer = window.setTimeout(() => {
     activeMegaKey.value = null
     closeTimer = null
-  }, 160)
+  }, HEADER_MEGA_CLOSE_DELAY_MS)
 }
 
 function cancelClose() {
@@ -202,7 +208,7 @@ onBeforeUnmount(() => {
 
           <a
             class="mobile-nav__dshop"
-            href="https://mgdshop.co.kr/main/index.do"
+            :href="EXTERNAL_URLS.mgdshop"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="MGDshop 새 창 열기"

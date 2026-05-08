@@ -2,6 +2,7 @@
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import downloadIcon from '@/assets/img/download.svg'
 import orgImg from '@/assets/img/org.svg'
+import { publicAssetUrl } from '@/config/site'
 
 const companyRows = [
   { label: '회사명', value: 'MG데이터시스템' },
@@ -15,7 +16,7 @@ const companyRows = [
 ]
 
 /** public/downloads/ci 에 동일 파일명으로 두면 다운로드됩니다 (public/downloads/ci/README.txt 참고) */
-const CI_DOWNLOAD_BASE = `${String(import.meta.env.BASE_URL || '/').replace(/\/$/, '')}/downloads/ci`
+const CI_DOWNLOAD_BASE = publicAssetUrl('downloads/ci')
 
 const ciItems = [
   { label: '국문 가로형 기본', file: 'MG데이터시스템-가로형-기본.ai' },

@@ -27,10 +27,27 @@ const selectPanels = [
   { label: 'Template', code: selectTemplateCode, language: 'html' },
   { label: 'Script', code: selectScriptCode, language: 'javascript' },
 ]
+
+const topBtnPanels = [
+  { label: 'Template', code: '<TopBtn />', language: 'html' },
+  {
+    label: 'Script',
+    code: `// 전역 등록 — import 생략
+// import TopBtn from '@/components/TopBtn.vue'`,
+    language: 'javascript',
+  },
+]
 </script>
 
 <template>
     <section class="guide">
+        <div class="cnt">
+            <h2>Form 가이드</h2>
+            <p class="form-guide-lead">
+              각 항목 아래 <strong>Template</strong> / <strong>Script</strong> 탭에서 코드를 고르고,
+              코드 상단 <strong>전체 복사</strong>로 한 번에 가져가면 됩니다.
+            </p>
+        </div>
         <div class="cnt">
             <h2>Input</h2>
             <div class="itm">
@@ -58,7 +75,16 @@ const selectPanels = [
                <TopBtn />
             </div>
 
-            <CodeBlockTabs :panels="inputPanels" />
+            <CodeBlockTabs :panels="topBtnPanels" />
         </div>
     </section>
 </template>
+
+<style scoped lang="scss">
+.form-guide-lead {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: $txt-sub;
+}
+</style>

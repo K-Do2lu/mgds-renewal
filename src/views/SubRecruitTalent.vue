@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import talentImg from '@/assets/img/talent.png'
 import RecruitCtaSection from '@/components/RecruitCtaSection.vue'
+import { EXTERNAL_URLS } from '@/config/site'
 
 const talentItems = computed(() => [
   {
@@ -51,7 +52,7 @@ const talentItems = computed(() => [
       </div>
     </section>
 
-    <RecruitCtaSection career-href="https://career.mgdatasystem.co.kr/">
+    <RecruitCtaSection :career-href="EXTERNAL_URLS.careers">
       <p>
         당신의 새로운 도전이 곧,<br />
         MGDS의 새로운 이야기가 됩니다.

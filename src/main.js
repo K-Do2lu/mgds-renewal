@@ -8,6 +8,7 @@ import Input from '@/components/Input.vue'
 import Select from '@/components/Select.vue'
 import TopBtn from '@/components/TopBtn.vue'
 import revealDirective from '@/directives/reveal.js'
+import { initDocumentTitle } from '@/config/site'
 
 // 새로고침 시 브라우저가 이전 스크롤 위치를 복원하면
 // ScrollTrigger/스크롤 기반 UI가 "이미 진행된 상태"로 보일 수 있어 초기 로드에선 복원을 끈다.
@@ -16,6 +17,8 @@ try {
 } catch {
   // noop
 }
+
+initDocumentTitle()
 
 const app = createApp(App)
 

@@ -1,3 +1,5 @@
+import { EXTERNAL_URLS } from '@/config/site'
+
 /** 헤더 1depth */
 export const primaryNav = [
   { to: '/company', label: 'COMPANY', sectionKey: 'company' },
@@ -78,7 +80,7 @@ export const megaMenuBySection = {
   ],
   recruit: [
     {
-      externalUrl: 'https://career.mgdatasystem.co.kr/',
+      externalUrl: EXTERNAL_URLS.careers,
       title: '채용공고',
       lines: ['MG데이터시스템 채용 사이트에서', '채용공고를 확인하세요.'],
       thumb: new URL('../assets/img/header_item_07.svg', import.meta.url).href,
