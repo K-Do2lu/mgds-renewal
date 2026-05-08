@@ -1,7 +1,18 @@
 <script setup>
+import { RouterLink } from 'vue-router'
 import SubPageHeading from '@/components/SubPageHeading.vue'
 
 const updatedAt = '2023.01.09'
+
+const tocLinks = [
+  { hash: '#ch1', label: '제1장 총칙' },
+  { hash: '#ch2', label: '제2장 서비스 이용계약' },
+  { hash: '#ch3', label: '제3장 계약당사자의 의무' },
+  { hash: '#ch4', label: '제4장 서비스 이용' },
+  { hash: '#ch5', label: '제5장 계약해지 및 이용제한' },
+  { hash: '#ch6', label: '제6장 기타' },
+  { hash: '#supp', label: '부칙' },
+]
 </script>
 
 <template>
@@ -17,13 +28,14 @@ const updatedAt = '2023.01.09'
       </p>
 
       <nav class="terms-page__toc" aria-label="약관 목차">
-        <a class="terms-page__toc-link" href="#ch1">제1장 총칙</a>
-        <a class="terms-page__toc-link" href="#ch2">제2장 서비스 이용계약</a>
-        <a class="terms-page__toc-link" href="#ch3">제3장 계약당사자의 의무</a>
-        <a class="terms-page__toc-link" href="#ch4">제4장 서비스 이용</a>
-        <a class="terms-page__toc-link" href="#ch5">제5장 계약해지 및 이용제한</a>
-        <a class="terms-page__toc-link" href="#ch6">제6장 기타</a>
-        <a class="terms-page__toc-link" href="#supp">부칙</a>
+        <RouterLink
+          v-for="item in tocLinks"
+          :key="item.hash"
+          class="terms-page__toc-link"
+          :to="{ name: 'TermsOfService', hash: item.hash }"
+        >
+          {{ item.label }}
+        </RouterLink>
       </nav>
 
       <section id="ch1" class="terms-page__section" aria-labelledby="ch1-title">
@@ -272,6 +284,8 @@ const updatedAt = '2023.01.09'
 }
 
 .terms-page__section {
+  /* fixed 헤더 + 라우터 scrollBehavior top 오프셋(getComputedStyle)과 맞춤 */
+  scroll-margin-top: clamp(120px, 13vw, 150px);
   padding-top: clamp(18px, 2.5vw, 26px);
   margin-top: clamp(16px, 2.2vw, 22px);
   border-top: 1px solid rgba(15, 23, 42, 0.06);

@@ -194,11 +194,13 @@ onBeforeUnmount(() => {
 .main-business__featured-link {
   margin-top: 16px;
   display: inline-flex;
-  min-height: 38px;
   align-items: center;
-  padding: 0 14px;
+  min-height: clamp(34px, 5vw, 38px);
+  padding: 0 clamp(12px, 1.8vw, 15px);
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.45);
+  font-size: clamp(12px, 1vw, 14px);
+  font-weight: 600;
 }
 
 .main-business__featured-ico {
@@ -251,7 +253,7 @@ onBeforeUnmount(() => {
 
   h3 {
     margin: 0;
-    font-size: 20px;
+    @include clamp(font-size, 17px, 20px);
     color: $txt-main;
   }
 
@@ -259,7 +261,7 @@ onBeforeUnmount(() => {
     margin: 0;
     color: $txt-sub;
     line-height: 1.6;
-    font-size: 15px;
+    @include clamp(font-size, 14px, 16px);
   }
 }
 

@@ -28,9 +28,8 @@ app.component('Select', Select)
 app.component('TopBtn', TopBtn)
 app.directive('reveal', revealDirective)
 
-// 최초 로드에서 스크롤 위치를 항상 top으로 고정
-// (라우터 scrollBehavior는 내비게이션 시점엔 적용되지만, 브라우저의 복원 페인트가 더 빠를 수 있음)
-if (typeof window !== 'undefined') {
+// 최초 로드에서 스크롤 위치를 top으로 고정 (해시 앵커 URL은 라우터 scrollBehavior에 맡김)
+if (typeof window !== 'undefined' && !window.location.hash) {
   window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
 }
 

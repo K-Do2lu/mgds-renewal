@@ -22,13 +22,16 @@ const handleClick = (tab, event) => {
 <style lang="scss">
 .el-tabs{ height: auto !important; }
 .demo-tabs > .el-tabs__content {
-  padding: 0;
-  font-size: 20px;
-  font-weight: 600;
+  padding: 0 0 4px;
+  font-size: clamp(14px, 1.05vw, 16px);
+  font-weight: 400;
+  color: $txt-main;
+  line-height: 1.55;
 }
 .el-tabs--top>.el-tabs__header .el-tabs__item{
-    padding: 12px;
-    font-size: 20px;
+    padding: clamp(8px, 1.2vw, 12px) clamp(12px, 1.8vw, 18px);
+    font-size: clamp(14px, 1.1vw, 17px);
+    font-weight: 600;
     color: $txt-main;
 }
 .el-tabs--top>.el-tabs__header .el-tabs__item.is-active{

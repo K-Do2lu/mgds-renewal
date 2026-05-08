@@ -1,3 +1,4 @@
+import { nextTick } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import MainView from '@/views/MainView.vue'
 import GuideView from '@/views/guide/GuideView.vue'
@@ -73,6 +74,30 @@ const router = createRouter({
   routes,
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) return savedPosition
+    if (to.hash) {
+      // Vue Router는 el만 주면 CSS scroll-margin을 반영하지 않음.
+      // 공식 문서: getComputedStyle(el).scrollMarginTop을 top으로 전달 (고정 헤더 오프셋)
+      return new Promise((resolve) => {
+        nextTick(() => {
+          try {
+            const id = to.hash.startsWith('#') ? to.hash.slice(1) : to.hash
+            const el = document.getElementById(id)
+            let top = 128
+            if (el) {
+              const mt = parseFloat(getComputedStyle(el).scrollMarginTop)
+              if (!Number.isNaN(mt) && mt > 0) top = mt
+            }
+            resolve({
+              el: to.hash,
+              behavior: 'smooth',
+              top,
+            })
+          } catch {
+            resolve({ el: to.hash, behavior: 'smooth', top: 128 })
+          }
+        })
+      })
+    }
     return { top: 0, left: 0 }
   },
 })

@@ -106,14 +106,14 @@ function go(p) {
 }
 
 .paging__num {
-  height: 40px;
-  min-width: 40px;
+  height: clamp(36px, 5vw, 40px);
+  min-width: clamp(36px, 5vw, 40px);
   padding: 0 10px;
   border: 0;
   background: #f3f6fd;
   color: $txt-sub;
   border-radius: 10px;
-  font-size: 16px;
+  font-size: clamp(14px, 1.1vw, 16px);
   line-height: 1;
   cursor: pointer;
 }
@@ -122,8 +122,8 @@ function go(p) {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: clamp(36px, 6vw, 40px);
+  height: clamp(36px, 6vw, 40px);
   padding: 0;
   border: 1px solid rgba(29, 78, 216, 0.2);
   background: #fff;
@@ -134,8 +134,8 @@ function go(p) {
 
 .paging__ico {
   display: block;
-  width: 16px;
-  height: 16px;
+  width: clamp(14px, 2.5vw, 16px);
+  height: clamp(14px, 2.5vw, 16px);
   object-fit: contain;
 }
 

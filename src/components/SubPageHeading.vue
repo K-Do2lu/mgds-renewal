@@ -28,11 +28,11 @@ const hasLead = computed(() => Boolean(props.lead))
 @use '@/assets/scss/abstract' as *;
 
 .sub-page-heading {
-  padding-bottom: clamp(16px, 2vw, 24px);
+  padding-bottom: clamp(8px, 1.2vw, 12px);
 }
 
 .sub-page-heading__lead {
-  margin: 14px 0 0;
+  margin: 12px 0 0;
   color: $txt-sub;
   line-height: 1.7;
   @include clamp(font-size, 15px, 18px);

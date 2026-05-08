@@ -221,21 +221,25 @@ onBeforeUnmount(() => {
 .main-hero__cta {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 18px;
+  gap: 8px;
+  /* 본문(desc)보다 약간만 작은 라벨 — 타이틀 대비 부담스럽지 않게 */
+  margin-top: clamp(12px, 2.2vw, 16px);
 }
 
 .main-hero__cta-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 44px;
-  padding: 10px 16px;
-  border-radius: 6px;
+  box-sizing: border-box;
+  @include clamp(font-size, 13px, 15px);
+  @include clamp(min-height, 38px, 42px);
+  padding: clamp(6px, 1vw, 8px) clamp(11px, 1.8vw, 15px);
+  border-radius: 5px;
   background: $point-main;
   border: 1px solid transparent;
   color: $txt-white;
   font-weight: 600;
+  letter-spacing: -0.02em;
   text-decoration: none;
 
   &:focus-visible {
@@ -381,6 +385,8 @@ onBeforeUnmount(() => {
 
   .main-hero__content {
     padding: clamp(18px, 5vw, 28px);
+    /* 하단 인디케이터(도트 행)와 CTA 겹침 방지 — 절대배치 도트 + 안전 영역 */
+    padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px));
     justify-content: center;
   }
 

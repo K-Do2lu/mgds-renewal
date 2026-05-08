@@ -76,7 +76,8 @@ table{
         }
     }
     th{
-        padding: 18px 20px;
+        @include clamp(font-size, 13px, 15px);
+        padding: clamp(14px, 2vw, 18px) clamp(14px, 2vw, 20px);
         font-weight: 700;
         color: #1e293b;
     }

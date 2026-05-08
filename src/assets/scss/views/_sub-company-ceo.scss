@@ -5,7 +5,8 @@
 }
 
 .sub-company-ceo__block {
-  @include clamp(padding-block, 60px, 100px);
+  @include clamp(padding-top, 24px, 40px);
+  @include clamp(padding-bottom, 48px, 72px);
   padding-inline: clamp(16px, 2.5vw, 28px);
   border-radius: 0;
   background: #fff;

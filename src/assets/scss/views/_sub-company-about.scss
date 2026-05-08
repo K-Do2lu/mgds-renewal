@@ -4,8 +4,10 @@
   @include flex(column, null, null, 0);
 }
 
+/* 직계 section: 타이틀~첫 콘텐츠는 main 밖 intro와 맞물리므로 위쪽만 촘촘히, 섹션 사이는 아래쪽으로 유지 */
 .sub-company-about > section {
-  @include clamp(padding-block, 60px, 100px);
+  @include clamp(padding-top, 24px, 40px);
+  @include clamp(padding-bottom, 48px, 80px);
 }
 
 /* 상단: 본문(SubPageHeading)과 동일 왼쪽 기준으로 표·CI */

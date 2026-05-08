@@ -377,7 +377,7 @@ export const guideIconSections = [
             background: '#fff',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center',
+            justifyCn
           },
           img: { width: '11px', height: 'auto' },
         },

@@ -153,11 +153,11 @@ const items = ref(
   margin: 0;
   display: inline-flex;
   width: fit-content;
-  padding: 4px 10px;
+  padding: clamp(3px, 0.6vw, 4px) clamp(8px, 1.2vw, 10px);
   border-radius: 999px;
   background: rgba(36, 95, 232, 0.1);
   color: $point-main;
-  font-size: 14px;
+  @include clamp(font-size, 12px, 14px);
   font-weight: 600;
 }
 
@@ -165,7 +165,7 @@ const items = ref(
   margin: 0;
   font-weight: 600;
   color: $txt-main;
-  @include clamp(font-size, 16px, 20px);
+  @include clamp(font-size, 15px, 19px);
   line-height: 1.45;
 }
 
@@ -193,11 +193,11 @@ const items = ref(
   }
 
   .main-spotlight_card-type {
-    font-size: 14px;
+    font-size: 12px;
   }
 
   .main-spotlight_card-title {
-    font-size: 16px;
+    font-size: 15px;
   }
 }
 
@@ -218,13 +218,14 @@ const items = ref(
 .main-spotlight__more {
   align-self: flex-start;
   display: inline-flex;
-  min-height: 44px;
+  min-height: clamp(36px, 5vw, 40px);
   align-items: center;
-  padding: 0 14px;
+  padding: 0 clamp(12px, 1.8vw, 15px);
   border-radius: 999px;
   border: 1px solid rgba(36, 95, 232, 0.28);
   color: $point-main;
   font-weight: 600;
+  font-size: clamp(13px, 1vw, 15px);
   text-decoration: none;
 
   &:focus-visible {

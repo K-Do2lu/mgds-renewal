@@ -40,8 +40,8 @@
   font-weight: 700;
   color: $txt-main;
   letter-spacing: -0.02em;
-  @include clamp(font-size, 32px, 50px);
-  @include clamp(line-height, 38px, 56px);
+  @include clamp(font-size, 28px, 44px);
+  @include clamp(line-height, 34px, 52px);
   text-wrap: balance;
 }
 
@@ -61,10 +61,10 @@
 }
 
 .page-section__lead {
-  margin: 18px 0 0;
+  margin: clamp(12px, 2vw, 18px) 0 0;
   color: $txt-sub;
-  @include clamp(font-size, 16px, 20px);
-  @include clamp(line-height, 24px, 32px);
+  @include clamp(font-size, 15px, 19px);
+  @include clamp(line-height, 22px, 30px);
 }
 
 .main-page {
@@ -154,9 +154,9 @@
 }
 
 .sec-title{
-  @include flex(column, null, null, 8px);
+  @include flex(column, null, null, 6px);
   &__sub{
-    @include clamp(font-size, 14px, 18px);
+    @include clamp(font-size, 12px, 16px);
     font-weight: 700;
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -164,7 +164,7 @@
     color: $point-main;
   }
   &__title{
-    @include clamp(font-size, 34px, 52px);
+    @include clamp(font-size, 28px, 44px);
     font-weight: 700;
     color: $txt-main;
     line-height: 1.12;

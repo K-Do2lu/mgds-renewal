@@ -90,4 +90,21 @@ onBeforeUnmount(() => {
   filter: brightness(0) invert(1);
   transform: rotate(-90deg);
 }
+
+@include bp(mo) {
+  .top-btn {
+    width: 42px;
+    height: 42px;
+  }
+
+  .top-btn__ico {
+    width: 18px;
+    height: 18px;
+  }
+
+  .top-btn-wrap {
+    bottom: max(14px, env(safe-area-inset-bottom, 0px));
+    right: max(14px, env(safe-area-inset-right, 0px));
+  }
+}
 </style>

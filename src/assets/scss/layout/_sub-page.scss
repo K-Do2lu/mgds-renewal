@@ -100,8 +100,8 @@ $sub-sticky-top: clamp(56px, 3.2vw + 44px, 92px);
 
 .sub-page__lnb-link {
   display: block;
-  padding: 14px 2px 12px;
-  font-size: clamp(15px, 1.05vw, 17px);
+  padding: clamp(10px, 1.4vw, 14px) 2px clamp(8px, 1.1vw, 12px);
+  font-size: clamp(14px, 1vw, 16px);
   font-weight: 500;
   color: $txt-sub;
   text-decoration: none;
@@ -127,9 +127,9 @@ $sub-sticky-top: clamp(56px, 3.2vw + 44px, 92px);
   }
 }
 
-/* 페이지 타이틀(SubPageHeading)과 본문(main) 사이 — 상한 40px */
+/* 타이틀 블록(.sub-page__intro) ↔ main — __block 상단 패딩과 겹치지 않게 이 값만 사용 */
 .sub-page__intro {
-  margin-bottom: clamp(12px, 2vw, 40px);
+  @include clamp(margin-bottom, 24px, 36px);
 
   .sub-page-heading {
     padding-bottom: 0;
@@ -141,14 +141,15 @@ $sub-sticky-top: clamp(56px, 3.2vw + 44px, 92px);
   }
 
   .sec-title__title {
-    @include clamp(font-size, 28px, 46px);
-    @include clamp(line-height, 34px, 52px);
+    @include clamp(font-size, 26px, 42px);
+    @include clamp(line-height, 32px, 50px);
     margin-top: 6px;
   }
 
   .sub-page-heading__lead {
-    @include clamp(font-size, 16px, 19px);
+    @include clamp(font-size, 15px, 18px);
     max-width: 52rem;
+    margin-top: clamp(10px, 1.6vw, 12px);
   }
 }
 

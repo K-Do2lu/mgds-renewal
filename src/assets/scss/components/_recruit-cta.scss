@@ -71,7 +71,7 @@
   min-width: 0;
   color: $txt-main;
   font-weight: 600;
-  @include clamp(font-size, 18px, 24px);
+  @include clamp(font-size, 16px, 22px);
   line-height: 1.35;
 
   p,
@@ -88,8 +88,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 12px 18px;
+  gap: 6px;
+  @include clamp(font-size, 13px, 15px);
+  padding: clamp(8px, 1vw, 11px) clamp(14px, 2vw, 18px);
   border-radius: $btn-recruit-radius;
   background: $point-main;
   color: $txt-white;
