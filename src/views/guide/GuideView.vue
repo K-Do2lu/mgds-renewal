@@ -23,7 +23,7 @@ const tabPosition = ref('left')
         </li>
       </ul>
     </div>
-    <el-tabs :tab-position="tabPosition">
+    <el-tabs class="guide-view__tabs" :tab-position="tabPosition">
       <el-tab-pane label="Color"><Color /></el-tab-pane>
       <el-tab-pane label="Icons"><Icons /></el-tab-pane>
       <el-tab-pane label="Form"><Form /></el-tab-pane>
@@ -33,8 +33,19 @@ const tabPosition = ref('left')
   </div>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
+/* 한 줄 스크롤: intro + 탭이 합쳐져 뷰포트를 넘지 않고, 긴 본문은 탭 패널 안에서만 스크롤 */
+.guide-view {
+  box-sizing: border-box;
+  height: 100vh;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
 .guide-view__intro {
+  flex-shrink: 0;
   padding: 16px 20px;
   margin: 0;
   border-bottom: 1px solid $gray-200;
@@ -59,17 +70,33 @@ const tabPosition = ref('left')
   margin-top: 6px;
 }
 
-.el-tabs{
-    height: 100vh;
-    .guide{
-        .cnt{ 
-            @include flex(column, null, null, 20px);
-            padding: 20px;
-            &:not(:last-child) {border-bottom: 1px solid $gray-200;}
-            h2{font-size: 20px; font-weight: 600; color: $gray-700;}
-        }
-    }
+:deep(.guide-view__tabs.el-tabs) {
+  flex: 1;
+  min-height: 0;
+  display: flex;
 }
-.el-tabs__content{max-height: 100vh; overflow-y: auto;}
-.el-tabs--left .el-tabs__header.is-left {margin-right: 0;}
+
+:deep(.guide-view__tabs .el-tabs__content) {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+:deep(.guide-view__tabs.el-tabs--left .el-tabs__header.is-left) {
+  margin-right: 0;
+}
+
+:deep(.guide-view__tabs .guide .cnt) {
+  @include flex(column, null, null, 20px);
+  padding: 20px;
+  &:not(:last-child) {
+    border-bottom: 1px solid $gray-200;
+  }
+  h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: $gray-700;
+  }
+}
 </style>

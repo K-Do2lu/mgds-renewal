@@ -20,7 +20,6 @@ const handleClick = (tab, event) => {
 </template>
 
 <style lang="scss">
-.el-tabs{ height: auto !important; }
 .demo-tabs > .el-tabs__content {
   padding: 0 0 4px;
   font-size: clamp(14px, 1.05vw, 16px);
