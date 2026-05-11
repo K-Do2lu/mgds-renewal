@@ -33,4 +33,7 @@ if (typeof window !== 'undefined' && !window.location.hash) {
   window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
 }
 
-app.mount('#app')
+// 첫 화면 비동기 라우트 청크가 끝날 때까지 index.html의 부트 UI 유지
+router.isReady().finally(() => {
+  app.mount('#app')
+})

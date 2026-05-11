@@ -5,6 +5,7 @@ import Icons from './Icons.vue'
 import Form from './Form.vue' 
 import Layout from './Layout.vue'
 import Components from './Components.vue'
+import Loading from './Loading.vue'
 
 const tabPosition = ref('left')
 </script>
@@ -21,6 +22,10 @@ const tabPosition = ref('left')
         <li>
           <strong>개발</strong>: Form / Layout 탭에서 <strong>Template</strong>과 <strong>Script</strong>를 각각 복사해 붙이면 됩니다. (프로젝트에 이미 전역 등록된 컴포넌트는 주석대로 import 생략 가능.)
         </li>
+        <li>
+          <strong>로딩</strong>: <strong>Loading</strong> 탭에서 전역 오버레이·라우터 연동·API용
+          <code>beginManualLoading</code> / <code>endManualLoading</code> 사용법을 확인하세요.
+        </li>
       </ul>
     </div>
     <el-tabs class="guide-view__tabs" :tab-position="tabPosition">
@@ -29,6 +34,7 @@ const tabPosition = ref('left')
       <el-tab-pane label="Form"><Form /></el-tab-pane>
       <el-tab-pane label="Layout"><Layout /></el-tab-pane>
       <el-tab-pane label="Components"><Components /></el-tab-pane>
+      <el-tab-pane label="Loading"><Loading /></el-tab-pane>
     </el-tabs>
   </div>
 </template>
