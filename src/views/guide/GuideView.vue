@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue'
+import StyleGuide from './StyleGuide.vue'
 import Color from './Color.vue'
 import Icons from './Icons.vue'
 import Form from './Form.vue' 
@@ -16,8 +17,8 @@ const tabPosition = ref('left')
       <p class="guide-view__intro-title">이 가이드 쓰는 법</p>
       <ul>
         <li>
-          <strong>기획·디자인</strong>: Color 탭의 「디자인용 목록」·Icons 탭의 규격을 우선 보세요. 코드는 옆
-          <strong>전체 복사</strong>만 누르면 됩니다.
+          <strong>기획·디자인</strong>: <strong>Style guide</strong> 탭은 Figma UI·UX 가이드에 가깝게 정리한 <strong>웹 산출물</strong>이다.
+          캡처·PDF로 공유해도 된다. 색·아이콘 상세는 <strong>Color</strong> · <strong>Icons</strong> 탭을 함께 본다.
         </li>
         <li>
           <strong>개발</strong>: Form / Layout 탭에서 <strong>Template</strong>과 <strong>Script</strong>를 각각 복사해 붙이면 됩니다. (프로젝트에 이미 전역 등록된 컴포넌트는 주석대로 import 생략 가능.)
@@ -29,6 +30,7 @@ const tabPosition = ref('left')
       </ul>
     </div>
     <el-tabs class="guide-view__tabs" :tab-position="tabPosition">
+      <el-tab-pane label="Style guide"><StyleGuide /></el-tab-pane>
       <el-tab-pane label="Color"><Color /></el-tab-pane>
       <el-tab-pane label="Icons"><Icons /></el-tab-pane>
       <el-tab-pane label="Form"><Form /></el-tab-pane>
