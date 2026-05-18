@@ -24,9 +24,13 @@ const sectionEntry = computed(() => primaryNav.find((p) => p.sectionKey === prop
 
 const heading = computed(() => getSubPageHeadingByRouteName(route.name))
 
-const activeSub = computed(
-  () => navItems.value.find((i) => i.routeName === route.name) ?? navItems.value[0] ?? null,
-)
+const activeSub = computed(() => {
+  const parent = route.meta?.parentRouteName
+  if (parent) {
+    return navItems.value.find((i) => i.routeName === parent) ?? navItems.value[0] ?? null
+  }
+  return navItems.value.find((i) => i.routeName === route.name) ?? navItems.value[0] ?? null
+})
 
 const breadcrumbItems = computed(() => {
   const items = [{ to: '/', label: '홈' }]

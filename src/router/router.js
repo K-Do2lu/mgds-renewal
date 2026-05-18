@@ -64,14 +64,32 @@ const routes = [
     children: [
       { path: 'board', name: 'NoticeBoard', component: () => import('@/views/SubNoticeTable.vue') },
       {
+        path: 'board/:id',
+        name: 'NoticeBoardDetail',
+        component: () => import('@/views/notice/NoticeDetailView.vue'),
+        meta: { parentRouteName: 'NoticeBoard', noticeBoard: 'board' },
+      },
+      {
         path: 'archive',
         name: 'NoticeArchive',
         component: () => import('@/views/SubArchiveTable.vue'),
       },
       {
+        path: 'archive/:id',
+        name: 'NoticeArchiveDetail',
+        component: () => import('@/views/notice/NoticeDetailView.vue'),
+        meta: { parentRouteName: 'NoticeArchive', noticeBoard: 'archive' },
+      },
+      {
         path: 'tender',
         name: 'NoticeTender',
         component: () => import('@/views/SubTenderTable.vue'),
+      },
+      {
+        path: 'tender/:id',
+        name: 'NoticeTenderDetail',
+        component: () => import('@/views/notice/NoticeDetailView.vue'),
+        meta: { parentRouteName: 'NoticeTender', noticeBoard: 'tender' },
       },
     ],
   },

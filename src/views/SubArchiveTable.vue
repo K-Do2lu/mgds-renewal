@@ -1,10 +1,14 @@
 <script setup>
 import Table from '@/components/Table.vue'
 import PagingIndicator from '@/components/PagingIndicator.vue'
+import { computed } from 'vue'
 import { noticeArchiveSampleRows } from '@/config/noticeSampleRows.js'
 import { useNoticeList } from '@/composables/useNoticeList'
+import { withNoticeDetailUrls } from '@/utils/noticePosts'
 
 const { searchField, searchQuery, filtered, page, totalPages, paged } = useNoticeList(noticeArchiveSampleRows)
+
+const pagedWithUrls = computed(() => withNoticeDetailUrls('archive', paged.value))
 </script>
 
 <template>
@@ -19,7 +23,7 @@ const { searchField, searchQuery, filtered, page, totalPages, paged } = useNotic
       </div>
       <p class="sub-notice-page__search-help">실무 문서 중심 · 제목/내용 즉시 검색</p>
 
-      <Table :items="paged" />
+      <Table :items="pagedWithUrls" />
 
       <PagingIndicator v-model:page="page" :total-pages="totalPages" />
     </section>

@@ -1,12 +1,16 @@
 <script setup>
 import Table from '@/components/Table.vue'
 import PagingIndicator from '@/components/PagingIndicator.vue'
+import { computed } from 'vue'
 import { noticeBoardSampleRows } from '@/config/noticeSampleRows.js'
 import { useNoticeList } from '@/composables/useNoticeList'
+import { withNoticeDetailUrls } from '@/utils/noticePosts'
 
 const { searchField, searchQuery, filtered, page, totalPages, paged } = useNoticeList(noticeBoardSampleRows, 5, {
   hotFirst: true,
 })
+
+const pagedWithUrls = computed(() => withNoticeDetailUrls('board', paged.value))
 </script>
 
 <template>
@@ -21,7 +25,7 @@ const { searchField, searchQuery, filtered, page, totalPages, paged } = useNotic
       </div>
       <p class="sub-notice-page__search-help">최신 공지 우선 정렬 · 제목/내용 즉시 검색</p>
 
-      <Table :items="paged" />
+      <Table :items="pagedWithUrls" />
 
       <PagingIndicator v-model:page="page" :total-pages="totalPages" />
     </section>

@@ -234,6 +234,7 @@ export const guideIconSections = [
       {
         file: 'business_item_06.svg',
         src: business06,
+        
         note: '`더보기` 카드 + 동일 22px 규격',
         preview: {
           wrap: {
@@ -245,17 +246,15 @@ export const guideIconSections = [
             alignItems: 'center',
             justifyContent: 'center',
 
-            
+
           },
           img: { width: '22px', height: '22px', objectFit: 'contain', filter: 'brightness(0) invert(1)' },
         },
       },
-
-      
       {
         file: 'business_item (피처드)',
         src: business04,
-        note: '`.main-business__featured-ico` — 박스 최대 ~130px, img 58%, 어두운 배경용용 invert',
+        note: '`.main-business__featured-ico` — 박스 최대 ~130px, img 58%, 어두운 배경용 invert',
         preview: {
           wrap: {
             width: '130px',

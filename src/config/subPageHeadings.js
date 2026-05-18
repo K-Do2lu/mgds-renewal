@@ -46,6 +46,21 @@ export const subPageHeadingsByRouteName = {
     sub: 'Tender',
     title: '입찰공고',
   },
+  NoticeBoardDetail: {
+    id: 'sub-notice-board-title',
+    sub: 'Notice',
+    title: '공지사항',
+  },
+  NoticeArchiveDetail: {
+    id: 'sub-notice-archive-title',
+    sub: 'Archive',
+    title: '자료실',
+  },
+  NoticeTenderDetail: {
+    id: 'sub-notice-tender-title',
+    sub: 'Tender',
+    title: '입찰공고',
+  },
 
   // RECRUIT
   RecruitTalent: {
