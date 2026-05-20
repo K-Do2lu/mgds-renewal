@@ -2,11 +2,12 @@
 import Table from '@/components/Table.vue'
 import PagingIndicator from '@/components/PagingIndicator.vue'
 import { computed } from 'vue'
-import { noticeArchiveSampleRows } from '@/config/noticeSampleRows.js'
+import { useNoticeBoard } from '@/composables/useNoticeBoard'
 import { useNoticeList } from '@/composables/useNoticeList'
 import { withNoticeDetailUrls } from '@/utils/noticePosts'
 
-const { searchField, searchQuery, filtered, page, totalPages, paged } = useNoticeList(noticeArchiveSampleRows)
+const { tableData, loading, usingSample } = useNoticeBoard('archive')
+const { searchField, searchQuery, filtered, page, totalPages, paged } = useNoticeList(tableData)
 
 const pagedWithUrls = computed(() => withNoticeDetailUrls('archive', paged.value))
 </script>
@@ -14,6 +15,9 @@ const pagedWithUrls = computed(() => withNoticeDetailUrls('archive', paged.value
 <template>
   <div class="sub-notice-page">
     <section class="sub-notice-page__block" aria-labelledby="sub-notice-archive-title">
+      <p v-if="usingSample" class="sub-notice-page__sample-hint">
+        Supabase 미연결 — 샘플 데이터를 표시합니다.
+      </p>
       <div class="sub-notice-page__toolbar" role="group" aria-label="자료실 검색">
         <p class="sub-notice-page__count">총 {{ filtered.length }} 건</p>
         <div class="sub-notice-page__search">
@@ -21,15 +25,24 @@ const pagedWithUrls = computed(() => withNoticeDetailUrls('archive', paged.value
           <Input v-model="searchQuery" placeholder="검색어를 입력하세요." />
         </div>
       </div>
-      <p class="sub-notice-page__search-help">실무 문서 중심 · 제목/내용 즉시 검색</p>
+      <p class="sub-notice-page__search-help">최신순 · 제목/내용 검색</p>
 
-      <Table :items="pagedWithUrls" />
-
-      <PagingIndicator v-model:page="page" :total-pages="totalPages" />
+      <p v-if="loading" class="sub-notice-page__loading">불러오는 중…</p>
+      <template v-else>
+        <Table :items="pagedWithUrls" />
+        <PagingIndicator v-model:page="page" :total-pages="totalPages" />
+      </template>
     </section>
   </div>
 </template>
 
 <style lang="scss" scoped>
 @use '@/assets/scss/views/sub-notice-page';
+
+.sub-notice-page__sample-hint,
+.sub-notice-page__loading {
+  margin: 0 0 12px;
+  font-size: 14px;
+  color: $txt-sub;
+}
 </style>

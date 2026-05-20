@@ -27,8 +27,18 @@ const dragStartX = ref(0)
 const dragStartY = ref(0)
 const dragPointerId = ref(null)
 const didDrag = ref(false)
+/** 드래그 직후 링크 클릭이 잘못 열리지 않도록 */
+const suppressNavClickUntil = ref(0)
 
 let ro = null
+
+function isInteractiveTarget(target) {
+  return target instanceof Element && Boolean(target.closest('a, button, [role="button"]'))
+}
+
+function shouldSuppressNavClick() {
+  return Date.now() < suppressNavClickUntil.value
+}
 let autoplayTimer = null
 
 function prefersReducedMotion() {
@@ -136,12 +146,15 @@ defineExpose({
   goToPage,
   index,
   maxIndex,
+  shouldSuppressNavClick,
 })
 
 function onPointerDown(e) {
   if (e.button != null && e.button !== 0) return
   if (!viewportEl.value) return
   if (stepPx.value <= 0) return
+  // 카드·링크 클릭은 슬라이드 드래그로 가로채지 않음
+  if (isInteractiveTarget(e.target)) return
 
   isDragging.value = true
   didDrag.value = false
@@ -207,8 +220,12 @@ function onPointerUp(e) {
   didDrag.value = false
   dragPointerId.value = null
 
-  if (wasDrag) finishDrag(dx)
-  else dragOffsetPx.value = 0
+  if (wasDrag) {
+    finishDrag(dx)
+    suppressNavClickUntil.value = Date.now() + 400
+  } else {
+    dragOffsetPx.value = 0
+  }
 
   restartAutoplay()
 }

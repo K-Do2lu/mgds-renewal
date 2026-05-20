@@ -24,13 +24,27 @@ const sectionEntry = computed(() => primaryNav.find((p) => p.sectionKey === prop
 
 const heading = computed(() => getSubPageHeadingByRouteName(route.name))
 
+/** 상세(자식) 라우트일 때 목록 탭을 활성으로 — meta.parentRouteName */
+const parentRouteName = computed(() => {
+  if (route.meta?.parentRouteName) return route.meta.parentRouteName
+  for (let i = route.matched.length - 1; i >= 0; i -= 1) {
+    const name = route.matched[i].meta?.parentRouteName
+    if (name) return name
+  }
+  return null
+})
+
 const activeSub = computed(() => {
-  const parent = route.meta?.parentRouteName
+  const parent = parentRouteName.value
   if (parent) {
     return navItems.value.find((i) => i.routeName === parent) ?? navItems.value[0] ?? null
   }
   return navItems.value.find((i) => i.routeName === route.name) ?? navItems.value[0] ?? null
 })
+
+function isLnbItemActive(item) {
+  return activeSub.value?.routeName === item.routeName
+}
 
 const breadcrumbItems = computed(() => {
   const items = [{ to: '/', label: '홈' }]
@@ -70,8 +84,8 @@ const breadcrumbItems = computed(() => {
             <router-link
               :to="item.to"
               class="sub-page__lnb-link"
-              active-class="is-active"
-              :aria-current="route.name === item.routeName ? 'page' : undefined"
+              :class="{ 'is-active': isLnbItemActive(item) }"
+              :aria-current="isLnbItemActive(item) ? 'page' : undefined"
             >
               {{ item.label }}
             </router-link>

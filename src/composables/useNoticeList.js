@@ -1,7 +1,7 @@
-import { computed, ref, watch } from 'vue'
+import { computed, isRef, ref, unref, watch } from 'vue'
 
 export function useNoticeList(sourceRows, pageSize = 5, options = {}) {
-  const tableData = ref(sourceRows)
+  const tableData = isRef(sourceRows) ? sourceRows : ref(sourceRows)
   const searchField = ref('제목')
   const searchQuery = ref('')
   const page = ref(1)
@@ -10,7 +10,7 @@ export function useNoticeList(sourceRows, pageSize = 5, options = {}) {
 
   const filtered = computed(() => {
     const q = searchQuery.value.trim()
-    const rows = tableData.value
+    const rows = unref(tableData) ?? []
 
     const searched = (() => {
       if (!q) return rows

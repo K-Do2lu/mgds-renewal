@@ -1,5 +1,0 @@
-@use "@/assets/scss/abstract" as *;
-
-header{
-    @include flex(row, center, center, 0);
-}

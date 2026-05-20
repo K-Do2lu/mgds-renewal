@@ -1,10 +1,13 @@
 <script setup>
 
 import { computed, onMounted, ref, watchEffect } from 'vue'
-
+import { useRouter } from 'vue-router'
 import BaseSlider from '@/components/BaseSlider.vue'
-
+import { isSupabaseConfigured } from '@/lib/supabase'
+import { fetchSpotlightPosts } from '@/services/noticePostService'
 import { pickRandomSpotlightPosts } from '@/utils/noticePosts'
+
+const router = useRouter()
 
 
 
@@ -20,10 +23,16 @@ const activeIndex = ref(0)
 
 
 
-onMounted(() => {
-
+onMounted(async () => {
+  if (isSupabaseConfigured()) {
+    try {
+      items.value = await fetchSpotlightPosts(SPOTLIGHT_COUNT)
+      return
+    } catch {
+      /* 샘플로 폴백 */
+    }
+  }
   items.value = pickRandomSpotlightPosts(SPOTLIGHT_COUNT)
-
 })
 
 
@@ -33,17 +42,22 @@ const featured = computed(() => items.value[activeIndex.value] ?? items.value[0]
 
 
 watchEffect(() => {
-
   const slider = sliderRef.value
-
   if (!slider) return
-
   const idx = slider.index
-
   activeIndex.value = typeof idx === 'number' ? idx : idx.value ?? 0
-
 })
 
+function openPost(e, item) {
+  if (!item?.to) return
+  if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button === 1) return
+  if (sliderRef.value?.shouldSuppressNavClick?.()) {
+    e.preventDefault()
+    return
+  }
+  e.preventDefault()
+  router.push(item.to)
+}
 </script>
 
 
@@ -78,16 +92,14 @@ watchEffect(() => {
 
 
 
+      
       <div v-if="items.length" class="main-spotlight__content">
 
-        <RouterLink
-
+        <a
           v-if="featured"
-
-          :to="featured.to"
-
+          :href="featured.to"
           class="main-spotlight__featured"
-
+          @click="openPost($event, featured)"
         >
 
           <p class="main-spotlight__featured-kicker">{{ featured.boardLabel }}</p>
@@ -98,9 +110,7 @@ watchEffect(() => {
 
           <p class="main-spotlight__featured-date">{{ featured.dateLabel }}</p>
 
-        </RouterLink>
-
-
+        </a>
 
         <BaseSlider
 
@@ -120,18 +130,13 @@ watchEffect(() => {
 
         >
 
-          <RouterLink
-
+          <a
             v-for="item in items"
-
             :key="item.id"
-
-            :to="item.to"
-
+            :href="item.to"
             class="main-spotlight_card"
-
             data-slider-item
-
+            @click="openPost($event, item)"
           >
 
             <p
@@ -145,7 +150,7 @@ watchEffect(() => {
 
             <p class="main-spotlight_card-date">{{ item.dateLabel }}</p>
 
-          </RouterLink>
+          </a>
 
         </BaseSlider>
 

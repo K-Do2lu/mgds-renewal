@@ -131,6 +131,7 @@ const partnerLogos = [
   color: $txt-main;
   font-weight: 800;
   @include clamp(font-size, 16px, 20px);
+  
   position: relative;
   z-index: 1;
 }

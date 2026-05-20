@@ -2,11 +2,12 @@
 import Table from '@/components/Table.vue'
 import PagingIndicator from '@/components/PagingIndicator.vue'
 import { computed } from 'vue'
-import { noticeTenderSampleRows } from '@/config/noticeSampleRows.js'
+import { useNoticeBoard } from '@/composables/useNoticeBoard'
 import { useNoticeList } from '@/composables/useNoticeList'
 import { withNoticeDetailUrls } from '@/utils/noticePosts'
 
-const { searchField, searchQuery, filtered, page, totalPages, paged } = useNoticeList(noticeTenderSampleRows)
+const { tableData, loading, usingSample } = useNoticeBoard('tender')
+const { searchField, searchQuery, filtered, page, totalPages, paged } = useNoticeList(tableData)
 
 const pagedWithUrls = computed(() => withNoticeDetailUrls('tender', paged.value))
 </script>
@@ -14,6 +15,9 @@ const pagedWithUrls = computed(() => withNoticeDetailUrls('tender', paged.value)
 <template>
   <div class="sub-notice-page">
     <section class="sub-notice-page__block" aria-labelledby="sub-notice-tender-title">
+      <p v-if="usingSample" class="sub-notice-page__sample-hint">
+        Supabase 미연결 — 샘플 데이터를 표시합니다.
+      </p>
       <div class="sub-notice-page__toolbar" role="group" aria-label="입찰공고 검색">
         <p class="sub-notice-page__count">총 {{ filtered.length }} 건</p>
         <div class="sub-notice-page__search">
@@ -23,13 +27,22 @@ const pagedWithUrls = computed(() => withNoticeDetailUrls('tender', paged.value)
       </div>
       <p class="sub-notice-page__search-help">진행 중/마감 공고 확인 · 제목/내용 즉시 검색</p>
 
-      <Table :items="pagedWithUrls" />
-
-      <PagingIndicator v-model:page="page" :total-pages="totalPages" />
+      <p v-if="loading" class="sub-notice-page__loading">불러오는 중…</p>
+      <template v-else>
+        <Table :items="pagedWithUrls" />
+        <PagingIndicator v-model:page="page" :total-pages="totalPages" />
+      </template>
     </section>
   </div>
 </template>
 
 <style lang="scss" scoped>
 @use '@/assets/scss/views/sub-notice-page';
+
+.sub-notice-page__sample-hint,
+.sub-notice-page__loading {
+  margin: 0 0 12px;
+  font-size: 14px;
+  color: $txt-sub;
+}
 </style>

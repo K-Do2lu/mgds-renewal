@@ -4,6 +4,8 @@ import {
   notifyRouteLoadingEnd,
   notifyRouteLoadingStart,
 } from '@/composables/useAppLoading'
+import { ensureAdminSession } from '@/composables/useAdminAuth'
+import { isSupabaseConfigured } from '@/lib/supabase'
 
 const routes = [
   { path: '/', name: 'Main', component: () => import('@/views/MainView.vue') },
@@ -62,18 +64,13 @@ const routes = [
     component: () => import('@/views/notice/NoticeSection.vue'),
     redirect: '/notice/board',
     children: [
-      { path: 'board', name: 'NoticeBoard', component: () => import('@/views/SubNoticeTable.vue') },
       {
         path: 'board/:id',
         name: 'NoticeBoardDetail',
         component: () => import('@/views/notice/NoticeDetailView.vue'),
         meta: { parentRouteName: 'NoticeBoard', noticeBoard: 'board' },
       },
-      {
-        path: 'archive',
-        name: 'NoticeArchive',
-        component: () => import('@/views/SubArchiveTable.vue'),
-      },
+      { path: 'board', name: 'NoticeBoard', component: () => import('@/views/SubNoticeTable.vue') },
       {
         path: 'archive/:id',
         name: 'NoticeArchiveDetail',
@@ -81,15 +78,49 @@ const routes = [
         meta: { parentRouteName: 'NoticeArchive', noticeBoard: 'archive' },
       },
       {
-        path: 'tender',
-        name: 'NoticeTender',
-        component: () => import('@/views/SubTenderTable.vue'),
+        path: 'archive',
+        name: 'NoticeArchive',
+        component: () => import('@/views/SubArchiveTable.vue'),
       },
       {
         path: 'tender/:id',
         name: 'NoticeTenderDetail',
         component: () => import('@/views/notice/NoticeDetailView.vue'),
         meta: { parentRouteName: 'NoticeTender', noticeBoard: 'tender' },
+      },
+      {
+        path: 'tender',
+        name: 'NoticeTender',
+        component: () => import('@/views/SubTenderTable.vue'),
+      },
+    ],
+  },
+  {
+    path: '/admin/login',
+    name: 'AdminLogin',
+    component: () => import('@/views/admin/AdminLoginView.vue'),
+    meta: { layout: 'admin', adminGuest: true },
+  },
+  {
+    path: '/admin',
+    component: () => import('@/views/admin/AdminLayout.vue'),
+    meta: { layout: 'admin', requiresAdmin: true },
+    redirect: '/admin/posts',
+    children: [
+      {
+        path: 'posts',
+        name: 'AdminPosts',
+        component: () => import('@/views/admin/AdminPostListView.vue'),
+      },
+      {
+        path: 'posts/new',
+        name: 'AdminPostNew',
+        component: () => import('@/views/admin/AdminPostEditView.vue'),
+      },
+      {
+        path: 'posts/:id/edit',
+        name: 'AdminPostEdit',
+        component: () => import('@/views/admin/AdminPostEditView.vue'),
       },
     ],
   },
@@ -142,8 +173,33 @@ const router = createRouter({
   },
 })
 
-router.beforeEach((_to, _from, next) => {
+router.beforeEach(async (to, _from, next) => {
   notifyRouteLoadingStart()
+
+  const needsAdmin = to.matched.some((r) => r.meta.requiresAdmin)
+  const isGuestAdmin = Boolean(to.meta.adminGuest)
+
+  if (needsAdmin || isGuestAdmin) {
+    if (!isSupabaseConfigured()) {
+      if (needsAdmin) {
+        next({ name: 'AdminLogin', query: { redirect: to.fullPath } })
+        return
+      }
+      next()
+      return
+    }
+
+    const loggedIn = await ensureAdminSession()
+    if (needsAdmin && !loggedIn) {
+      next({ name: 'AdminLogin', query: { redirect: to.fullPath } })
+      return
+    }
+    if (isGuestAdmin && loggedIn) {
+      next({ name: 'AdminPosts' })
+      return
+    }
+  }
+
   next()
 })
 
